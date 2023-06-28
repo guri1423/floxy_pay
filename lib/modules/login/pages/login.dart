@@ -1,6 +1,4 @@
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
@@ -25,9 +23,9 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(),
 
       body: Center(
-        child: Container(
+        child: SizedBox(
             height: 40,
-            width: 80,
+            width: 120,
             child: ElevatedButton(onPressed: () async {
               final Web3AuthResponse response = await Web3AuthFlutter.login(
                   LoginParams(loginProvider: Provider.google)
