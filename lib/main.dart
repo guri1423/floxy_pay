@@ -32,26 +32,29 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    HashMap themeMap = HashMap<String, String>();
+    HashMap<String, String> themeMap = HashMap<String, String>();
     themeMap['primary'] = "#229954";
 
     Uri redirectUrl;
-    redirectUrl = Uri.parse(
-        'myapp://com.example.floxy_pay/auth');
+    redirectUrl = Uri.parse('myapp://com.example.floxy_pay/auth');
 
-    await Web3AuthFlutter.init(Web3AuthOptions(
-        clientId:
-        'BEKnO5WgGdCOoGZIIxr3ThNLoXwHaewcYc4PBh46Q2M8s3Jm4IivcxUFBIhoNYRrltyJQ_2iUAUZCwWLFj4yFKQ',
+    await Web3AuthFlutter.init(
+      Web3AuthOptions(
+        clientId: 'BEKnO5WgGdCOoGZIIxr3ThNLoXwHaewcYc4PBh46Q2M8s3Jm4IivcxUFBIhoNYRrltyJQ_2iUAUZCwWLFj4yFKQ',
         network: Network.testnet,
         redirectUrl: redirectUrl,
         whiteLabel: WhiteLabelData(
-            dark: true, name: "Floxy App", theme: themeMap)));
+          dark: true,
+          name: "Floxy App",
+          theme: themeMap,
+        ),
+      ),
+    );
 
     await Web3AuthFlutter.initialize();
 
-    final String res = await Web3AuthFlutter.getPrivKey();
-    print(res);
-    if (res.isNotEmpty) {
+    final String? res = await Web3AuthFlutter.getPrivKey();
+    if (res != null && res.isNotEmpty) {
       setState(() {
         logoutVisible = true;
       });
@@ -67,93 +70,81 @@ class _MyAppState extends State<MyApp> {
         ),
         body: SingleChildScrollView(
           child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                  ),
-                  Visibility(
-                    visible: !logoutVisible,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 50,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                ),
+                Visibility(
+                  visible: !logoutVisible,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      const Text(
+                        'Web3Auth',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 36,
+                          color: Color(0xFF0364ff),
                         ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        const Text(
-                          'Web3Auth',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 36,
-                              color: Color(0xFF0364ff)),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Text(
-                          'Login with',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                            onPressed: () => _login(_withGoogle)(),
-                            child: const Text('Google')
-                        ),
-                        ElevatedButton(
-                            onPressed: () => _login(_withFacebook)(),
-                            child: const Text('Facebook')
-                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () => _login(_withGoogle)(),
+                        child: const Text('Google'),
+                      ),
 
-                        // ElevatedButton(
-                        //     onPressed: _login(_withEmailPasswordless),
-                        //     child: const Text('Email Passwordless')),
-                        // ElevatedButton(
-                        //     onPressed: _login(_withDiscord),
-                        //     child: const Text('Discord')),
-                      ],
-                    ),
+                      ElevatedButton(
+                        onPressed: () => _login(_withFacebook)(),
+                        child: const Text('Facebook'),
+                      ),
+
+                    ],
                   ),
-                  Visibility(
-                    // ignore: sort_child_properties_last
-                    child: Column(
-                      children: [
-                        Center(
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                  Colors.red[600] // This is what you need!
-                              ),
-                              onPressed: _logout(),
-                              child: Column(
-                                children: const [
-                                  Text('Logout'),
-                                ],
-                              )),
+                ),
+                Visibility(
+                  // ignore: sort_child_properties_last
+                  child: Column(
+                    children: [
+                      Center(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red[600]!,
+                          ),
+                          onPressed: _logout(),
+                          child: const Text('Logout'),
                         ),
-                        ElevatedButton(
-                            onPressed: _privKey(_getPrivKey),
-                            child: const Text('Get PrivKey')),
-                        ElevatedButton(
-                            onPressed: _userInfo(_getUserInfo),
-                            child: const Text('Get UserInfo')),
-                      ],
-                    ),
-                    visible: logoutVisible,
+                      ),
+                      ElevatedButton(
+                        onPressed: _privKey(_getPrivKey),
+                        child: const Text('Get PrivKey'),
+                      ),
+                      ElevatedButton(
+                        onPressed: _userInfo(_getUserInfo),
+                        child: const Text('Get UserInfo'),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(_result),
-                  )
-                ],
-              )),
+                  visible: logoutVisible,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(_result),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -230,17 +221,22 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<Web3AuthResponse> _withFacebook() {
-    return Web3AuthFlutter.login(LoginParams(loginProvider: Provider.facebook));
+    return Web3AuthFlutter.login(LoginParams(
+      loginProvider: Provider.facebook,
+    ));
   }
 
   Future<Web3AuthResponse> _withEmailPasswordless() {
     return Web3AuthFlutter.login(LoginParams(
-        loginProvider: Provider.email_passwordless,
-        extraLoginOptions: ExtraLoginOptions(login_hint: "")));
+      loginProvider: Provider.email_passwordless,
+      extraLoginOptions: ExtraLoginOptions(login_hint: ""),
+    ));
   }
 
   Future<Web3AuthResponse> _withDiscord() {
-    return Web3AuthFlutter.login(LoginParams(loginProvider: Provider.discord));
+    return Web3AuthFlutter.login(LoginParams(
+      loginProvider: Provider.discord,
+    ));
   }
 
   Future<String?> _getPrivKey() {

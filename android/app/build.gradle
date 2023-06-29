@@ -68,4 +68,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.github.Web3Auth:web3auth-android-sdk:4.0.2'
 }

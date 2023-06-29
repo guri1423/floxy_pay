@@ -24,7 +24,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-                <data android:scheme="myapp" android:host="com.example.floxy_pay" android:path="/auth" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="com.example.floxy_pay" android:scheme="myapp" android:path="/auth" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
