@@ -1,13 +1,16 @@
 import 'dart:collection';
-import 'dart:io';
-
+import 'package:floxy_pay/core/theme.dart';
+import 'package:floxy_pay/modules/onboarding/pages/onboarding_one.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/output.dart';
 import 'dart:async';
 
 import 'package:web3auth_flutter/web3auth_flutter.dart';
+
+import 'modules/bottom_navigation/bloc/bottom_navigation_cubit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,92 +66,107 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Floxy Pay'),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<NavigationCubit>(
+          create: (_) => NavigationCubit(),
         ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Visibility(
-                  visible: !logoutVisible,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      const Text(
-                        'Web3Auth',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 36,
-                          color: Color(0xFF0364ff),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () => _login(_withGoogle)(),
-                        child: const Text('Google'),
-                      ),
-
-                      ElevatedButton(
-                        onPressed: () => _login(_withFacebook)(),
-                        child: const Text('Facebook'),
-                      ),
-
-                    ],
-                  ),
-                ),
-                Visibility(
-                  // ignore: sort_child_properties_last
-                  child: Column(
-                    children: [
-                      Center(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red[600]!,
-                          ),
-                          onPressed: _logout(),
-                          child: const Text('Logout'),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: _privKey(_getPrivKey),
-                        child: const Text('Get PrivKey'),
-                      ),
-                      ElevatedButton(
-                        onPressed: _userInfo(_getUserInfo),
-                        child: const Text('Get UserInfo'),
-                      ),
-                    ],
-                  ),
-                  visible: logoutVisible,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(_result),
-                )
-              ],
-            ),
-          ),
-        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: OnboardingPageOne(),
+        theme: CustomThemes.getTheme(),
       ),
     );
   }
+
+  // home: Scaffold(
+  //   appBar: AppBar(
+  //     title: const Text('Floxy Pay'),
+  //   ),
+  //   body: SingleChildScrollView(
+  //     child: Center(
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           const Padding(
+  //             padding: EdgeInsets.all(8.0),
+  //           ),
+  //           Visibility(
+  //             visible: !logoutVisible,
+  //             child: Column(
+  //               children: [
+  //                 const SizedBox(
+  //                   height: 50,
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 40,
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 10,
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 20,
+  //                 ),
+  //                 ElevatedButton(
+  //                   onPressed: () => _login(_withGoogle)(),
+  //                   child: const Text('Google'),
+  //                 ),
+  //
+  //                 ElevatedButton(
+  //                   onPressed: () => _login(_withFacebook)(),
+  //                   child: const Text('Facebook'),
+  //                 ),
+  //
+  //                 ElevatedButton(
+  //                   onPressed: () => _login(_withTwitter)(),
+  //                   child: const Text('Twitter'),
+  //                 ),
+  //
+  //                 ElevatedButton(
+  //                   onPressed: () => _login(_withApple)(),
+  //                   child: const Text('Apple'),
+  //                 ),
+  //
+  //
+  //
+  //               ],
+  //             ),
+  //           ),
+  //           Visibility(
+  //             // ignore: sort_child_properties_last
+  //             child: Column(
+  //               children: [
+  //                 Center(
+  //                   child: ElevatedButton(
+  //                     style: ElevatedButton.styleFrom(
+  //                       backgroundColor: Colors.red[600]!,
+  //                     ),
+  //                     onPressed: _logout(),
+  //                     child: const Text('Logout'),
+  //                   ),
+  //                 ),
+  //                 ElevatedButton(
+  //                   onPressed: _privKey(_getPrivKey),
+  //                   child: const Text('Get PrivKey'),
+  //                 ),
+  //                 ElevatedButton(
+  //                   onPressed: _userInfo(_getUserInfo),
+  //                   child: const Text('Get UserInfo'),
+  //                 ),
+  //               ],
+  //             ),
+  //             visible: logoutVisible,
+  //           ),
+  //           Padding(
+  //             padding: const EdgeInsets.all(8.0),
+  //             child: Text(_result),
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   ),
+  // ),
 
   VoidCallback _login(Future<Web3AuthResponse> Function() method) {
     return () async {
@@ -223,6 +241,18 @@ class _MyAppState extends State<MyApp> {
   Future<Web3AuthResponse> _withFacebook() {
     return Web3AuthFlutter.login(LoginParams(
       loginProvider: Provider.facebook,
+    ));
+  }
+
+  Future<Web3AuthResponse> _withTwitter() {
+    return Web3AuthFlutter.login(LoginParams(
+      loginProvider: Provider.twitter,
+    ));
+  }
+
+  Future<Web3AuthResponse> _withApple() {
+    return Web3AuthFlutter.login(LoginParams(
+      loginProvider: Provider.apple,
     ));
   }
 
