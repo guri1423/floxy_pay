@@ -1,8 +1,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../core/colors.dart';
+import '../../../core/strings.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -33,6 +35,20 @@ class _SettingsPageState extends State<SettingsPage> {
 
                   child: Column(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 40),
+                        child: Row(
+                          children: [
+                            Icon(Icons.arrow_back),
+                            Text(
+                              Strings.setting,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          ],
+                        ),
+                      ),
+
 
                     ],
                   ),
@@ -42,15 +58,33 @@ class _SettingsPageState extends State<SettingsPage> {
                   padding: const EdgeInsets.only(top: 120,left: 20, right: 20),
                   child: Container(
                     alignment: Alignment.centerRight,
-                    height: height * 0.10,
-                    decoration:  const BoxDecoration(
+                      height: height*0.40,
+                      decoration:  const BoxDecoration(
                       color: CustomColors.white,
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
-                    child: Column(
-                      children: [
+                    child: ListView.builder(
+                      itemCount: imageList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return  Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Row(
+                            children: [
 
-                      ],
+                              SvgPicture.asset(imageList[index]),
+
+                              Text(pageList[index],
+                              style: Theme.of(context).textTheme.titleSmall,),
+
+                              Spacer(),
+
+                              Icon(Icons.navigate_next_sharp)
+
+                            ],
+                          ),
+                        );
+                      },
+
                     )
                   ),
                 )
@@ -60,4 +94,19 @@ class _SettingsPageState extends State<SettingsPage> {
       )
     );
   }
+
+  List<String> imageList = [
+
+    'assets/svg_images/profileIcon.svg',
+    'assets/svg_images/change_pin.svg',
+    'assets/svg_images/logout_icon.svg',
+    'assets/svg_images/notification_icon.svg'
+  ];
+
+  List<String> pageList = [
+    'Profile',
+    'Notification',
+    'Change Pin',
+    'Logout'
+  ];
 }

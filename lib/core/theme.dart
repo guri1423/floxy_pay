@@ -24,7 +24,7 @@ class CustomThemes{
           ),
 
           titleSmall: TextStyle(
-            color: CustomColors.black, fontWeight: FontWeight.w500, fontSize: 15,fontFamily: "Lato", letterSpacing: 0.15,
+            color: CustomColors.black, fontWeight: FontWeight.w500, fontSize: 16,fontFamily: "Lato", letterSpacing: 0.15,
           ),
 
 

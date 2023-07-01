@@ -15,6 +15,9 @@ class Strings{
   static const percentageTwo = '-7.53%';
   static const yourToken = 'Your Tokens';
   static const send = 'Send';
+  static const setting = 'Setting';
+  static const deposit = 'Deposit';
+  static const history = 'History';
   static const sale = 'Sale';
   static const currentBalance = 'Current Balance';
   static const tenThousandFXY = '10,000 FXY';
@@ -29,5 +32,6 @@ class Strings{
   static const bankIfsc = 'Bank IFSC code';
   static const fxyToken = 'FXY Token';
   static const saleNow = 'Sale Now';
+  static const lastTransaction = 'Last Transaction';
 
 }

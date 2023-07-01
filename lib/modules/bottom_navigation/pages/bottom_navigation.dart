@@ -4,6 +4,7 @@ import 'package:floxy_pay/modules/history/pages/history.dart';
 import 'package:floxy_pay/modules/settings/pages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../core/colors.dart';
 import '../../home/pages/home.dart';
@@ -23,21 +24,21 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
 
-    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-    final double oneLogicalPixelInPhysicalPixels = 1 / devicePixelRatio;
+
+
 
     return Scaffold(
-      backgroundColor: Colors.white,
+
       body: BlocBuilder<NavigationCubit, NavigationState>(
           builder: (context, state) {
             if (state.navbarItem == NavbarItem.Home) {
-              return HomePage();
+              return const HomePage();
             } else if (state.navbarItem == NavbarItem.History) {
-              return HistoryPage();
+              return const HistoryPage();
             } else if (state.navbarItem == NavbarItem.Deposit) {
-              return DepositPage();
+              return const DepositPage();
             } else if (state.navbarItem == NavbarItem.Setting) {
-              return SettingsPage();
+              return const SettingsPage();
             }
 
 
@@ -71,7 +72,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
+                      child: SizedBox(
                         height: 50,
                         width: 50,
                         child: Center(
@@ -82,9 +83,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                   : CustomColors.grey,
                               BlendMode.srcIn,
                             ),
-                            child: Image.asset(
-                              "assets/images/wallet_icon.png",
-                            ),
+                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/172631_wallet_icon 1.svg'),
                           ),
                         ),
                       ),
@@ -111,9 +110,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                   : CustomColors.grey,
                               BlendMode.srcIn,
                             ),
-                            child: Image.asset(
-                              "assets/images/history.png",
-                            ),
+                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/Group 311.svg')
                           ),
                         ),
                       ),
@@ -129,7 +126,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
+                      child: SizedBox(
                         height: 50,
                         width: 50,
                         child: Center(
@@ -140,9 +137,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                   : CustomColors.grey,
                               BlendMode.srcIn,
                             ),
-                            child: Image.asset(
-                              "assets/images/deposit.png",
-                            ),
+                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/8333969_deposit_money_bank_salary_saving_icon 1.svg')
                           ),
                         ),
                       ),
@@ -158,7 +153,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
+                      child: SizedBox(
                         height: 50,
                         width: 50,
                         child: Center(
@@ -169,9 +164,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                   : CustomColors.grey,
                               BlendMode.srcIn,
                             ),
-                            child: Image.asset(
-                              "assets/images/settings.png",
-                            ),
+                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/Settings adjust__white.svg')
                           ),
                         ),
                       ),
