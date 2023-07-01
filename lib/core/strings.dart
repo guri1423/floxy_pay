@@ -14,5 +14,20 @@ class Strings{
   static const percentageOne = '+67.53%';
   static const percentageTwo = '-7.53%';
   static const yourToken = 'Your Tokens';
+  static const send = 'Send';
+  static const sale = 'Sale';
+  static const currentBalance = 'Current Balance';
+  static const tenThousandFXY = '10,000 FXY';
+  static const sendFXY = 'Send FXY';
+  static const saleFXY = 'Sale FXY';
+  static const address = 'Address';
+  static const amount = 'Amount';
+  static const process = 'Process';
+  static const name = 'Name';
+  static const mobileNo = 'Mobile No';
+  static const bankAccount = 'Bank Account No';
+  static const bankIfsc = 'Bank IFSC code';
+  static const fxyToken = 'FXY Token';
+  static const saleNow = 'Sale Now';
 
 }

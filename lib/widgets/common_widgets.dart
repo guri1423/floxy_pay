@@ -64,3 +64,42 @@ Widget customButton(context){
     ),
   );
 }
+
+
+Widget customSmallButton(context, String text, Color backgroundColor, Color textColor){
+
+  return Container(
+    width: 90,
+    height: 46,
+    decoration:  BoxDecoration(
+      color: backgroundColor,
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
+    child: Center(
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.titleSmall!.copyWith(color: textColor),
+      ),
+    ),
+  );
+}
+
+
+Widget customTextField(context, String hintText){
+
+  return Container(
+    height: 50,
+    color: Colors.white,
+    child: TextField(
+      decoration: InputDecoration(
+        hintText: hintText,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        filled: true,
+        fillColor: Colors.white,
+      ),
+    ),
+  );
+}
