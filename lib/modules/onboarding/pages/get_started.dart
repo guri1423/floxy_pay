@@ -73,7 +73,7 @@ class _GetStartedState extends State<GetStarted> {
 
                   onTap: (){
                     
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SendPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavigation()));
 
                   },
                   child: customButton(context),

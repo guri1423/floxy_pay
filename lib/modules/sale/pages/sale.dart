@@ -15,7 +15,7 @@ class SalePage extends StatefulWidget {
 class _SalePageState extends State<SalePage> {
   @override
   Widget build(BuildContext context) {
-    SizedBox sizebox = const SizedBox(height: 10);
+    SizedBox sizeBox = const SizedBox(height: 10);
     double? height = MediaQuery.of(context).size.height;
     double? width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -38,7 +38,7 @@ class _SalePageState extends State<SalePage> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Row(
                       children: [
-                        Icon(Icons.arrow_back),
+                        const Icon(Icons.arrow_back),
                         Text(
                           Strings.sale,
                           textAlign: TextAlign.center,
@@ -73,7 +73,7 @@ class _SalePageState extends State<SalePage> {
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
 
-                              sizebox,
+                              sizeBox,
 
                               Text(
                                 Strings.tenThousandFXY,
@@ -81,7 +81,7 @@ class _SalePageState extends State<SalePage> {
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
 
-                              sizebox,
+                              sizeBox,
 
                               Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -95,7 +95,7 @@ class _SalePageState extends State<SalePage> {
 
                       ),
 
-                      sizebox,
+                      sizeBox,
 
                       Text(
                         Strings.saleFXY,
@@ -103,31 +103,31 @@ class _SalePageState extends State<SalePage> {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
 
-                      sizebox,
+                      sizeBox,
 
                       customTextField(context, Strings.name),
 
-                      sizebox,
+                      sizeBox,
 
                       customTextField(context, Strings.mobileNo),
 
-                      sizebox,
+                      sizeBox,
 
                       customTextField(context, Strings.amount),
 
-                      sizebox,
+                      sizeBox,
 
                       customTextField(context, Strings.fxyToken),
 
-                      sizebox,
+                      sizeBox,
 
                       customTextField(context, Strings.bankAccount),
 
-                      sizebox,
+                      sizeBox,
 
                       customTextField(context, Strings.bankIfsc),
 
-                      sizebox,
+                      sizeBox,
 
 
                       customSmallButton(context, Strings.saleNow, CustomColors.black, CustomColors.white),
