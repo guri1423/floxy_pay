@@ -1,10 +1,12 @@
 
 
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/core/strings.dart';
 import 'package:floxy_pay/modules/home/pages/home.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../bottom_navigation/pages/bottom_navigation.dart';
 
@@ -34,7 +36,7 @@ class _GetStartedState extends State<GetStarted> {
             SizedBox(
                 height: 290,
                 width: 290,
-                child: Image.asset('assets/images/get_started_page.png')),
+                child: SvgPicture.asset('assets/svg_images/get_started.svg')),
 
             sizeBox,
 
@@ -52,6 +54,16 @@ class _GetStartedState extends State<GetStarted> {
 
             sizeBox,
             sizeBox,
+
+            DotsIndicator(
+              dotsCount: 3,
+              position: 2,
+              decorator: DotsDecorator(
+                size: const Size.square(9.0),
+                activeSize: const Size(18.0, 9.0),
+                activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+              ),
+            ),
 
             Row(
 

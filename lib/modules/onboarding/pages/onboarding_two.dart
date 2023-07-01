@@ -1,9 +1,11 @@
 
 
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/core/strings.dart';
 import 'package:floxy_pay/modules/onboarding/pages/get_started.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class OnboardingPageTwo extends StatefulWidget {
   const OnboardingPageTwo({super.key});
@@ -32,7 +34,7 @@ class _OnboardingPageTwoState extends State<OnboardingPageTwo> {
             child: SizedBox(
                 height: 290,
                 width: MediaQuery.of(context).size.width,
-                child: Image.asset('assets/images/onboarding_page_two.png',
+                child: SvgPicture.asset('assets/svg_images/onboarding_page_two.svg',
                 fit: BoxFit.fill,)),
           ),
 
@@ -59,6 +61,16 @@ class _OnboardingPageTwoState extends State<OnboardingPageTwo> {
 
                 sizeBox,
                 sizeBox,
+
+                DotsIndicator(
+                  dotsCount: 3,
+                  position: 1,
+                  decorator: DotsDecorator(
+                    size: const Size.square(9.0),
+                    activeSize: const Size(18.0, 9.0),
+                    activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  ),
+                ),
 
                 Row(
 
