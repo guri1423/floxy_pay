@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:floxy_pay/core/theme.dart';
+import 'package:floxy_pay/modules/home/pages/home.dart';
 import 'package:floxy_pay/modules/onboarding/pages/onboarding_one.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,7 +75,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: OnboardingPageOne(),
+        home: HomePage(),
         theme: CustomThemes.getTheme(),
       ),
     );

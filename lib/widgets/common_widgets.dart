@@ -47,9 +47,9 @@ Widget customButton(context){
               ),
             ),
 
-            const Row(
+             Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: const [
                 Align(
                     alignment: Alignment.centerRight,
                     child: Icon(Icons.keyboard_arrow_right, size: 60)),

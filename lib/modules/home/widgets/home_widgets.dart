@@ -1,39 +1,35 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../core/colors.dart';
 import '../../../core/strings.dart';
 
-Widget profilePic(context){
-
+Widget profilePic(context) {
   return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      Expanded(
-
-        child: Container(
-          height: 40,
-          width: 40,
-          child: SvgPicture.asset('assets/svg_images/profilePIc.svg',
+      Container(
+        decoration: const BoxDecoration(
+            shape: BoxShape.circle, color: CustomColors.white),
+        child: const Center(
+          child: Icon(
+            Icons.person,
+            size: 40,
           ),
         ),
-
       ),
-
-      Expanded(
-        child: Container(
-          child: SvgPicture.asset('assets/svg_images/notificationImage.svg'),
-        ),
+      const Spacer(),
+      SvgPicture.asset(
+        'assets/svg_images/notificationImage.svg',
+        height: 28,
+        width: 28,
       )
     ],
   );
 }
 
-
-Widget fxyRow(context){
-
-  return  Row(
+Widget fxyRow(context) {
+  return Row(
     children: [
       Expanded(
         child: Text(
@@ -42,9 +38,7 @@ Widget fxyRow(context){
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-
       Container(
-
         height: 36,
         decoration: const BoxDecoration(
           color: CustomColors.black,
@@ -53,7 +47,10 @@ Widget fxyRow(context){
         child: Center(
           child: Text(
             Strings.buyFxy,
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(color: CustomColors.white),
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall!
+                .copyWith(color: CustomColors.white),
           ),
         ),
       )
@@ -61,15 +58,10 @@ Widget fxyRow(context){
   );
 }
 
-
-Widget thirdRow(context){
-
-  return  Row(
+Widget thirdRow(context) {
+  return Row(
     children: [
-
-
       Container(
-
         height: 36,
         decoration: const BoxDecoration(
           color: CustomColors.white,
@@ -82,7 +74,6 @@ Widget thirdRow(context){
           ),
         ),
       ),
-
       Text(
         Strings.percentageOne,
         textAlign: TextAlign.center,
@@ -92,44 +83,37 @@ Widget thirdRow(context){
   );
 }
 
-
-Widget buttonRow(context){
-
+Widget buttonRow(context) {
   return Row(
     children: [
       Expanded(
-
         child: Container(
-          child: SvgPicture.asset('assets/svg_images/sendButton.svg',
+          child: SvgPicture.asset(
+            'assets/svg_images/sendButton.svg',
           ),
         ),
-
       ),
       Expanded(
-
         child: Container(
-          child: SvgPicture.asset('assets/svg_images/receiveButton.svg',
+          child: SvgPicture.asset(
+            'assets/svg_images/receiveButton.svg',
           ),
         ),
-
       ),
       Expanded(
-
         child: Container(
-          child: SvgPicture.asset('assets/svg_images/swapButton.svg',
+          child: SvgPicture.asset(
+            'assets/svg_images/swapButton.svg',
           ),
         ),
-
       ),
       Expanded(
-
         child: Container(
-          child: SvgPicture.asset('assets/svg_images/saleButton.svg',
+          child: SvgPicture.asset(
+            'assets/svg_images/saleButton.svg',
           ),
         ),
-
       ),
-
     ],
   );
 }
