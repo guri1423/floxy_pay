@@ -1,5 +1,6 @@
 import 'package:floxy_pay/core/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class ReceiveBodyWidget extends StatelessWidget {
   const ReceiveBodyWidget({Key? key}) : super(key: key);
@@ -26,8 +27,15 @@ class ReceiveBodyWidget extends StatelessWidget {
                     height: 227,
                     width: 220,
                     decoration: BoxDecoration(
-                        color: CustomColors.black,
+                        color: CustomColors.white,
                         borderRadius: BorderRadius.circular(16)),
+
+                    child: QrImage(
+                      data: 'This is a simple QR code',
+                      version: QrVersions.auto,
+                      size: 320,
+                      gapless: false,
+                    )
                   ),
                 ),
                 const Text('Scan address to receive payment'),
