@@ -10,6 +10,7 @@ import 'dart:async';
 
 import 'package:web3auth_flutter/web3auth_flutter.dart';
 
+import 'core/colors.dart';
 import 'modules/bottom_navigation/bloc/bottom_navigation_cubit.dart';
 
 void main() {
@@ -74,102 +75,108 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Floxy Pay'),
-          ),
-          body: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                  ),
-                  Visibility(
-                    visible: !logoutVisible,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          onPressed: () => _login(_withGoogle)(),
-                          child: const Text('Google'),
-                        ),
-
-                        ElevatedButton(
-                          onPressed: () => _login(_withFacebook)(),
-                          child: const Text('Facebook'),
-                        ),
-
-                        ElevatedButton(
-                          onPressed: () => _login(_withTwitter)(),
-                          child: const Text('Twitter'),
-                        ),
-
-                        ElevatedButton(
-                          onPressed: () => _login(_withApple)(),
-                          child: const Text('Apple'),
-                        ),
-
-
-
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                    // ignore: sort_child_properties_last
-                    child: Column(
-                      children: [
-                        Center(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red[600]!,
-                            ),
-                            onPressed: _logout(),
-                            child: const Text('Logout'),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: _privKey(_getPrivKey),
-                          child: const Text('Get PrivKey'),
-                        ),
-                        ElevatedButton(
-                          onPressed: _userInfo(_getUserInfo),
-                          child: const Text('Get UserInfo'),
-                        ),
-
-                        GestureDetector(
-                          onTap: (){
-                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> OnboardingPageOne()), (route) => false);
-                          },
-                          child: ElevatedButton(
-                            onPressed: _userInfo(_getUserInfo),
-                            child: const Text('Proceed to app'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    visible: logoutVisible,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(_result),
-                  )
-                ],
+        home: Builder(
+          builder: (BuildContext context) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Floxy Pay'),
               ),
-            ),
-          ),
+              body: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                      ),
+                      Visibility(
+                        visible: !logoutVisible,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            ElevatedButton(
+                              onPressed: () => _login(_withGoogle)(),
+                              child: const Text('Google'),
+                            ),
+
+                            ElevatedButton(
+                              onPressed: () => _login(_withFacebook)(),
+                              child: const Text('Facebook'),
+                            ),
+
+                            ElevatedButton(
+                              onPressed: () => _login(_withTwitter)(),
+                              child: const Text('Twitter'),
+                            ),
+
+                            ElevatedButton(
+                              onPressed: () => _login(_withApple)(),
+                              child: const Text('Apple'),
+                            ),
+
+
+
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        // ignore: sort_child_properties_last
+                        child: Column(
+                          children: [
+                            Center(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red[600]!,
+                                ),
+                                onPressed: _logout(),
+                                child: const Text('Logout'),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: _privKey(_getPrivKey),
+                              child: const Text('Get PrivKey'),
+                            ),
+                            ElevatedButton(
+                              onPressed: _userInfo(_getUserInfo),
+                              child: const Text('Get UserInfo'),
+                            ),
+
+                            ElevatedButton(
+                              onPressed: (){
+
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => OnboardingPageOne()),
+                                );
+                              },
+                              child: const Text('Proceed to App'),
+                            ),
+
+                          ],
+                        ),
+                        visible: logoutVisible,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(_result),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         ),
         theme: CustomThemes.getTheme(),
       ),
