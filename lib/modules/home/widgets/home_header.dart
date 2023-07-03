@@ -1,4 +1,5 @@
 import 'package:floxy_pay/core/colors.dart';
+import 'package:floxy_pay/modules/receive_new/pages/receive_page_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -145,9 +146,14 @@ class HomeHeaderWidget extends StatelessWidget {
                     'assets/svg_images/sendButton.svg',
                   ),
                 ),
-                Expanded(
-                  child: SvgPicture.asset(
-                    'assets/svg_images/receiveButton.svg',
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Receive()));
+                  },
+                  child: Expanded(
+                    child: SvgPicture.asset(
+                      'assets/svg_images/receiveButton.svg',
+                    ),
                   ),
                 ),
                 Expanded(
