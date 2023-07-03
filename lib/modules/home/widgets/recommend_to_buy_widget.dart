@@ -105,7 +105,11 @@ class RecommendedToBuyWidget extends StatelessWidget {
                   ),
                 );
               }),
-        )
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+
       ],
     );
   }

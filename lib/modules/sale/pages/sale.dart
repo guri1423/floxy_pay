@@ -185,7 +185,7 @@ class _SalePageState extends State<SalePage> {
                 ),
                 child: GestureDetector(
                   onTap: (){
-                    _enterPinDialog(context);
+                    // _enterPinDialog(context);
                   },
                   child: Center(
                     child: Text(
