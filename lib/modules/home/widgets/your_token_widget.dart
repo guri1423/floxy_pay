@@ -72,7 +72,7 @@ class YourTokenWidget extends StatelessWidget {
                         ),
                         Text(
                           YourTokens.allYourTokens[index].subTitle,
-                          style: theme.textTheme.bodyMedium!
+                          style: theme.textTheme.titleSmall!
                               .copyWith(color: CustomColors.subTitleColor),
                         ),
                         const SizedBox(
@@ -86,7 +86,8 @@ class YourTokenWidget extends StatelessWidget {
                               horizontal: 10, vertical: 4),
                           child: Center(
                             child:
-                                Text(YourTokens.allYourTokens[index].netProfit),
+                                Text(YourTokens.allYourTokens[index].netProfit,
+                                style: theme.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w400),),
                           ),
                         ),
                         const Spacer(),
@@ -96,8 +97,8 @@ class YourTokenWidget extends StatelessWidget {
                             const SizedBox(width: 4,),
                             Text(
                               YourTokens.allYourTokens[index].value,
-                              style: theme.textTheme.titleMedium!
-                                  .copyWith(color: CustomColors.subTitleColor,fontSize: 14),
+                              style: theme.textTheme.headlineSmall!
+                                  .copyWith(color: CustomColors.subTitleColor),
                             ),
                           ],
                         )

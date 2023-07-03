@@ -1,5 +1,6 @@
 import 'package:floxy_pay/core/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ReceiveBodyWidget extends StatelessWidget {
@@ -8,7 +9,7 @@ class ReceiveBodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 80),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 91),
       child: Container(
           decoration: const BoxDecoration(
             color: CustomColors.white,
@@ -20,7 +21,8 @@ class ReceiveBodyWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Text('Receive'),
+                 Text('Receive',
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal)),
                 Padding(
                   padding: const EdgeInsets.only(top: 24, bottom: 18),
                   child: Container(
@@ -38,7 +40,8 @@ class ReceiveBodyWidget extends StatelessWidget {
                     )
                   ),
                 ),
-                const Text('Scan address to receive payment'),
+                Text('Scan address to receive payment',
+                style: Theme.of(context).textTheme.bodyMedium,),
                 const SizedBox(
                   height: 4,
                 ),
@@ -54,12 +57,15 @@ class ReceiveBodyWidget extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 4),
                         child: Row(
-                          children: const [
+                          children:  [
                             Text('ewh37vfumf........xd2'),
+                            SvgPicture.asset('assets/svg_images/receive_page/copy_icon.svg')
                           ],
                         ),
                       ),
-                    )
+                    ),
+                    
+                    SvgPicture.asset('assets/svg_images/receive_page/share_icon.svg')
                   ],
                 )
               ],

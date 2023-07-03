@@ -84,7 +84,25 @@ flutter:
    - assets/svg_images/notificationImage.svg
    - assets/svg_images/profilePIc.svg
    - assets/svg_images/saleButton.svg
-   - assets/svg_images/
+   - assets/svg_images/bottom_navigation_images/172631_wallet_icon 1_white.svg
+   - assets/svg_images/bottom_navigation_images/8333969_deposit_money_bank_salary_saving_icon_white.svg
+   - assets/svg_images/bottom_navigation_images/history_white.svg
+   - assets/svg_images/bottom_navigation_images/Settings adjust__white.svg
+   - assets/svg_images/receive_page/copy_icon.svg
+   - assets/svg_images/receive_page/share_icon.svg
+   - assets/svg_images/bitcoin.svg
+   - assets/svg_images/eth.svg
+   - assets/svg_images/profileIcon.svg
+   - assets/svg_images/change_pin.svg
+   - assets/svg_images/logout_icon.svg
+   - assets/svg_images/notification_icon.svg
+   - assets/svg_images/icon _deposit.svg
+   - assets/svg_images/history_page.svg
+   - assets/svg_images/dots_icon.svg
+   - assets/svg_images/icon _candle.svg
+   - assets/svg_images/send_button.svg
+   - assets/svg_images/receive_icon.svg
+   - assets/svg_images/exchange_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

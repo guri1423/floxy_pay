@@ -1,6 +1,7 @@
-import 'package:floxy_pay/modules/receive_new/widgets/receive_body_widget.dart';
 import 'package:floxy_pay/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/receive_body_widget.dart';
 
 class Receive extends StatefulWidget {
   const Receive({Key? key}) : super(key: key);

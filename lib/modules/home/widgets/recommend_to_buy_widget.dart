@@ -71,7 +71,7 @@ class RecommendedToBuyWidget extends StatelessWidget {
                         ),
                         Text(
                           RecommendedToBuy.allRecommendation[index].subTitle,
-                          style: theme.textTheme.bodyMedium!
+                          style: theme.textTheme.bodySmall!
                               .copyWith(color: CustomColors.subTitleColor),
                         ),
                         const SizedBox(
@@ -85,7 +85,8 @@ class RecommendedToBuyWidget extends StatelessWidget {
                               horizontal: 10, vertical: 4),
                           child: Center(
                             child: Text(RecommendedToBuy
-                                .allRecommendation[index].netProfit),
+                                .allRecommendation[index].netProfit,
+                              style: theme.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w400),),
                           ),
                         ),
                         const Spacer(),

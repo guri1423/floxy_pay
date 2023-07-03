@@ -53,7 +53,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             height: 60,
             width: double.infinity,
             decoration: const BoxDecoration(
-              color: CustomColors.black,
+              color: CustomColors.white,
             ),
             child: BottomAppBar(
               elevation: 30,
@@ -83,7 +83,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                   : CustomColors.grey,
                               BlendMode.srcIn,
                             ),
-                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/172631_wallet_icon 1.svg'),
+                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/172631_wallet_icon 1_white.svg'),
                           ),
                         ),
                       ),
@@ -110,7 +110,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                   : CustomColors.grey,
                               BlendMode.srcIn,
                             ),
-                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/Group 311.svg')
+                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/history_white.svg')
                           ),
                         ),
                       ),
@@ -137,7 +137,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                   : CustomColors.grey,
                               BlendMode.srcIn,
                             ),
-                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/8333969_deposit_money_bank_salary_saving_icon 1.svg')
+                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/8333969_deposit_money_bank_salary_saving_icon_white.svg')
                           ),
                         ),
                       ),

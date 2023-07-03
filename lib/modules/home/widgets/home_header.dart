@@ -1,7 +1,12 @@
 import 'package:floxy_pay/core/colors.dart';
-import 'package:floxy_pay/modules/receive_new/pages/receive_page_new.dart';
+import 'package:floxy_pay/modules/buy_now_pop_up/pages/buy_now.dart';
+import 'package:floxy_pay/modules/sale/pages/sale.dart';
+import 'package:floxy_pay/modules/swap/pages/swap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../receive/pages/receive_page.dart';
+import '../../send/pages/send.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   const HomeHeaderWidget({Key? key}) : super(key: key);
@@ -23,7 +28,7 @@ class HomeHeaderWidget extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.only(
-                top: 20, left: 20, right: 20, bottom: 100),
+                top: 20, left: 20, right: 20, bottom: 80),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -105,11 +110,13 @@ class HomeHeaderWidget extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 14, vertical: 12),
-                          child: Text(
-                            "Buy FXY",
-                            style: theme.textTheme.titleMedium!.copyWith(
-                                color: CustomColors.white,
-                                fontWeight: FontWeight.w600),
+                          child: Center(
+                            child: Text(
+                              "Buy FXY",
+                              style: theme.textTheme.headlineSmall!.copyWith(
+                                  color: CustomColors.white,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                       ),
@@ -122,6 +129,7 @@ class HomeHeaderWidget extends StatelessWidget {
           ),
         ),
       ),
+
       Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: Container(
@@ -142,28 +150,43 @@ class HomeHeaderWidget extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: SvgPicture.asset(
-                    'assets/svg_images/sendButton.svg',
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SendPage()));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/svg_images/sendButton.svg',
+                    ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Receive()));
-                  },
-                  child: Expanded(
+                Expanded(
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Receive()));
+                    },
                     child: SvgPicture.asset(
                       'assets/svg_images/receiveButton.svg',
                     ),
                   ),
                 ),
                 Expanded(
-                  child: SvgPicture.asset(
-                    'assets/svg_images/swapButton.svg',
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SwapPage()));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/svg_images/swapButton.svg',
+                    ),
                   ),
                 ),
                 Expanded(
-                  child: SvgPicture.asset(
-                    'assets/svg_images/saleButton.svg',
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SalePage()));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/svg_images/saleButton.svg',
+                    ),
                   ),
                 ),
               ],

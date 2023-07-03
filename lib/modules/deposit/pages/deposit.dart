@@ -1,11 +1,14 @@
 
 
+import 'package:floxy_pay/modules/buy_now_pop_up/pages/buy_now.dart';
 import 'package:floxy_pay/modules/deposit/deposit_widgets.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
+import 'package:floxy_pay/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/colors.dart';
 import '../../../core/strings.dart';
+import '../../../widgets/header_widget.dart';
 
 class DepositPage extends StatefulWidget {
   const DepositPage({super.key});
@@ -15,6 +18,9 @@ class DepositPage extends StatefulWidget {
 }
 
 class _DepositPageState extends State<DepositPage> {
+
+  TextEditingController _deposit = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double? height = MediaQuery.of(context).size.height;
@@ -23,42 +29,12 @@ class _DepositPageState extends State<DepositPage> {
           children: [
             Stack(
                 children: <Widget>[
-                  Container(
-                    height: height * 0.20,
-                    decoration: const BoxDecoration(
-                      color: CustomColors.blueLight,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20), // Adjust radiusValue as needed
-                        bottomRight: Radius.circular(20), // Adjust radiusValue as needed
-                      ),
-                    ),
-
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 40),
-                          child: Row(
-                            children: [
-                              Icon(Icons.arrow_back),
-                              Text(
-                                Strings.deposit,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                            ],
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-                  ),
+                  HeaderWidget(title: Strings.deposit),
 
                   Padding(
-                    padding: const EdgeInsets.only(top: 120,left: 20, right: 20),
+                    padding: const EdgeInsets.only(top: 120,left: 16, right: 16),
                     child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: height*0.40,
                         decoration:  const BoxDecoration(
                           color: CustomColors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -69,24 +45,36 @@ class _DepositPageState extends State<DepositPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
 
-                              depositButton(context),
+                              GestureDetector(
+                                  onTap: (){
+                                    
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => BuyNowPage()));
+                                  },
+                                  
+                                  child: depositButton(context)),
 
-                              SizedBox(height: 20,),
 
-                              Text(
-                                'Your Deposits',
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.7200000286102295),
-                                  fontSize: 16,
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 0.16,
+
+                              Padding(
+                                padding: const EdgeInsets.only(top: 30, bottom: 5),
+                                child: Text(
+                                  'Your Deposits',
+                                  style: TextStyle(
+                                    color: Colors.black.withOpacity(0.7200000286102295),
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 0.16,
+                                  ),
                                 ),
                               ),
 
-                              SizedBox(height: 20,),
 
-                              customTextField(context, '')
+
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 30),
+                                child: customTextFieldForm(context, controller: _deposit , hintText: ''),
+                              )
 
 
 

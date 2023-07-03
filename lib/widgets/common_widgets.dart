@@ -33,7 +33,7 @@ Widget customButton(context){
                 ),
                 child: const Align(
                     alignment: Alignment.center,
-                    child: Icon(Icons.keyboard_arrow_right, size: 60)),
+                    child: Icon(Icons.keyboard_arrow_right, size: 40)),
               ),
 
             ),
@@ -52,7 +52,7 @@ Widget customButton(context){
               children: const [
                 Align(
                     alignment: Alignment.centerRight,
-                    child: Icon(Icons.keyboard_arrow_right, size: 60)),
+                    child: Icon(Icons.keyboard_arrow_right, size: 40)),
               ],
             ),
           ],
@@ -69,8 +69,8 @@ Widget customButton(context){
 Widget customSmallButton(context, String text, Color backgroundColor, Color textColor){
 
   return Container(
-    width: 90,
-    height: 46,
+    width: 75,
+    height: 26,
     decoration:  BoxDecoration(
       color: backgroundColor,
       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -78,7 +78,7 @@ Widget customSmallButton(context, String text, Color backgroundColor, Color text
     child: Center(
       child: Text(
         text,
-        style: Theme.of(context).textTheme.titleSmall!.copyWith(color: textColor),
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: textColor),
       ),
     ),
   );
@@ -99,6 +99,25 @@ Widget customTextField(context, String hintText){
         ),
         filled: true,
         fillColor: Colors.white,
+      ),
+    ),
+  );
+}
+
+
+Widget customButtonNew(context, String text, Color backgroundColor, Color textColor){
+
+  return Container(
+    height: 42,
+    width: 139,
+    decoration:  BoxDecoration(
+      color: backgroundColor,
+      borderRadius: BorderRadius.all(Radius.circular(110)),
+    ),
+    child: Center(
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor, fontWeight: FontWeight.w600),
       ),
     ),
   );

@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../core/colors.dart';
 import '../../../core/strings.dart';
+import '../../../widgets/header_widget.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -23,44 +24,15 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           Stack(
               children: <Widget>[
-                Container(
-                  height: height * 0.20,
-                  decoration: const BoxDecoration(
-                    color: CustomColors.blueLight,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20), // Adjust radiusValue as needed
-                      bottomRight: Radius.circular(20), // Adjust radiusValue as needed
-                    ),
-                  ),
-
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 40),
-                        child: Row(
-                          children: [
-                            Icon(Icons.arrow_back),
-                            Text(
-                              Strings.setting,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ],
-                        ),
-                      ),
-
-
-                    ],
-                  ),
-                ),
+                HeaderWidget(title: Strings.setting),
 
                 Padding(
                   padding: const EdgeInsets.only(top: 120,left: 20, right: 20),
                   child: Container(
                     alignment: Alignment.centerRight,
-                      height: height*0.40,
+                      height: 328,
                       decoration:  const BoxDecoration(
-                      color: CustomColors.white,
+                      color: Color.fromRGBO(255, 255, 255, 1),
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     child: ListView.builder(
@@ -69,9 +41,15 @@ class _SettingsPageState extends State<SettingsPage> {
                         return  Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
 
-                              SvgPicture.asset(imageList[index]),
+                              Container(
+                          decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: CustomColors.white),
+
+                                  child: SvgPicture.asset(imageList[index])),
 
                               Text(pageList[index],
                               style: Theme.of(context).textTheme.titleSmall,),

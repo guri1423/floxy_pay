@@ -13,18 +13,37 @@ class CustomThemes{
         textTheme: const TextTheme(
 
           titleLarge: TextStyle(
-              color: CustomColors.black, fontWeight: FontWeight.w700, fontSize: 26,fontFamily: "Lato",
+              color: CustomColors.black, fontWeight: FontWeight.w700, fontSize: 24,fontFamily: "Lato",
             letterSpacing: 0.26,
 
           ),
 
 
           titleMedium: TextStyle(
-            color: CustomColors.black, fontWeight: FontWeight.w600, fontSize: 20,fontFamily: "Lato",letterSpacing: 0.16,
+            color: CustomColors.black, fontWeight: FontWeight.w600, fontSize: 18,fontFamily: "Lato",letterSpacing: 0.16,
           ),
 
           titleSmall: TextStyle(
-            color: CustomColors.black, fontWeight: FontWeight.w500, fontSize: 16,fontFamily: "Lato", letterSpacing: 0.15,
+            color: CustomColors.black, fontWeight: FontWeight.w600, fontSize: 12,fontFamily: "Lato", letterSpacing: 0.15,
+          ),
+
+          headlineSmall: TextStyle(
+            color: CustomColors.black, fontWeight: FontWeight.w600, fontSize: 14,fontFamily: "Lato", letterSpacing: 0.15,
+          ),
+
+
+          bodyLarge: TextStyle(
+            color: CustomColors.black, fontWeight: FontWeight.normal, fontSize: 18,fontFamily: "Lato",
+            letterSpacing: 0.26,
+
+          ),
+
+          bodyMedium:  TextStyle(
+            color: CustomColors.black, fontWeight: FontWeight.normal, fontSize: 16,fontFamily: "Lato",letterSpacing: 0.14,
+          ),
+
+          bodySmall: TextStyle(
+            color: CustomColors.black, fontWeight: FontWeight.normal, fontSize: 12,fontFamily: "Lato", letterSpacing: 0.15,
           ),
 
 

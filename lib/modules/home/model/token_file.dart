@@ -19,7 +19,7 @@ class YourTokens {
 
   static List<YourTokens> allYourTokens = [
     YourTokens(
-        title: "Matic",
+        title: "MATIC",
         value: "45,338.11Matic",
         iconSrc: "assets/svg_images/bitcoin.svg",
         netProfit: "+2.49%",

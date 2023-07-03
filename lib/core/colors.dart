@@ -4,6 +4,9 @@ class CustomColors {
   static const Color white = Colors.white;
   static const black = Colors.black;
 
+  static Color darkGreyColor = Color.fromRGBO(0, 0, 0, 0.20);
+  static Color yellowBackground = Color.fromRGBO(254, 236, 212, 1);
+
   Color get blackWithOpacity => Colors.black.withOpacity(0.5);
   static const roundButtonColor = Color(0xFFF3E2CC);
   static const transparent = Colors.transparent;
