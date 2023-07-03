@@ -72,6 +72,7 @@ class _GetStartedState extends State<GetStarted> {
                 GestureDetector(
 
                   onTap: (){
+
                     
                     Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavigation()));
 
