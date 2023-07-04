@@ -41,6 +41,12 @@ dependencies:
   dots_indicator: ^3.0.0
   flutter_svg: ^2.0.5
   qr_flutter: ^4.0.0
+  syncfusion_flutter_charts: ^22.1.36
+  onboarding: ^3.1.0
+  tuple: ^2.0.2
+  encrypt: ^5.0.1
+  crypto: ^3.0.3
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -103,6 +109,10 @@ flutter:
    - assets/svg_images/send_button.svg
    - assets/svg_images/receive_icon.svg
    - assets/svg_images/exchange_icon.svg
+   - assets/svg_images/pop_dialog_image.svg
+   - assets/svg_images/close_icon.svg
+   - assets/svg_images/pin_popup.svg
+   - assets/svg_images/successful_tick.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

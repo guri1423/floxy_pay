@@ -1,6 +1,8 @@
 
+import 'package:floxy_pay/modules/sale/pages/sale_successful.dart';
 import 'package:floxy_pay/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../core/colors.dart';
 import '../../../core/strings.dart';
@@ -161,78 +163,115 @@ class _SalePageState extends State<SalePage> {
       barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
-            'Are you sure want to process? ',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          content: Row(
+          content: Stack(
+            alignment: Alignment.topRight,
             children: [
-
               Container(
-                width: 106,
-                height: 42,
-                decoration: ShapeDecoration(
-                  color: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+
+                width:280,
+                height: 190,
+
+                decoration: BoxDecoration(
+
+                    borderRadius: BorderRadius.all(Radius.circular(16))
                 ),
-                child: GestureDetector(
-                  onTap: (){
-                    // _enterPinDialog(context);
-                  },
-                  child: Center(
-                    child: Text(
-                      'OK',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0.16,
+
+                child: Column(
+
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: SvgPicture.asset('assets/svg_images/pop_dialog_image.svg'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        'Are you sure want to process? ',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Row(
+                        children: [
 
-              Spacer(),
+                          Container(
+                            width: 106,
+                            height: 42,
+                            decoration: ShapeDecoration(
+                              color: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: GestureDetector(
+                              onTap: (){
+                                _enterPinDialog(context);
+                              },
+                              child: Center(
+                                child: Text(
+                                  'OK',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 0.16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
 
-              Container(
-                width: 106,
-                height: 42,
-                decoration: ShapeDecoration(
-                  color: Colors.black.withOpacity(0.10000000149011612),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: Center(
-                    child: Text(
-                      'CANCEL',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0.16,
+                          Spacer(),
+
+                          Container(
+                            width: 106,
+                            height: 42,
+                            decoration: ShapeDecoration(
+                              color: Colors.black.withOpacity(0.10000000149011612),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.pop(context);
+                              },
+                              child: Center(
+                                child: Text(
+                                  'CANCEL',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 0.16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                        ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-
-            ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SvgPicture.asset('assets/svg_images/close_icon.svg'),
+                ],
+              )
+            ]
           )
         );
       },
@@ -245,79 +284,124 @@ class _SalePageState extends State<SalePage> {
       barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
       builder: (BuildContext context) {
         return AlertDialog(
-            title: Text(
-              'Please Enter Pin',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            content: Column(
-              children: [
+            content: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Container(
 
-                customTextFieldForm(context, controller:_pin , hintText: 'Enter Pin'),
-                Row(
-                  children: [
+                    width:280,
+                    height: 240,
 
-                    Container(
-                      width: 106,
-                      height: 42,
-                      decoration: ShapeDecoration(
-                        color: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'OK',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: 'Lato',
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: 0.16,
-                          ),
-                        ),
-                      ),
+                    decoration: BoxDecoration(
+
+                        borderRadius: BorderRadius.all(Radius.circular(16))
                     ),
 
-                    Spacer(),
+                    child: Column(
 
-                    Container(
-                      width: 106,
-                      height: 42,
-                      decoration: ShapeDecoration(
-                        color: Colors.black.withOpacity(0.10000000149011612),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: SvgPicture.asset('assets/svg_images/pin_popup.svg'),
                         ),
-                      ),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.pop(context);
-                        },
-                        child: Center(
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
                           child: Text(
-                            'CANCEL',
+                            'Please Enter Pin',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 16,
                               fontFamily: 'Lato',
                               fontWeight: FontWeight.w400,
-                              letterSpacing: 0.16,
                             ),
                           ),
                         ),
-                      ),
-                    ),
 
-                  ],
-                ),
-              ],
+                        SizedBox(height: 8,),
+
+                        SizedBox(
+                            height: 40,
+                            child: customTextFieldForm(context, controller: _pin, hintText: '')),
+
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Row(
+                            children: [
+
+                              Container(
+                                width: 106,
+                                height: 42,
+                                decoration: ShapeDecoration(
+                                  color: Colors.black,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                                child: GestureDetector(
+                                  onTap: (){
+                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SaleSuccessful(
+
+                                  )), (route) => false);
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      'OK',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontFamily: 'Lato',
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 0.16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Spacer(),
+
+                              Container(
+                                width: 106,
+                                height: 42,
+                                decoration: ShapeDecoration(
+                                  color: Colors.black.withOpacity(0.10000000149011612),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                                child: GestureDetector(
+                                  onTap: (){
+                                    Navigator.pop(context);
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      'CANCEL',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontFamily: 'Lato',
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 0.16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SvgPicture.asset('assets/svg_images/close_icon.svg'),
+                    ],
+                  )
+                ]
             )
         );
       },

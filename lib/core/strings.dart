@@ -35,5 +35,6 @@ class Strings{
   static const saleNow = 'Sale Now';
   static const lastTransaction = 'Last Transaction';
   static const swap = 'Swap';
+  static const profile = 'Profile';
 
 }

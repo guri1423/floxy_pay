@@ -1,8 +1,8 @@
 
 
-import 'package:floxy_pay/modules/buy_now_pop_up/widget/widget_buy_now.dart';
-import 'package:floxy_pay/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../widget/widget_buy_now.dart';
 
 class BuyNowPage extends StatefulWidget {
   const BuyNowPage({super.key});

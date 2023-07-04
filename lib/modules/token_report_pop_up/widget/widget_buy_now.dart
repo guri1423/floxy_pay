@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../core/colors.dart';
 import '../../../widgets/common_widgets.dart';
 
@@ -16,8 +17,16 @@ Widget topWidgetBuyNow(context){
   );
 }
 
+class SalesData {
+  SalesData(this.year, this.sales);
+  final String year;
+  final double sales;
+}
+
 
 Widget bodyWidgetBuyNow(context){
+
+
 
   return Padding(
     padding: const EdgeInsets.only(top: 63),
@@ -76,10 +85,31 @@ Widget bodyWidgetBuyNow(context){
 
           customSmallButton(context, '+2.49', CustomColors.white, CustomColors.black),
 
-          SizedBox(height: 230,),
+           Container(
+                 child: SfCartesianChart(
+          // Initialize category axis
+            primaryXAxis: CategoryAxis(),
+
+            series: <LineSeries<SalesData, String>>[
+              LineSeries<SalesData, String>(
+                // Bind data source
+                  dataSource:  <SalesData>[
+                    SalesData('Jan', 35),
+                    SalesData('Feb', 28),
+                    SalesData('Mar', 34),
+                    SalesData('Apr', 32),
+                    SalesData('May', 40)
+                  ],
+                  xValueMapper: (SalesData sales, _) => sales.year,
+                  yValueMapper: (SalesData sales, _) => sales.sales
+              )
+            ]
+        )
+    ),
+
 
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 30),
             child: SizedBox(
               height: 22,
               child: ListView.separated(
@@ -128,7 +158,6 @@ Widget bodyWidgetBuyNow(context){
             ),
           ),
 
-          SizedBox(height: 40,)
 
 
 
@@ -137,6 +166,8 @@ Widget bodyWidgetBuyNow(context){
       ),
     ),
   );
+
+
 }
 
 
@@ -153,7 +184,7 @@ Widget buttonArea(context){
     ),
     ),
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 43),
+      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 33),
       child: Row(
         children: [
           SvgPicture.asset('assets/svg_images/send_button.svg'),

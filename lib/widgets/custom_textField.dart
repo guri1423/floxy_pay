@@ -11,6 +11,7 @@ Widget customTextFieldForm(BuildContext context,
   return Padding(
     padding: const EdgeInsets.only(bottom: 5),
     child: TextFormField(
+
       controller: controller,
       textCapitalization: TextCapitalization.sentences,
       /* maxLines: 10,*/
@@ -19,6 +20,7 @@ Widget customTextFieldForm(BuildContext context,
           .titleSmall!,
       onChanged: (value) {},
       decoration: InputDecoration(
+
         hintText: hintText,
         contentPadding: isBig
             ? const EdgeInsets.only(top: 16, left: 10)

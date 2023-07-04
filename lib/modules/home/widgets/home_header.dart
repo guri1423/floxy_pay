@@ -1,5 +1,4 @@
 import 'package:floxy_pay/core/colors.dart';
-import 'package:floxy_pay/modules/buy_now_pop_up/pages/buy_now.dart';
 import 'package:floxy_pay/modules/sale/pages/sale.dart';
 import 'package:floxy_pay/modules/swap/pages/swap.dart';
 import 'package:flutter/material.dart';

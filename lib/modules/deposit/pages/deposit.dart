@@ -1,14 +1,12 @@
 
-
-import 'package:floxy_pay/modules/buy_now_pop_up/pages/buy_now.dart';
 import 'package:floxy_pay/modules/deposit/deposit_widgets.dart';
-import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:floxy_pay/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/colors.dart';
 import '../../../core/strings.dart';
 import '../../../widgets/header_widget.dart';
+import '../../token_report_pop_up/pages/buy_now.dart';
 
 class DepositPage extends StatefulWidget {
   const DepositPage({super.key});
