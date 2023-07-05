@@ -3,12 +3,33 @@ import 'package:floxy_pay/modules/sale/pages/sale.dart';
 import 'package:floxy_pay/modules/swap/pages/swap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web3dart/web3dart.dart';
 
 import '../../receive/pages/receive_page.dart';
 import '../../send/pages/send.dart';
 
-class HomeHeaderWidget extends StatelessWidget {
-  const HomeHeaderWidget({Key? key}) : super(key: key);
+class HomeHeaderWidget extends StatefulWidget {
+  const HomeHeaderWidget({super.key});
+
+  @override
+  State<HomeHeaderWidget> createState() => _HomeHeaderWidgetState();
+}
+
+class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
+
+  @override
+  void initState() {
+    _getBalance();
+    super.initState();
+  }
+
+  String rpcUrl = 'https://rpc.ankr.com/eth_goerli';
+
+  String _result = '';
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +86,7 @@ class HomeHeaderWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "490,598.58 FXY",
+                            "${_result}FXY",
                             style: theme.textTheme.titleLarge!
                                 .copyWith(fontSize: 24),
                           ),
@@ -195,4 +216,23 @@ class HomeHeaderWidget extends StatelessWidget {
       )
     ]);
   }
+
+
+  Future<EtherAmount> _getBalance() async {
+    final prefs = await SharedPreferences.getInstance();
+    final privateKey = prefs.getString('privateKey') ?? '0';
+
+    final client = Web3Client(rpcUrl, Client());
+    final credentials = EthPrivateKey.fromHex(privateKey);
+    final address = credentials.address;
+    final balance = await client.getBalance(address);
+    debugPrint(balance.toString());
+
+    setState(() {
+      _result = balance.toString();
+    });
+
+    return balance;
+  }
 }
+

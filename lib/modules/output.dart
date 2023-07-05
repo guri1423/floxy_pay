@@ -107,3 +107,5 @@ class TorusUserInfo {
         oAuthIdToken = json['oAuthIdToken'],
         oAuthAccessToken = json['oAuthAccessToken'];
 }
+
+

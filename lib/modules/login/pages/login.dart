@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';

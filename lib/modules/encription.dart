@@ -9,7 +9,7 @@ class EncryptedDataSender extends StatefulWidget {
 }
 
 class _EncryptedDataSenderState extends State<EncryptedDataSender> {
-  final key = "Test check";
+  final key = "TestCheck.......................";
   final plainText = "lorem ipsum example example";
   late encrypt.Encrypted encrypted;
   late String decryptedText;

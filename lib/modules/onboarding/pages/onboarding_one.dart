@@ -331,7 +331,7 @@ class _OnboardingPageOneState extends State<OnboardingPageOne> {
   void navigateToNextPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EncryptedDataSender()), // Replace `NextPage` with your desired page
+      MaterialPageRoute(builder: (context) => BottomNavigation()), // Replace `NextPage` with your desired page
     );
   }
 
