@@ -27,7 +27,7 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
     super.initState();
   }
 
-  String rpcUrl = 'https://rpc.ankr.com/eth_goerli';
+  String rpcUrl = 'https://rpc.ankr.com/eth';
 
   String _result = '';
 
@@ -98,7 +98,7 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${_result}FXY",
+                            "${_result}",
                             style: theme.textTheme.titleLarge!
                                 .copyWith(fontSize: 24),
                           ),

@@ -1,9 +1,6 @@
-
 import 'dart:collection';
-
 import 'package:floxy_pay/modules/bottom_navigation/pages/bottom_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3auth_flutter/enums.dart';
@@ -23,13 +20,7 @@ class Authentication extends StatefulWidget {
 class _AuthenticationState extends State<Authentication> {
 
 
-  final flutterWebViewPlugin = FlutterWebviewPlugin();
 
-  @override
-  void dispose() {
-    flutterWebViewPlugin.dispose();
-    super.dispose();
-  }
   String _result = '';
   bool logoutVisible = false;
   String rpcUrl = 'https://rpc.ankr.com/eth_goerli';
@@ -330,12 +321,14 @@ class _AuthenticationState extends State<Authentication> {
   Future<Web3AuthResponse> _withFacebook() {
     return Web3AuthFlutter.login(LoginParams(
       loginProvider: Provider.facebook,
+      mfaLevel: MFALevel.OPTIONAL,
     ));
   }
 
   Future<Web3AuthResponse> _withTwitter() {
     return Web3AuthFlutter.login(LoginParams(
       loginProvider: Provider.twitter,
+      mfaLevel: MFALevel.OPTIONAL,
     ));
   }
 

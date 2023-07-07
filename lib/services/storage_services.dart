@@ -1,11 +1,13 @@
 
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import '../core/strings.dart';
 
 class StorageServices{
 
 
-/*  final storage =  const FlutterSecureStorage();
+  final storage =  const FlutterSecureStorage();
   setAddress(String address)async{
     await storage.write(key: Strings.address, value: address);
   }
@@ -60,6 +62,6 @@ class StorageServices{
 
   clearStorage()async{
     await storage.deleteAll();
-  }*/
+  }
 
 }

@@ -1,15 +1,11 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/modules/bottom_navigation/pages/bottom_navigation.dart';
 import 'package:floxy_pay/modules/web3Auth/pages/authentication.dart';
-import 'package:floxy_pay/modules/web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import '../../../core/strings.dart';
-import 'package:onboarding/onboarding.dart';
 
-import '../../encription.dart';
 
 class OnboardingPageOne extends StatefulWidget {
   const OnboardingPageOne({super.key});
@@ -205,60 +201,64 @@ class _OnboardingPageOneState extends State<OnboardingPageOne> {
                     onTap: (){
                       navigateToNextPage();
                     },
-                    child: Container(
-                      height: 60,
-                      decoration: ShapeDecoration(
-                        color: CustomColors.roundButtonColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: Container(
-                                  width: 58,
-                                  height: 58,
-                                  decoration: const ShapeDecoration(
-                                    color: CustomColors.white,
-                                    shape: CircleBorder(),
-                                  ),
-                                  child: const Align(
-                                      alignment: Alignment.center,
-                                      child:
-                                      Icon(Icons.keyboard_arrow_right, size: 40)),
-                                ),
-                              ),
-                              const Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  Strings.letsStarted,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: CustomColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18,
-                                    fontFamily: "Lato",
-                                    letterSpacing: 0.16,
-                                  ),
-                                ),
-                              ),
-                              const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Align(
-                                      alignment: Alignment.centerRight,
-                                      child:
-                                      Icon(Icons.keyboard_arrow_right, size: 40)),
-                                ],
-                              ),
-                            ],
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      child: Container(
+
+                        height: 60,
+                        decoration: ShapeDecoration(
+                          color: CustomColors.roundButtonColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                        ],
+                        ),
+                        child: Stack(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Container(
+                                    width: 58,
+                                    height: 58,
+                                    decoration: const ShapeDecoration(
+                                      color: CustomColors.white,
+                                      shape: CircleBorder(),
+                                    ),
+                                    child: const Align(
+                                        alignment: Alignment.center,
+                                        child:
+                                        Icon(Icons.keyboard_arrow_right, size: 40)),
+                                  ),
+                                ),
+                                const Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    Strings.letsStarted,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: CustomColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                      fontFamily: "Lato",
+                                      letterSpacing: 0.16,
+                                    ),
+                                  ),
+                                ),
+                                const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Align(
+                                        alignment: Alignment.centerRight,
+                                        child:
+                                        Icon(Icons.keyboard_arrow_right, size: 40)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -274,7 +274,7 @@ class _OnboardingPageOneState extends State<OnboardingPageOne> {
   void navigateToNextPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => WebView()), // Replace `NextPage` with your desired page
+      MaterialPageRoute(builder: (context) => Authentication()), // Replace `NextPage` with your desired page
     );
   }
 

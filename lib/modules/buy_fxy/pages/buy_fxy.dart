@@ -1,5 +1,6 @@
 
 import 'package:floxy_pay/modules/buy_fxy/pages/payment_method.dart';
+import 'package:floxy_pay/modules/buy_fxy/pages/payment_success.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:floxy_pay/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
@@ -168,7 +169,7 @@ class _BuyFxyState extends State<BuyFxy> {
                                 child: GestureDetector(
                                   onTap: (){
 
-                                    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> PaymentMethod()), (route) => false);
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> PaymentSuccessful()), (route) => false);
 
                                   },
                                   child: const Center(

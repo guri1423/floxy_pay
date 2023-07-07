@@ -40,5 +40,14 @@ class Strings{
   static const pleaseEnterPin = 'Please Enter Pin';
   static const notification = 'Notification';
 
+  static const login = "LOG IN";
+
+  static const emailKey = "User Email";
+  static const passwordKey = "User Password";
+  static const userIdKey = "User Id";
+  static const loggedKey = "loggedInReadyForMade";
+  static const IdKey = "Id";
+
 
 }
+
