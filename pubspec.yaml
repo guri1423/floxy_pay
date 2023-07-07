@@ -46,10 +46,12 @@ dependencies:
   encrypt: ^5.0.1
   crypto: ^3.0.3
   http: ^1.1.0
-  web3auth_flutter: ^2.0.0
   shared_preferences: ^2.2.0
-  web3dart: ^2.7.0
   webview_flutter: ^4.2.2
+  web3dart: ^2.7.0
+  web3auth_flutter: ^2.0.0
+  flutter_webview_plugin: ^0.4.0
+  introduction_screen: ^3.1.9
 
 dev_dependencies:
   flutter_test:
@@ -116,6 +118,12 @@ flutter:
    - assets/svg_images/close_icon.svg
    - assets/svg_images/pin_popup.svg
    - assets/svg_images/successful_tick.svg
+   - assets/svg_images/notification_icon_1.svg
+   - assets/svg_images/download_payment.svg
+   - assets/svg_images/paytm.svg
+   - assets/svg_images/phonePay.svg
+   - assets/svg_images/upi.svg
+   - assets/svg_images/Google pay.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

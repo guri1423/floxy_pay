@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../core/strings.dart';
 import '../../../widgets/common_widgets.dart';
+import '../../buy_fxy/pages/buy_fxy.dart';
 
 class SwapPage extends StatefulWidget {
   const SwapPage({super.key});
@@ -61,10 +62,15 @@ class _SwapPageState extends State<SwapPage> {
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           sizeBox,
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: customSmallButton(context, Strings.buyFxy,
-                                  CustomColors.white, CustomColors.black)),
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> BuyFxy()));
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: customSmallButton(context, Strings.buyFxy,
+                                    CustomColors.white, CustomColors.black)),
+                          ),
                         ],
                       ),
                     ),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/colors.dart';
 import '../../../core/strings.dart';
+import '../../buy_fxy/pages/buy_fxy.dart';
 
 class SendPage extends StatefulWidget {
   const SendPage({super.key});
@@ -66,7 +67,11 @@ class _SendPageState extends State<SendPage> {
 
                               sizebox,
 
-                              customSmallButton(context, Strings.buyFxy, CustomColors.white, CustomColors.black),
+                              GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> BuyFxy()));
+                                  },
+                                  child: customSmallButton(context, Strings.buyFxy, CustomColors.white, CustomColors.black)),
 
 
                             ],

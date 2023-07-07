@@ -122,3 +122,23 @@ Widget customButtonNew(context, String text, Color backgroundColor, Color textCo
     ),
   );
 }
+
+
+Widget customButtonLast(context, String text, Color backgroundColor, Color textColor){
+
+  return Container(
+    decoration:  BoxDecoration(
+      color: backgroundColor,
+      borderRadius: BorderRadius.all(Radius.circular(110)),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Center(
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor, fontWeight: FontWeight.w600),
+        ),
+      ),
+    ),
+  );
+}

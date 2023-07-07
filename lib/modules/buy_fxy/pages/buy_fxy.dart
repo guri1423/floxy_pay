@@ -1,104 +1,116 @@
-import 'package:floxy_pay/modules/change_pin/pages/change_pin.dart';
-import 'package:floxy_pay/modules/notification/pages/notification.dart';
-import 'package:floxy_pay/modules/onboarding/pages/onboarding_one.dart';
-import 'package:floxy_pay/modules/profile/pages/profile.dart';
+
+import 'package:floxy_pay/modules/buy_fxy/pages/payment_method.dart';
+import 'package:floxy_pay/widgets/common_widgets.dart';
+import 'package:floxy_pay/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:web3auth_flutter/input.dart';
-import 'package:web3auth_flutter/web3auth_flutter.dart';
 
 import '../../../core/colors.dart';
 import '../../../core/strings.dart';
 import '../../../widgets/header_widget.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+class BuyFxy extends StatefulWidget {
+  const BuyFxy({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<BuyFxy> createState() => _BuyFxyState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _BuyFxyState extends State<BuyFxy> {
+
+  TextEditingController _amount = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+
+    SizedBox sizeBox = const SizedBox(height: 10);
     double? height = MediaQuery.of(context).size.height;
+    double? width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-        body: Column(
-      children: [
-          Stack(children: <Widget>[
-             HeaderWidget(title: Strings.setting),
-             Padding(
-                padding: const EdgeInsets.only(top: 91, left: 16, right: 16),
-                 child: Container(
+      body: ListView(
+        children: [
+          Stack(children: [
+            HeaderWidget(title: Strings.buyFxy),
+            Padding(
+              padding: const EdgeInsets.only(top: 106, left: 16, right: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: width,
+                    decoration: const BoxDecoration(
+                      color: CustomColors.yellowLight,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      child: Text(
+                        'Enter amount how much do you want to buy FXY',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.18,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: width,
+                    decoration: const BoxDecoration(
+                      color: CustomColors.white,
+                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 22, bottom: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Amount',
+                                  style: TextStyle(
+                                    color: Colors.black.withOpacity(0.800000011920929),
+                                    fontSize: 16,
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 0.16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          
+                          customTextFieldForm(context, controller: _amount, hintText: ''),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+          ]),
+          
+          GestureDetector(
+            onTap: (){
+              _showDialog(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20, left: 31, right: 31),
+              child: customButtonLast(context, 'BUY NOW', CustomColors.black, CustomColors.white),
+            ),
+          )
 
-                   decoration: const BoxDecoration(
-                     color: Color.fromRGBO(255, 255, 255, 1),
-                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                   ),
-                   child: Padding(
-                     padding: const EdgeInsets.symmetric( horizontal: 8),
-                     child: ListView.builder(
-                       shrinkWrap: true,
-                       itemCount: imageList.length,
-                       itemBuilder: (BuildContext context, int index) {
-                         return GestureDetector(
-                           onTap: () {
-                             if (index == 0) {
-                               Navigator.push(
-                                 context,
-                                 MaterialPageRoute(builder: (context) => ProfilePage()),
-                               );
-                             } else if (index == 1) {
-                               Navigator.push(
-                                 context,
-                                 MaterialPageRoute(builder: (context) => NotificationPage()),
-                               );
-                             } else if (index == 2) {
-                               Navigator.push(
-                                 context,
-                                 MaterialPageRoute(builder: (context) => ChangePin()),
-                               );
-                             } else if (index == 3) {
-
-                               _showDialog(context);
-
-                             }
-                           },
-                           child: Row(
-                             crossAxisAlignment: CrossAxisAlignment.center,
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             children: [
-                               SvgPicture.asset(imageList[index]),
-                               Text(
-                                 pageList[index],
-                                 style: Theme.of(context).textTheme.titleSmall,
-                               ),
-                               Spacer(),
-                               Icon(Icons.navigate_next_sharp),
-                             ],
-                           ),
-                         );
-                       },
-                     ),
-                   ),
-                 )
-
-
-
-             )
-        ]),
-      ],
-    ));
+        ],
+      ),
+    );
   }
-
-  List<String> imageList = [
-    'assets/svg_images/profileIcon.svg',
-    'assets/svg_images/change_pin.svg',
-    'assets/svg_images/logout_icon.svg',
-    'assets/svg_images/notification_icon.svg'
-  ];
-
-  List<String> pageList = ['Profile', 'Notification', 'Change Pin', 'Logout'];
 
   Future<void> _showDialog(BuildContext context) async {
     return showDialog<void>(
@@ -126,10 +138,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           padding: const EdgeInsets.only(top: 30),
                           child: SvgPicture.asset('assets/svg_images/pop_dialog_image.svg'),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
                           child: Text(
-                            'Are you sure want to Logout? ',
+                            'Are you sure want to process? ',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
@@ -156,7 +168,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 child: GestureDetector(
                                   onTap: (){
 
-                                    _logout();
+                                    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> PaymentMethod()), (route) => false);
 
                                   },
                                   child: const Center(
@@ -226,20 +238,4 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
   }
-
-  VoidCallback _logout() {
-    return () async {
-      try {
-        await Web3AuthFlutter.logout();
-        setState(() {
-         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => OnboardingPageOne()), (route) => false);
-        });
-      } on UserCancelledException {
-        print("User cancelled.");
-      } on UnKnownException {
-        print("Unknown exception occurred");
-      }
-    };
-  }
-
 }

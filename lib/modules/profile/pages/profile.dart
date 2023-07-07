@@ -30,6 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Stack(
               children: <Widget>[
+
                 HeaderWidget(title: Strings.profile),
 
                 Padding(
@@ -61,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                 SizedBox(height: 4,),
 
-                                Center(
+                                const Center(
                                   child: Text(
                                     'Upload Image',
                                     textAlign: TextAlign.center,

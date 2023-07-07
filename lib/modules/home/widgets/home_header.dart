@@ -1,4 +1,7 @@
 import 'package:floxy_pay/core/colors.dart';
+import 'package:floxy_pay/modules/buy_fxy/pages/buy_fxy.dart';
+import 'package:floxy_pay/modules/notification/pages/notification.dart';
+import 'package:floxy_pay/modules/profile/pages/profile.dart';
 import 'package:floxy_pay/modules/sale/pages/sale.dart';
 import 'package:floxy_pay/modules/swap/pages/swap.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +9,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3dart/web3dart.dart';
-
 import '../../receive/pages/receive_page.dart';
 import '../../send/pages/send.dart';
 
@@ -55,21 +57,31 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: CustomColors.white),
-                      child: const Center(
-                        child: Icon(
-                          Icons.person,
-                          size: 40,
+                    GestureDetector(
+                      onTap: (){
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: CustomColors.white),
+                        child: const Center(
+                          child: Icon(
+                            Icons.person,
+                            size: 40,
+                          ),
                         ),
                       ),
                     ),
                     const Spacer(),
-                    SvgPicture.asset(
-                      'assets/svg_images/notificationImage.svg',
-                      height: 28,
-                      width: 28,
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
+                      },
+                      child: SvgPicture.asset(
+                        'assets/svg_images/notificationImage.svg',
+                        height: 28,
+                        width: 28,
+                      ),
                     )
                   ],
                 ),
@@ -122,20 +134,25 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: CustomColors.black,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 14, vertical: 12),
-                          child: Center(
-                            child: Text(
-                              "Buy FXY",
-                              style: theme.textTheme.headlineSmall!.copyWith(
-                                  color: CustomColors.white,
-                                  fontWeight: FontWeight.w600),
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> BuyFxy()));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: CustomColors.black,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 12),
+                            child: Center(
+                              child: Text(
+                                "Buy FXY",
+                                style: theme.textTheme.headlineSmall!.copyWith(
+                                    color: CustomColors.white,
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ),
                         ),

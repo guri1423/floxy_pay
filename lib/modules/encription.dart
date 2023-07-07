@@ -9,11 +9,11 @@ class EncryptedDataSender extends StatefulWidget {
 }
 
 class _EncryptedDataSenderState extends State<EncryptedDataSender> {
-  final key = "TestCheck.......................";
+  final key = "my 32 length key................";
   final plainText = "lorem ipsum example example";
   late encrypt.Encrypted encrypted;
   late String decryptedText;
-  late String responseMessage;
+  String responseMessage = '';
 
   @override
   void initState() {
@@ -29,11 +29,16 @@ class _EncryptedDataSenderState extends State<EncryptedDataSender> {
       'data': encrypted.base64,
     };
 
+    debugPrint('Encripted data: ${payload.toString()}');
+
+
     // API endpoint URL
     final apiUrl = 'https://api.example.com/endpoint';
 
     // Send the encrypted data through API
     sendEncryptedData(apiUrl, payload).then((response) {
+
+
       if (response.statusCode == 200) {
         // Data sent successfully
         setState(() {

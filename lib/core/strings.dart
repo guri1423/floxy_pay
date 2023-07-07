@@ -36,5 +36,9 @@ class Strings{
   static const lastTransaction = 'Last Transaction';
   static const swap = 'Swap';
   static const profile = 'Profile';
+  static const changePin = 'Change Pin';
+  static const pleaseEnterPin = 'Please Enter Pin';
+  static const notification = 'Notification';
+
 
 }

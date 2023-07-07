@@ -8,6 +8,7 @@ import '../../../core/colors.dart';
 import '../../../core/strings.dart';
 import '../../../widgets/common_widgets.dart';
 import '../../../widgets/custom_textField.dart';
+import '../../buy_fxy/pages/buy_fxy.dart';
 
 class SalePage extends StatefulWidget {
   const SalePage({super.key});
@@ -77,9 +78,14 @@ class _SalePageState extends State<SalePage> {
 
                               sizeBox,
 
-                              Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: customSmallButton(context, Strings.buyFxy, CustomColors.white, CustomColors.black)
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> BuyFxy()));
+                                },
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: customSmallButton(context, Strings.buyFxy, CustomColors.white, CustomColors.black)
+                                ),
                               ),
 
 
@@ -268,7 +274,11 @@ class _SalePageState extends State<SalePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SvgPicture.asset('assets/svg_images/close_icon.svg'),
+                  GestureDetector(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: SvgPicture.asset('assets/svg_images/close_icon.svg')),
                 ],
               )
             ]
@@ -398,7 +408,11 @@ class _SalePageState extends State<SalePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      SvgPicture.asset('assets/svg_images/close_icon.svg'),
+                      GestureDetector(
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
+                          child: SvgPicture.asset('assets/svg_images/close_icon.svg')),
                     ],
                   )
                 ]

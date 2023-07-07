@@ -17,7 +17,7 @@ class HeaderWidget extends StatelessWidget {
       ),
       child: Padding(
         padding:
-            const EdgeInsets.only(left: 20, top: 51, right: 20, bottom: 72),
+            const EdgeInsets.only(left: 20, top: 51, right: 20, bottom: 62),
         child: GestureDetector(
           onTap: (){
             Navigator.pop(context);
@@ -31,7 +31,7 @@ class HeaderWidget extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w600),
               ),
             ],
           ),

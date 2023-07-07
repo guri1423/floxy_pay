@@ -23,21 +23,14 @@ class ReceiveBodyWidget extends StatelessWidget {
               children: [
                  Text('Receive',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal)),
-                Padding(
-                  padding: const EdgeInsets.only(top: 24, bottom: 18),
-                  child: Container(
-                    height: 227,
-                    width: 220,
-                    decoration: BoxDecoration(
-                        color: CustomColors.white,
-                        borderRadius: BorderRadius.circular(16)),
-
-                    child: QrImage(
-                      data: 'This is a simple QR code',
-                      version: QrVersions.auto,
-                      size: 320,
-                      gapless: false,
-                    )
+                Container(
+                  height: 227,
+                  width: 220,
+                  child: QrImageView(
+                    data: 'This is a simple QR code',
+                    version: QrVersions.auto,
+                    size: 320,
+                    gapless: false,
                   ),
                 ),
                 Text('Scan address to receive payment',
