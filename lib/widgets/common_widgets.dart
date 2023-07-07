@@ -124,7 +124,7 @@ Widget customButtonNew(context, String text, Color backgroundColor, Color textCo
 }
 
 
-Widget customButtonLast(context, String text, Color backgroundColor, Color textColor){
+Widget customButtonLast1(context, String text, Color backgroundColor, Color textColor){
 
   return Container(
     decoration:  BoxDecoration(
@@ -132,13 +132,48 @@ Widget customButtonLast(context, String text, Color backgroundColor, Color textC
       borderRadius: BorderRadius.all(Radius.circular(110)),
     ),
     child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Center(
         child: Text(
           text,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor, fontWeight: FontWeight.w600),
         ),
       ),
+    ),
+  );
+}
+
+Widget customButtonLast(
+    BuildContext context, String text, Color backgroundColor, Color textColor) {
+  final _formKey = GlobalKey<FormState>();
+  String _email = '';
+
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 20),
+    child: Form(
+      key: _formKey,
+      child: GestureDetector(
+        onTap: (){
+          if (_formKey.currentState!.validate()) {
+
+          }
+        },
+        child: Container(
+          decoration:  BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.all(Radius.circular(110)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: Text(
+                text,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+        ),
+      )
     ),
   );
 }

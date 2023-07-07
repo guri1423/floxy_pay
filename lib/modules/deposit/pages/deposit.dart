@@ -27,7 +27,7 @@ class _DepositPageState extends State<DepositPage> {
           children: [
             Stack(
                 children: <Widget>[
-                  HeaderWidget(title: Strings.deposit),
+                  HeaderWidgetWithoutBackButton(title: Strings.deposit),
 
                   Padding(
                     padding: const EdgeInsets.only(top: 120,left: 16, right: 16),

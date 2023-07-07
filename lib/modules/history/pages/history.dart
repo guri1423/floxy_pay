@@ -24,7 +24,8 @@ class _HistoryPageState extends State<HistoryPage> {
           children: [
             Stack(
                 children: <Widget>[
-                  HeaderWidget(title: Strings.history),
+
+                  HeaderWidgetWithoutBackButton(title: Strings.history),
 
                   Padding(
                     padding: const EdgeInsets.only(top: 91,left: 16, right: 16),

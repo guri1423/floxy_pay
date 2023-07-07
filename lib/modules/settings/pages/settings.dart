@@ -2,6 +2,7 @@ import 'package:floxy_pay/modules/change_pin/pages/change_pin.dart';
 import 'package:floxy_pay/modules/notification/pages/notification.dart';
 import 'package:floxy_pay/modules/onboarding/pages/onboarding_one.dart';
 import 'package:floxy_pay/modules/profile/pages/profile.dart';
+import 'package:floxy_pay/services/storage_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:web3auth_flutter/input.dart';
@@ -19,6 +20,10 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+
+
+  StorageServices _storageServices = StorageServices();
+
   @override
   Widget build(BuildContext context) {
     double? height = MediaQuery.of(context).size.height;
@@ -26,7 +31,7 @@ class _SettingsPageState extends State<SettingsPage> {
         body: Column(
       children: [
           Stack(children: <Widget>[
-             HeaderWidget(title: Strings.setting),
+            HeaderWidgetWithoutBackButton(title: Strings.setting),
              Padding(
                 padding: const EdgeInsets.only(top: 91, left: 16, right: 16),
                  child: Container(
@@ -156,7 +161,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 child: GestureDetector(
                                   onTap: (){
 
-                                    _logout();
+                                    logout();
 
                                   },
                                   child: const Center(
@@ -225,6 +230,14 @@ class _SettingsPageState extends State<SettingsPage> {
         );
       },
     );
+  }
+
+  logout()async{
+    await Web3AuthFlutter.logout();
+    await _storageServices.clearStorage();
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => OnboardingPageOne()), (route) => false);
+
+
   }
 
   VoidCallback _logout() {

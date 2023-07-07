@@ -1,6 +1,10 @@
 import 'dart:collection';
 import 'package:floxy_pay/modules/bottom_navigation/pages/bottom_navigation.dart';
+import 'package:floxy_pay/services/storage_services.dart';
+import 'package:floxy_pay/widgets/common_widgets.dart';
+import 'package:floxy_pay/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3auth_flutter/enums.dart';
@@ -8,6 +12,8 @@ import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/output.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
 import 'package:web3dart/web3dart.dart';
+
+import '../../../core/colors.dart';
 
 
 class Authentication extends StatefulWidget {
@@ -24,6 +30,9 @@ class _AuthenticationState extends State<Authentication> {
   String _result = '';
   bool logoutVisible = false;
   String rpcUrl = 'https://rpc.ankr.com/eth_goerli';
+
+  StorageServices _servicesStorage = StorageServices();
+  TextEditingController _email = TextEditingController();
 
   Future<void> initPlatformState1() async {
     final themeMap = HashMap<String, String>();
@@ -92,6 +101,8 @@ class _AuthenticationState extends State<Authentication> {
     }
   }
 
+
+
   @override
   void initState() {
     initPlatformState1();
@@ -102,139 +113,167 @@ class _AuthenticationState extends State<Authentication> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Floxy Pay'),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+
+      body: ListView(
+        children: [
+
+          Padding(
+            padding: const EdgeInsets.only(left: 16, top: 100),
+            child: Text(
+              'Sign In ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 32,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w700,
               ),
+            ),
+          ),
 
-              ElevatedButton(onPressed: initPlatformState1, child: Text('Login')),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, top: 10),
+            child: Text(
+              'Your blockchain wallet in one-click',
 
-              Visibility(
-                visible: !logoutVisible,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
 
-                    ElevatedButton(
-                      onPressed: () async {
-
-                        await _login1(_withAuth0);
-
-                      },
-                      child: Text('Login with Web3Auth'),
-                    ),
-
-                    ElevatedButton(
-                      onPressed: () async {
-
-                        await initPlatformState;
-
-                      },
-                      child: Text('Initalise'),
-                    ),
-
-
-                    ElevatedButton(
-                      onPressed: () => _login(_withGoogle)(),
-                      child: const Text('Google'),
-                    ),
-
-                    ElevatedButton(
-                      onPressed: () => _login(_withFacebook)(),
-                      child: const Text('Facebook'),
-                    ),
-
-                    ElevatedButton(
-                      onPressed: () => _login(_withTwitter)(),
-                      child: const Text('Twitter'),
-                    ),
-
-                    ElevatedButton(
-                      onPressed: () => _login(_withApple)(),
-                      child: const Text('Apple'),
-                    ),
-
-
-
-                  ],
+          GestureDetector(
+            onTap: () => _login(_withGoogle)(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 24),
+              child: Container(
+                height: 60,
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 78),
+                  child: SvgPicture.asset('assets/svg_images/receive_page/google_login.svg'),
                 ),
               ),
-              Visibility(
-                // ignore: sort_child_properties_last
-                child: Column(
-                  children: [
-                    Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red[600]!,
-                        ),
-                        onPressed: _logout(),
-                        child: const Text('Logout'),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: () => _login(_withFacebook)(),
+                  child: Container(
+                    width: 81,
+                    height: 60,
+                    decoration: ShapeDecoration(
+                      color: CustomColors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: _getPrivateKey(_getPrivKey),
-                      child: const Text('Get PrivKey'),
-                    ),
-                    ElevatedButton(
-                      onPressed: _userInfo(_getUserInfo),
-                      child: const Text('Get UserInfo'),
-                    ),
-
-                    ElevatedButton(
-                      onPressed: (){
-
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => BottomNavigation()),
-                        );
-                      },
-                      child: const Text('Proceed to App'),
-                    ),
-
-                   /* ElevatedButton(
-
-                        onPressed: _getAddress,
-                        child: const Text('Get Address')),
-                    ElevatedButton(
-
-                        onPressed: _getBalance,
-                        child: const Text('Get Balance')),
-                    ElevatedButton(
-
-                        onPressed: _sendTransaction,
-                        child: const Text('Send Transaction')),*/
-
-
-                  ],
+                    child: SvgPicture.asset('assets/svg_images/fb_login.svg'),
+                  ),
                 ),
-                visible: logoutVisible,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(_result),
-              )
-            ],
+                GestureDetector(
+                  onTap: () => _login(_withApple)(),
+                  child: Container(
+                    width: 81,
+                    height: 60,
+                    decoration: ShapeDecoration(
+                      color: CustomColors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: SvgPicture.asset('assets/svg_images/receive_page/apple_login.svg'),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _login(_withTwitter)(),
+                  child: Container(
+                    width: 81,
+                    height: 60,
+                    decoration: ShapeDecoration(
+                      color: CustomColors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: SvgPicture.asset('assets/svg_images/receive_page/twitter_login.svg'),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _login(_withLinkedin)(),
+                  child: Container(
+                    width: 81,
+                    height: 60,
+                    decoration: ShapeDecoration(
+                      color: CustomColors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: SvgPicture.asset('assets/svg_images/receive_page/linkdin_login.svg'),
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 40, bottom: 20),
+            child: Text(
+              'We do not store any related to your social logins.',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 16,right: 16, bottom: 10),
+            child: Text(
+              'Email',
+              style: TextStyle(
+                color: Color(0xFF1A1A1A),
+                fontSize: 14,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w400,
+
+              ),
+            ),
+          ),
+          
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: customTextFieldForm(context, controller: _email, hintText: 'Name@example.com'),
+          ),
+          
+          GestureDetector(
+            onTap: () => _login(_withEmailPasswordless)(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+              child: customButtonLast(context, 'CONTINUE WITH EMAIL', CustomColors.yellowLight, CustomColors.black),
+            ),
+          )
+
+
+
+
+        ],
+
       ),
     );
   }
@@ -243,9 +282,18 @@ class _AuthenticationState extends State<Authentication> {
     return () async {
       try {
         final Web3AuthResponse response = await method();
-        setState(() {
-          logoutVisible = true;
-        });
+        if (response.privKey != null ) {
+
+          await _servicesStorage.setUserLoggedIn('true');
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => BottomNavigation()),
+                (route) => false, // Remove all previous routes
+          );
+        } else {
+          // Authentication failed
+          print("Authentication failed");
+        }
       } on UserCancelledException {
         print("User cancelled.");
       } on UnKnownException {
@@ -253,6 +301,7 @@ class _AuthenticationState extends State<Authentication> {
       }
     };
   }
+
 
 
 
@@ -332,6 +381,13 @@ class _AuthenticationState extends State<Authentication> {
     ));
   }
 
+  Future<Web3AuthResponse> _withLinkedin() {
+    return Web3AuthFlutter.login(LoginParams(
+      loginProvider: Provider.linkedin,
+      mfaLevel: MFALevel.OPTIONAL,
+    ));
+  }
+
   Future<Web3AuthResponse> _withApple() {
     return Web3AuthFlutter.login(LoginParams(
       loginProvider: Provider.apple,
@@ -341,7 +397,7 @@ class _AuthenticationState extends State<Authentication> {
   Future<Web3AuthResponse> _withEmailPasswordless() {
     return Web3AuthFlutter.login(LoginParams(
       loginProvider: Provider.email_passwordless,
-      extraLoginOptions: ExtraLoginOptions(login_hint: ""),
+      extraLoginOptions: ExtraLoginOptions(login_hint: _email.text),
     ));
   }
 
@@ -453,4 +509,7 @@ class _AuthenticationState extends State<Authentication> {
       return e.toString();
     }
   }
+
+
+
 }

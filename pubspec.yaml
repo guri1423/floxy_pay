@@ -125,6 +125,12 @@ flutter:
    - assets/svg_images/phonePay.svg
    - assets/svg_images/upi.svg
    - assets/svg_images/Google pay.svg
+   - assets/svg_images/receive_page/apple_login.svg
+   - assets/svg_images/receive_page/google_login.svg
+   - assets/svg_images/receive_page/linkdin_login.svg
+   - assets/svg_images/receive_page/twitter_login.svg
+   - assets/svg_images/fb_login.svg
+   - assets/svg_images/facebook_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

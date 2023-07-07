@@ -169,7 +169,7 @@ class _BuyFxyState extends State<BuyFxy> {
                                 child: GestureDetector(
                                   onTap: (){
 
-                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> PaymentSuccessful()), (route) => false);
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> PaymentMethod()), (route) => false);
 
                                   },
                                   child: const Center(

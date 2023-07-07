@@ -5,6 +5,7 @@ import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/core/strings.dart';
 import 'package:floxy_pay/modules/home/pages/home.dart';
 import 'package:floxy_pay/modules/send/pages/send.dart';
+import 'package:floxy_pay/modules/web3Auth/pages/authentication.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -74,7 +75,7 @@ class _GetStartedState extends State<GetStarted> {
                   onTap: (){
 
                     
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavigation()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Authentication()));
 
                   },
                   child: customButton(context),
