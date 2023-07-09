@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.17.0 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -50,9 +50,9 @@ dependencies:
   webview_flutter: ^4.2.2
   web3dart: ^2.7.0
   web3auth_flutter: ^2.0.0
-  introduction_screen: ^3.1.9
   go_router: ^9.0.2
   flutter_secure_storage: ^8.0.0
+  introduction_screen: ^3.1.9
 
 dev_dependencies:
   flutter_test:
@@ -79,58 +79,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/get_started_page.png
-   - assets/images/onboarding_page_one.png
-   - assets/images/onboarding_page_two.png
-   - assets/images/deposit.png
-   - assets/images/history.png
-   - assets/images/wallet_icon.png
-   - assets/images/settings.png
-   - assets/svg_images/get_started.svg
-   - assets/svg_images/onboarding_page_one.svg
-   - assets/svg_images/onboarding_page_two.svg
-   - assets/svg_images/receiveButton.svg
-   - assets/svg_images/sendButton.svg
-   - assets/svg_images/swapButton.svg
-   - assets/svg_images/wallet_icon.svg
-   - assets/svg_images/notificationImage.svg
-   - assets/svg_images/profilePIc.svg
-   - assets/svg_images/saleButton.svg
-   - assets/svg_images/bottom_navigation_images/172631_wallet_icon 1_white.svg
-   - assets/svg_images/bottom_navigation_images/8333969_deposit_money_bank_salary_saving_icon_white.svg
-   - assets/svg_images/bottom_navigation_images/history_white.svg
-   - assets/svg_images/bottom_navigation_images/Settings adjust__white.svg
-   - assets/svg_images/receive_page/copy_icon.svg
-   - assets/svg_images/receive_page/share_icon.svg
-   - assets/svg_images/bitcoin.svg
-   - assets/svg_images/eth.svg
-   - assets/svg_images/profileIcon.svg
-   - assets/svg_images/change_pin.svg
-   - assets/svg_images/logout_icon.svg
-   - assets/svg_images/notification_icon.svg
-   - assets/svg_images/icon _deposit.svg
-   - assets/svg_images/history_page.svg
-   - assets/svg_images/dots_icon.svg
-   - assets/svg_images/icon _candle.svg
-   - assets/svg_images/send_button.svg
-   - assets/svg_images/receive_icon.svg
-   - assets/svg_images/exchange_icon.svg
-   - assets/svg_images/pop_dialog_image.svg
-   - assets/svg_images/close_icon.svg
-   - assets/svg_images/pin_popup.svg
-   - assets/svg_images/successful_tick.svg
-   - assets/svg_images/notification_icon_1.svg
-   - assets/svg_images/download_payment.svg
-   - assets/svg_images/paytm.svg
-   - assets/svg_images/phonePay.svg
-   - assets/svg_images/upi.svg
-   - assets/svg_images/Google pay.svg
-   - assets/svg_images/receive_page/apple_login.svg
-   - assets/svg_images/receive_page/google_login.svg
-   - assets/svg_images/receive_page/linkdin_login.svg
-   - assets/svg_images/receive_page/twitter_login.svg
-   - assets/svg_images/fb_login.svg
-   - assets/svg_images/facebook_icon.svg
+    - assets/images/
+    - assets/svg_images/
+    - assets/svg_images/receive_page/
+    - assets/svg_images/bottom_navigation_images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

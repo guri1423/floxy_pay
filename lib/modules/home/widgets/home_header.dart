@@ -20,7 +20,6 @@ class HomeHeaderWidget extends StatefulWidget {
 }
 
 class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
-
   @override
   void initState() {
     _getBalance();
@@ -30,8 +29,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
   String rpcUrl = 'https://rpc.ankr.com/eth';
 
   String _result = '';
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +46,8 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.only(
-                top: 20, left: 20, right: 20, bottom: 80),
+            padding:
+                const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 80),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -58,8 +55,11 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage()));
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -74,8 +74,11 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NotificationPage()));
                       },
                       child: SvgPicture.asset(
                         'assets/svg_images/notificationImage.svg',
@@ -135,8 +138,11 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                     ),
                     Expanded(
                       child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> BuyFxy()));
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BuyFxy()));
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -166,7 +172,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
           ),
         ),
       ),
-
       Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: Container(
@@ -188,8 +193,9 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SendPage()));
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SendPage()));
                     },
                     child: SvgPicture.asset(
                       'assets/svg_images/sendButton.svg',
@@ -198,8 +204,9 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Receive()));
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Receive()));
                     },
                     child: SvgPicture.asset(
                       'assets/svg_images/receiveButton.svg',
@@ -208,8 +215,9 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SwapPage()));
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SwapPage()));
                     },
                     child: SvgPicture.asset(
                       'assets/svg_images/swapButton.svg',
@@ -218,8 +226,9 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SalePage()));
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SalePage()));
                     },
                     child: SvgPicture.asset(
                       'assets/svg_images/saleButton.svg',
@@ -233,7 +242,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
       )
     ]);
   }
-
 
   Future<EtherAmount> _getBalance() async {
     final prefs = await SharedPreferences.getInstance();
@@ -252,4 +260,3 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
     return balance;
   }
 }
-

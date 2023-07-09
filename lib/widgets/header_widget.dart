@@ -19,7 +19,7 @@ class HeaderWidget extends StatelessWidget {
         padding:
             const EdgeInsets.only(left: 20, top: 51, right: 20, bottom: 62),
         child: GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.pop(context);
           },
           child: Row(
@@ -31,7 +31,10 @@ class HeaderWidget extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -39,14 +42,11 @@ class HeaderWidget extends StatelessWidget {
       ),
     );
   }
-
-
 }
 
-
-
 class HeaderWidgetWithoutBackButton extends StatelessWidget {
-  const HeaderWidgetWithoutBackButton({Key? key, required this.title}) : super(key: key);
+  const HeaderWidgetWithoutBackButton({Key? key, required this.title})
+      : super(key: key);
   final String title;
 
   @override
@@ -61,7 +61,7 @@ class HeaderWidgetWithoutBackButton extends StatelessWidget {
       ),
       child: Padding(
         padding:
-        const EdgeInsets.only(left: 20, top: 51, right: 20, bottom: 62),
+            const EdgeInsets.only(left: 20, top: 51, right: 20, bottom: 62),
         child: Row(
           children: [
             const SizedBox(
@@ -70,15 +70,14 @@ class HeaderWidgetWithoutBackButton extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
             ),
           ],
         ),
       ),
     );
   }
-
-
 }
-
-

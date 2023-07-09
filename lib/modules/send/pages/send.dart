@@ -31,6 +31,7 @@ class _SendPageState extends State<SendPage> {
         children: [
           Stack(
               children: <Widget>[
+
                 HeaderWidget(title: Strings.send),
 
                 Padding(

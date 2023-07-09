@@ -152,24 +152,17 @@ Widget customButtonLast(
     padding: const EdgeInsets.symmetric(vertical: 20),
     child: Form(
       key: _formKey,
-      child: GestureDetector(
-        onTap: (){
-          if (_formKey.currentState!.validate()) {
-
-          }
-        },
-        child: Container(
-          decoration:  BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.all(Radius.circular(110)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Center(
-              child: Text(
-                text,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor, fontWeight: FontWeight.w600),
-              ),
+      child: Container(
+        decoration:  BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.all(Radius.circular(110)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Center(
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor, fontWeight: FontWeight.w600),
             ),
           ),
         ),

@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+// import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../core/colors.dart';
 import '../../../widgets/common_widgets.dart';
 
@@ -85,7 +85,7 @@ Widget bodyWidgetBuyNow(context){
 
           customSmallButton(context, '+2.49', CustomColors.white, CustomColors.black),
 
-           Container(
+/*           Container(
                  child: SfCartesianChart(
           // Initialize category axis
             primaryXAxis: CategoryAxis(),
@@ -105,7 +105,7 @@ Widget bodyWidgetBuyNow(context){
               )
             ]
         )
-    ),
+    ),*/
 
 
           Padding(

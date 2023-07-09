@@ -21,11 +21,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(
-          children: const [
-
-           HomeHeaderWidget(),
-           YourTokenWidget(),
-           RecommendedToBuyWidget()
+      children: const [
+        HomeHeaderWidget(),
+        YourTokenWidget(),
+        RecommendedToBuyWidget()
       ],
     ));
   }

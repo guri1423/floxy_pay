@@ -1,4 +1,3 @@
-
 import 'package:floxy_pay/modules/deposit/pages/deposit.dart';
 import 'package:floxy_pay/modules/history/pages/history.dart';
 import 'package:floxy_pay/modules/settings/pages/settings.dart';
@@ -12,7 +11,6 @@ import '../bloc/bottom_navigation_cubit.dart';
 import '../bloc/bottom_navigation_state.dart';
 import '../constant/items.dart';
 
-
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
 
@@ -23,30 +21,21 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return Scaffold(
-
       body: BlocBuilder<NavigationCubit, NavigationState>(
           builder: (context, state) {
-            if (state.navbarItem == NavbarItem.Home) {
-              return const HomePage();
-            } else if (state.navbarItem == NavbarItem.History) {
-              return const HistoryPage();
-            } else if (state.navbarItem == NavbarItem.Deposit) {
-              return const DepositPage();
-            } else if (state.navbarItem == NavbarItem.Setting) {
-              return const SettingsPage();
-            }
+        if (state.navbarItem == NavbarItem.Home) {
+          return const HomePage();
+        } else if (state.navbarItem == NavbarItem.History) {
+          return const HistoryPage();
+        } else if (state.navbarItem == NavbarItem.Deposit) {
+          return const DepositPage();
+        } else if (state.navbarItem == NavbarItem.Setting) {
+          return const SettingsPage();
+        }
 
-
-
-            return Container();
-          }
-
-      ),
+        return Container();
+      }),
       bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
           return Container(
@@ -83,7 +72,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                   : CustomColors.grey,
                               BlendMode.srcIn,
                             ),
-                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/172631_wallet_icon 1_white.svg'),
+                            child: SvgPicture.asset(
+                                'assets/svg_images/bottom_navigation_images/172631_wallet_icon 1_white.svg'),
                           ),
                         ),
                       ),
@@ -104,14 +94,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         width: 50,
                         child: Center(
                           child: ColorFiltered(
-                            colorFilter: ColorFilter.mode(
-                              state.index == 1
-                                  ? CustomColors.white
-                                  : CustomColors.grey,
-                              BlendMode.srcIn,
-                            ),
-                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/history_white.svg')
-                          ),
+                              colorFilter: ColorFilter.mode(
+                                state.index == 1
+                                    ? CustomColors.white
+                                    : CustomColors.grey,
+                                BlendMode.srcIn,
+                              ),
+                              child: SvgPicture.asset(
+                                  'assets/svg_images/bottom_navigation_images/history_white.svg')),
                         ),
                       ),
                     ),
@@ -131,14 +121,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         width: 50,
                         child: Center(
                           child: ColorFiltered(
-                            colorFilter: ColorFilter.mode(
-                              state.index == 2
-                                  ? CustomColors.white
-                                  : CustomColors.grey,
-                              BlendMode.srcIn,
-                            ),
-                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/8333969_deposit_money_bank_salary_saving_icon_white.svg')
-                          ),
+                              colorFilter: ColorFilter.mode(
+                                state.index == 2
+                                    ? CustomColors.white
+                                    : CustomColors.grey,
+                                BlendMode.srcIn,
+                              ),
+                              child: SvgPicture.asset(
+                                  'assets/svg_images/bottom_navigation_images/8333969_deposit_money_bank_salary_saving_icon_white.svg')),
                         ),
                       ),
                     ),
@@ -158,14 +148,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         width: 50,
                         child: Center(
                           child: ColorFiltered(
-                            colorFilter: ColorFilter.mode(
-                              state.index == 3
-                                  ? CustomColors.white
-                                  : CustomColors.grey,
-                              BlendMode.srcIn,
-                            ),
-                            child: SvgPicture.asset('assets/svg_images/bottom_navigation_images/Settings adjust__white.svg')
-                          ),
+                              colorFilter: ColorFilter.mode(
+                                state.index == 3
+                                    ? CustomColors.white
+                                    : CustomColors.grey,
+                                BlendMode.srcIn,
+                              ),
+                              child: SvgPicture.asset(
+                                  'assets/svg_images/bottom_navigation_images/Settings adjust__white.svg')),
                         ),
                       ),
                     ),
@@ -176,9 +166,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
           );
         },
       ),
-
     );
   }
-
-
 }

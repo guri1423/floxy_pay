@@ -100,6 +100,7 @@ class _BuyFxyState extends State<BuyFxy> {
           
           GestureDetector(
             onTap: (){
+              print("(((((");
               _showDialog(context);
             },
             child: Padding(
@@ -114,7 +115,8 @@ class _BuyFxyState extends State<BuyFxy> {
   }
 
   Future<void> _showDialog(BuildContext context) async {
-    return showDialog<void>(
+    print("dafj");
+     showDialog<void>(
       context: context,
       barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
       builder: (BuildContext context) {

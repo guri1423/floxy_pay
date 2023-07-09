@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/modules/bottom_navigation/pages/bottom_navigation.dart';
 import 'package:floxy_pay/services/storage_services.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
@@ -13,9 +14,6 @@ import 'package:web3auth_flutter/output.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
 import 'package:web3dart/web3dart.dart';
 
-import '../../../core/colors.dart';
-
-
 class Authentication extends StatefulWidget {
   const Authentication({super.key});
 
@@ -24,88 +22,19 @@ class Authentication extends StatefulWidget {
 }
 
 class _AuthenticationState extends State<Authentication> {
-
-
-
   String _result = '';
-  bool logoutVisible = false;
+  bool isLoading = false;
+
   String rpcUrl = 'https://rpc.ankr.com/eth_goerli';
 
-  StorageServices _servicesStorage = StorageServices();
-  TextEditingController _email = TextEditingController();
-
-  Future<void> initPlatformState1() async {
-    final themeMap = HashMap<String, String>();
-    themeMap['primary'] = "#229954";
-
-    Uri redirectUrl;
-    redirectUrl = Uri.parse('myapp://com.example.floxy_pay/auth');
-
-    // final loginConfig = HashMap<String, LoginConfigItem>();
-    // loginConfig['jwt'] = LoginConfigItem(
-    //     verifier: "web3auth-auth0-demo", // get it from web3auth dashboard
-    //     typeOfLogin: TypeOfLogin.jwt,
-    //     name: "Web3Auth Flutter Auth0 Example",
-    //     clientId: "BODS765Jl7Fpp6Z4UBvWU58nPfDSGnuNaIlqyl4iCD7z5zxCqpP0NJPVffRGOWMAXw4wJTxKZxKd4zWSnWgCkO8" // auth0 client id
-    // );
-
-    await Web3AuthFlutter.init(Web3AuthOptions(
-      clientId:
-      'BODS765Jl7Fpp6Z4UBvWU58nPfDSGnuNaIlqyl4iCD7z5zxCqpP0NJPVffRGOWMAXw4wJTxKZxKd4zWSnWgCkO8',
-      network: Network.aqua,
-      redirectUrl: redirectUrl,
-      whiteLabel: WhiteLabelData(
-          dark: true, name: "Pay Floxy", theme: themeMap),
-    ));
-  }
-
-  Future<void> initPlatformState() async {
-    HashMap<String, String> themeMap = HashMap<String, String>();
-    themeMap['primary'] = "#229954";
-
-    Uri redirectUrl;
-    redirectUrl = Uri.parse('myapp://com.example.floxy_pay/auth');
-
-    await Web3AuthFlutter.init(
-      Web3AuthOptions(
-
-        clientId: 'BODS765Jl7Fpp6Z4UBvWU58nPfDSGnuNaIlqyl4iCD7z5zxCqpP0NJPVffRGOWMAXw4wJTxKZxKd4zWSnWgCkO8',
-        network: Network.aqua,
-        redirectUrl: redirectUrl,
-        whiteLabel: WhiteLabelData(
-          dark: true,
-          name: "Floxy App",
-          theme: themeMap,
-        ),
-
-      ),
-    );
-
-    await Web3AuthFlutter.initialize();
-
-
-
-    await Web3AuthFlutter.logout();
-
-    final Web3AuthResponse response = await Web3AuthFlutter.login(
-        LoginParams(loginProvider: Provider.jwt)
-    );
-
-
-
-    final String? res = await Web3AuthFlutter.getPrivKey();
-    if (res != null && res.isNotEmpty) {
-      setState(() {
-        logoutVisible = true;
-      });
-    }
-  }
+  final StorageServices _servicesStorage = StorageServices();
+  final TextEditingController _email = TextEditingController();
 
 
 
   @override
   void initState() {
-    initPlatformState1();
+    // initPlatformState1();
     _getPrivKey();
     super.initState();
   }
@@ -113,245 +42,196 @@ class _AuthenticationState extends State<Authentication> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: ListView(
-        children: [
-
-          Padding(
-            padding: const EdgeInsets.only(left: 16, top: 100),
-            child: Text(
-              'Sign In ',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 32,
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(left: 16, top: 10),
-            child: Text(
-              'Your blockchain wallet in one-click',
-
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-
-          GestureDetector(
-            onTap: () => _login(_withGoogle)(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 24),
-              child: Container(
-                height: 60,
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 78),
-                  child: SvgPicture.asset('assets/svg_images/receive_page/google_login.svg'),
-                ),
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: AbsorbPointer(
+        absorbing: isLoading,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            ListView(
               children: [
-                GestureDetector(
-                  onTap: () => _login(_withFacebook)(),
-                  child: Container(
-                    width: 81,
-                    height: 60,
-                    decoration: ShapeDecoration(
-                      color: CustomColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 16, top: 100),
+                  child: Text(
+                    'Sign In ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 32,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.w700,
                     ),
-                    child: SvgPicture.asset('assets/svg_images/fb_login.svg'),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 16, top: 10),
+                  child: Text(
+                    'Your blockchain wallet in one-click',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => _login(_withApple)(),
-                  child: Container(
-                    width: 81,
-                    height: 60,
-                    decoration: ShapeDecoration(
-                      color: CustomColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                  onTap: () => _login(_withGoogle)(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 24),
+                    child: Container(
+                      height: 60,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 78),
+                        child: SvgPicture.asset(
+                            'assets/svg_images/receive_page/google_login.svg'),
                       ),
                     ),
-                    child: SvgPicture.asset('assets/svg_images/receive_page/apple_login.svg'),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () => _login(_withTwitter)(),
-                  child: Container(
-                    width: 81,
-                    height: 60,
-                    decoration: ShapeDecoration(
-                      color: CustomColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () => _login(_withFacebook)(),
+                        child: Container(
+                          width: 81,
+                          height: 60,
+                          decoration: ShapeDecoration(
+                            color: CustomColors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                              'assets/svg_images/fb_login.svg'),
+                        ),
                       ),
-                    ),
-                    child: SvgPicture.asset('assets/svg_images/receive_page/twitter_login.svg'),
+                      GestureDetector(
+                        onTap: () => _login(_withApple)(),
+                        child: Container(
+                          width: 81,
+                          height: 60,
+                          decoration: ShapeDecoration(
+                            color: CustomColors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                              'assets/svg_images/receive_page/apple_login.svg'),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => _login(_withTwitter)(),
+                        child: Container(
+                          width: 81,
+                          height: 60,
+                          decoration: ShapeDecoration(
+                            color: CustomColors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                              'assets/svg_images/receive_page/twitter_login.svg'),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => _login(_withLinkedin)(),
+                        child: Container(
+                          width: 81,
+                          height: 60,
+                          decoration: ShapeDecoration(
+                            color: CustomColors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                              'assets/svg_images/receive_page/linkdin_login.svg'),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () => _login(_withLinkedin)(),
-                  child: Container(
-                    width: 81,
-                    height: 60,
-                    decoration: ShapeDecoration(
-                      color: CustomColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 40, bottom: 20),
+                  child: Text(
+                    'We do not store any related to your social logins.',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.w400,
                     ),
-                    child: SvgPicture.asset('assets/svg_images/receive_page/linkdin_login.svg'),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 10),
+                  child: Text(
+                    'Email',
+                    style: TextStyle(
+                      color: Color(0xFF1A1A1A),
+                      fontSize: 14,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: customTextFieldForm(context,
+                      controller: _email, hintText: 'Name@example.com'),
+                ),
+                GestureDetector(
+                  onTap: () => _login(_withEmailPasswordless)(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    child: customButtonLast(context, 'CONTINUE WITH EMAIL',
+                        CustomColors.yellowLight, CustomColors.black),
                   ),
                 )
               ],
             ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 40, bottom: 20),
-            child: Text(
-              'We do not store any related to your social logins.',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(left: 16,right: 16, bottom: 10),
-            child: Text(
-              'Email',
-              style: TextStyle(
-                color: Color(0xFF1A1A1A),
-                fontSize: 14,
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.w400,
-
-              ),
-            ),
-          ),
-          
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: customTextFieldForm(context, controller: _email, hintText: 'Name@example.com'),
-          ),
-          
-          GestureDetector(
-            onTap: () => _login(_withEmailPasswordless)(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
-              child: customButtonLast(context, 'CONTINUE WITH EMAIL', CustomColors.yellowLight, CustomColors.black),
-            ),
-          )
-
-
-
-
-        ],
-
+            if (isLoading) const CircularProgressIndicator()
+          ],
+        ),
       ),
     );
   }
 
   VoidCallback _login(Future<Web3AuthResponse> Function() method) {
+    setState(() {
+      isLoading = true;
+    });
     return () async {
       try {
         final Web3AuthResponse response = await method();
-        if (response.privKey != null ) {
-
+        if (response.privKey != null) {
           await _servicesStorage.setUserLoggedIn('true');
+          setState(() {
+            isLoading = false;
+          });
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => BottomNavigation()),
-                (route) => false, // Remove all previous routes
+            (route) => false,
           );
         } else {
           // Authentication failed
           print("Authentication failed");
         }
-      } on UserCancelledException {
-        print("User cancelled.");
-      } on UnKnownException {
-        print("Unknown exception occurred");
-      }
-    };
-  }
-
-
-
-
-  VoidCallback _logout() {
-    return () async {
-      try {
-        await Web3AuthFlutter.logout();
-        setState(() {
-          _result = '';
-          logoutVisible = false;
-        });
-      } on UserCancelledException {
-        print("User cancelled.");
-      } on UnKnownException {
-        print("Unknown exception occurred");
-      }
-    };
-  }
-
-
-
-  VoidCallback _getPrivateKey(Future<String?> Function() method) {
-    return () async {
-      try {
-        final String? response = await Web3AuthFlutter.getPrivKey();
-        setState(() {
-          _result = response!;
-          logoutVisible = true;
-        });
-
-        // Save private key using shared preferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('privateKey', response!);
-      } on UserCancelledException {
-        print("User cancelled.");
-      } on UnKnownException {
-        print("Unknown exception occurred");
-      }
-    };
-  }
-
-
-  VoidCallback _userInfo(Future<TorusUserInfo> Function() method) {
-    return () async {
-      try {
-        final TorusUserInfo response = await Web3AuthFlutter.getUserInfo();
-        setState(() {
-          _result = response.toString();
-          logoutVisible = true;
-        });
       } on UserCancelledException {
         print("User cancelled.");
       } on UnKnownException {
@@ -411,33 +291,9 @@ class _AuthenticationState extends State<Authentication> {
     return Web3AuthFlutter.getPrivKey();
   }
 
-
-
-
-
   Future<TorusUserInfo> _getUserInfo() {
     return Web3AuthFlutter.getUserInfo();
   }
-
-  VoidCallback _login1(Future<Web3AuthResponse> Function() method) {
-    return () async {
-      try {
-        final Web3AuthResponse response = await method();
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('privateKey', response.privKey.toString());
-        setState(() {
-          _result = response.toString();
-          logoutVisible = true;
-        });
-      } on UserCancelledException {
-        print("User cancelled.");
-      } on UnKnownException {
-        print("Unknown exception occurred");
-      }
-    };
-  }
-
-
 
   Future<Web3AuthResponse> _withAuth0() {
     return Web3AuthFlutter.login(LoginParams(
@@ -509,7 +365,4 @@ class _AuthenticationState extends State<Authentication> {
       return e.toString();
     }
   }
-
-
-
 }

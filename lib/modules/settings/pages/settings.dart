@@ -20,77 +20,88 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
-
   StorageServices _storageServices = StorageServices();
 
   @override
   Widget build(BuildContext context) {
     double? height = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: Column(
+        body: ListView(
       children: [
-          Stack(children: <Widget>[
-            HeaderWidgetWithoutBackButton(title: Strings.setting),
-             Padding(
-                padding: const EdgeInsets.only(top: 91, left: 16, right: 16),
-                 child: Container(
-
-                   decoration: const BoxDecoration(
-                     color: Color.fromRGBO(255, 255, 255, 1),
-                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                   ),
-                   child: Padding(
-                     padding: const EdgeInsets.symmetric( horizontal: 8),
-                     child: ListView.builder(
-                       shrinkWrap: true,
-                       itemCount: imageList.length,
-                       itemBuilder: (BuildContext context, int index) {
-                         return GestureDetector(
-                           onTap: () {
-                             if (index == 0) {
-                               Navigator.push(
-                                 context,
-                                 MaterialPageRoute(builder: (context) => ProfilePage()),
-                               );
-                             } else if (index == 1) {
-                               Navigator.push(
-                                 context,
-                                 MaterialPageRoute(builder: (context) => NotificationPage()),
-                               );
-                             } else if (index == 2) {
-                               Navigator.push(
-                                 context,
-                                 MaterialPageRoute(builder: (context) => ChangePin()),
-                               );
-                             } else if (index == 3) {
-
-                               _showDialog(context);
-
-                             }
-                           },
-                           child: Row(
-                             crossAxisAlignment: CrossAxisAlignment.center,
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             children: [
-                               SvgPicture.asset(imageList[index]),
-                               Text(
-                                 pageList[index],
-                                 style: Theme.of(context).textTheme.titleSmall,
-                               ),
-                               Spacer(),
-                               Icon(Icons.navigate_next_sharp),
-                             ],
-                           ),
-                         );
-                       },
-                     ),
-                   ),
-                 )
-
-
-
-             )
+        Stack(children: <Widget>[
+          const HeaderWidgetWithoutBackButton(title: Strings.setting),
+          Padding(
+              padding: const EdgeInsets.only(top: 91, left: 16, right: 16),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(255, 255, 255, 1),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: imageList.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: index == 0
+                            ? const EdgeInsets.only(bottom: 16, top: 30)
+                            : const EdgeInsets.only(
+                                bottom: 16,
+                              ),
+                        child: ListTile(
+                          onTap: () {
+                            if (index == 0) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage()),
+                              );
+                            } else if (index == 1) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NotificationPage()),
+                              );
+                            } else if (index == 2) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ChangePin()),
+                              );
+                            } else if (index == 3) {
+                              _showDialog(context);
+                            }
+                          },
+                          leading: Container(
+                              decoration: const BoxDecoration(boxShadow: [
+                                BoxShadow(
+                                  color: Color(0x19272246),
+                                  blurRadius: 12,
+                                  offset: Offset(0, 2),
+                                  spreadRadius: 0,
+                                ),
+                              ], shape: BoxShape.circle),
+                              child: SvgPicture.asset(
+                                imageList[index],
+                              )),
+                          title: Text(
+                            pageList[index],
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                    fontWeight: FontWeight.w500, fontSize: 16),
+                          ),
+                          trailing: const Icon(Icons.navigate_next_sharp),
+                          splashColor: CustomColors.blueLight,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ))
         ]),
       ],
     ));
@@ -108,136 +119,123 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _showDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
+      barrierDismissible: false,
+      // Dialog cannot be dismissed by tapping outside
       builder: (BuildContext context) {
         return AlertDialog(
-            content: Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  Container(
-
-                    width:280,
-                    height: 190,
-
-                    decoration: BoxDecoration(
-
-                        borderRadius: BorderRadius.all(Radius.circular(16))
+            content: Stack(alignment: Alignment.topRight, children: [
+          Container(
+            width: 280,
+            height: 190,
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(16))),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: SvgPicture.asset(
+                      'assets/svg_images/pop_dialog_image.svg'),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Text(
+                    'Are you sure want to Logout? ',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.w400,
                     ),
-
-                    child: Column(
-
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: SvgPicture.asset('assets/svg_images/pop_dialog_image.svg'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 106,
+                        height: 42,
+                        decoration: ShapeDecoration(
+                          color: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Text(
-                            'Are you sure want to Logout? ',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w400,
+                        child: GestureDetector(
+                          onTap: () {
+                            logout();
+                          },
+                          child: const Center(
+                            child: Text(
+                              'OK',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: 'Lato',
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 0.16,
+                              ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Row(
-                            children: [
-
-                              Container(
-                                width: 106,
-                                height: 42,
-                                decoration: ShapeDecoration(
-                                  color: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                child: GestureDetector(
-                                  onTap: (){
-
-                                    logout();
-
-                                  },
-                                  child: const Center(
-                                    child: Text(
-                                      'OK',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: 0.16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              Spacer(),
-
-                              Container(
-                                width: 106,
-                                height: 42,
-                                decoration: ShapeDecoration(
-                                  color: Colors.black.withOpacity(0.10000000149011612),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                child: GestureDetector(
-                                  onTap: (){
-                                    Navigator.pop(context);
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      'CANCEL',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: 0.16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                            ],
+                      ),
+                      Spacer(),
+                      Container(
+                        width: 106,
+                        height: 42,
+                        decoration: ShapeDecoration(
+                          color: Colors.black.withOpacity(0.10000000149011612),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                          onTap: (){
+                        child: GestureDetector(
+                          onTap: () {
                             Navigator.pop(context);
                           },
-                          child: SvgPicture.asset('assets/svg_images/close_icon.svg')),
+                          child: Center(
+                            child: Text(
+                              'CANCEL',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: 'Lato',
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 0.16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
-                  )
-                ]
-            )
-        );
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: SvgPicture.asset('assets/svg_images/close_icon.svg')),
+            ],
+          )
+        ]));
       },
     );
   }
 
-  logout()async{
+  logout() async {
     await Web3AuthFlutter.logout();
     await _storageServices.clearStorage();
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => OnboardingPageOne()), (route) => false);
-
-
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => OnboardingPageOne()),
+        (route) => false);
   }
 
   VoidCallback _logout() {
@@ -245,7 +243,10 @@ class _SettingsPageState extends State<SettingsPage> {
       try {
         await Web3AuthFlutter.logout();
         setState(() {
-         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => OnboardingPageOne()), (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => OnboardingPageOne()),
+              (route) => false);
         });
       } on UserCancelledException {
         print("User cancelled.");
@@ -254,5 +255,4 @@ class _SettingsPageState extends State<SettingsPage> {
       }
     };
   }
-
 }
