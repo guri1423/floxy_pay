@@ -47,6 +47,7 @@ class Strings{
   static const userIdKey = "User Id";
   static const loggedKey = "loggedInReadyForMade";
   static const IdKey = "Id";
+  static const privateKey = "Id";
 
 
 }

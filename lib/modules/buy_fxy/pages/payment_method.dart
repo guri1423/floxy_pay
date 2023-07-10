@@ -183,12 +183,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
 
   int initSelectedVal = 0;
   final List<String> _imageList = const [
-    // 'assets/svg_images/phonePay.svg',
-    'assets/svg_images/paytm.svg',
-    'assets/svg_images/paytm.svg',
-    'assets/svg_images/paytm.svg',
-    'assets/svg_images/paytm.svg',
-    // 'assets/svg_images/upi.svg',
-    // 'assets/svg_images/Google pay.svg'
+
+    'assets/svg_images/google-pay 1.svg',
+    'assets/svg_images/Paytm_Logo_(standalone) 1.svg',
+    'assets/svg_images/image 7.svg',
+    'assets/svg_images/image 8.svg',
   ];
 }

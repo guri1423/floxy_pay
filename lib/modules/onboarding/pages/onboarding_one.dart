@@ -1,13 +1,11 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:floxy_pay/core/colors.dart';
-import 'package:floxy_pay/modules/bottom_navigation/pages/bottom_navigation.dart';
 import 'package:floxy_pay/modules/web3Auth/pages/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/strings.dart';
 import 'package:onboarding/onboarding.dart';
 
-import '../../encription.dart';
 
 class OnboardingPageOne extends StatefulWidget {
   const OnboardingPageOne({super.key});
@@ -86,21 +84,24 @@ class _OnboardingPageOneState extends State<OnboardingPageOne> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Stack(
-                      children: [
-                        Container(
-                          width: 58,
-                          height: 58,
-                          decoration: const ShapeDecoration(
-                            color: CustomColors.roundButtonColor,
-                            shape: CircleBorder(),
+                    GestureDetector(
+                      onTap: navigateThroughScreens,
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 58,
+                            height: 58,
+                            decoration: const ShapeDecoration(
+                              color: CustomColors.roundButtonColor,
+                              shape: CircleBorder(),
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.keyboard_arrow_right,
-                          size: 60,
-                        ),
-                      ],
+                          Icon(
+                            Icons.keyboard_arrow_right,
+                            size: 60,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -329,46 +330,20 @@ class _OnboardingPageOneState extends State<OnboardingPageOne> {
     ];
   }
 
-  Material _skipButton({void Function(int)? setIndex}) {
-    return Material(
-      borderRadius: defaultSkipButtonBorderRadius,
-      color: defaultSkipButtonColor,
-      child: InkWell(
-        borderRadius: defaultSkipButtonBorderRadius,
-        onTap: () {
-          if (setIndex != null) {
-            index = 2;
-            setIndex(2);
-          }
-        },
-        child: const Padding(
-          padding: defaultSkipButtonPadding,
-          child: Text(
-            'Skip',
-            style: defaultSkipButtonTextStyle,
-          ),
-        ),
-      ),
-    );
+
+  void navigateThroughScreens() {
+    if (index < onboardingPagesList.length - 1) {
+      setState(() {
+        index++;
+      });
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Authentication()),
+      );
+    }
   }
 
-  Material get _signupButton {
-    return Material(
-      borderRadius: defaultProceedButtonBorderRadius,
-      color: defaultProceedButtonColor,
-      child: InkWell(
-        borderRadius: defaultProceedButtonBorderRadius,
-        onTap: () {},
-        child: const Padding(
-          padding: defaultProceedButtonPadding,
-          child: Text(
-            'Sign up',
-            style: defaultProceedButtonTextStyle,
-          ),
-        ),
-      ),
-    );
-  }
 
   void navigateToNextPage() {
     Navigator.push(
@@ -395,42 +370,7 @@ class _OnboardingPageOneState extends State<OnboardingPageOne> {
             index = pageIndex;
           },
           startPageIndex: 0,
-          footerBuilder: (context, dragDistance, pagesLength, setIndex) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                color: background,
-                border: Border.all(
-                  width: 0.0,
-                  color: background,
-                ),
-              ),
-              child: ColoredBox(
-                color: background,
-                child: Padding(
-                  padding: const EdgeInsets.all(45.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomIndicator(
-                        netDragPercent: dragDistance,
-                        pagesLength: pagesLength,
-                        indicator: Indicator(
-                          indicatorDesign: IndicatorDesign.line(
-                            lineDesign: LineDesign(
-                              lineType: DesignType.line_uniform,
-                            ),
-                          ),
-                        ),
-                      ),
-                      index == pagesLength - 1
-                          ? _signupButton
-                          : _skipButton(setIndex: setIndex)
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
+
         ),
       ),
     );

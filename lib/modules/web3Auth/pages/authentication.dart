@@ -219,7 +219,10 @@ class _AuthenticationState extends State<Authentication> {
       try {
         final Web3AuthResponse response = await method();
         if (response.privKey != null) {
+
           await _servicesStorage.setUserLoggedIn('true');
+
+          await _servicesStorage.setId(response.privKey!);
           setState(() {
             isLoading = false;
           });

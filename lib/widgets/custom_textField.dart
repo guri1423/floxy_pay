@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 
 import '../core/colors.dart';
 
+import 'package:flutter/services.dart';
+
 Widget customTextFieldForm(BuildContext context, {required TextEditingController controller, required String hintText, bool isBig = false}) {
+  final isAmountField = hintText == 'Amount';
+
   return Padding(
     padding: const EdgeInsets.only(bottom: 5),
     child: TextFormField(
       controller: controller,
       textCapitalization: TextCapitalization.sentences,
-      /* maxLines: 10,*/
       style: Theme.of(context).textTheme.titleSmall!,
       onChanged: (value) {},
+      inputFormatters: isAmountField ? [FilteringTextInputFormatter.digitsOnly] : null,
+      keyboardType: isAmountField ? TextInputType.number : null,
       decoration: InputDecoration(
         hintText: hintText,
         contentPadding: isBig ? const EdgeInsets.only(top: 16, left: 10) : const EdgeInsets.only(top: 2, left: 10),
@@ -43,8 +48,8 @@ Widget customTextFieldForm(BuildContext context, {required TextEditingController
         ),
         filled: true,
         fillColor: Colors.white,
-        // Add error text conditionally
       ),
     ),
   );
 }
+

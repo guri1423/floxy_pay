@@ -339,21 +339,21 @@ class _SalePageState extends State<SalePage> {
                           child: Row(
                             children: [
 
-                              Container(
-                                width: 106,
-                                height: 42,
-                                decoration: ShapeDecoration(
-                                  color: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                child: GestureDetector(
-                                  onTap: (){
-                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SaleSuccessful(
+                              GestureDetector(
+                                onTap: (){
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SaleSuccessful(
 
-                                  )), (route) => false);
-                                  },
+                                )), (route) => false);
+                                },
+                                child: Container(
+                                  width: 106,
+                                  height: 42,
+                                  decoration: ShapeDecoration(
+                                    color: Colors.black,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
                                   child: Center(
                                     child: Text(
                                       'OK',
@@ -371,19 +371,19 @@ class _SalePageState extends State<SalePage> {
 
                               Spacer(),
 
-                              Container(
-                                width: 106,
-                                height: 42,
-                                decoration: ShapeDecoration(
-                                  color: Colors.black.withOpacity(0.10000000149011612),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  width: 106,
+                                  height: 42,
+                                  decoration: ShapeDecoration(
+                                    color: Colors.black.withOpacity(0.10000000149011612),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
                                   ),
-                                ),
-                                child: GestureDetector(
-                                  onTap: (){
-                                    Navigator.pop(context);
-                                  },
                                   child: Center(
                                     child: Text(
                                       'CANCEL',

@@ -17,6 +17,10 @@ class StorageServices{
     await storage.write(key: Strings.emailKey, value: email);
   }
 
+  setPrivateKey(String privateKey)async{
+    await storage.write(key: Strings.privateKey, value: privateKey);
+  }
+
   setPassword(String password)async{
     await storage.write(key: Strings.passwordKey, value: password);
   }

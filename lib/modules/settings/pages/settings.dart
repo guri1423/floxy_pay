@@ -153,19 +153,19 @@ class _SettingsPageState extends State<SettingsPage> {
                   padding: const EdgeInsets.only(top: 20),
                   child: Row(
                     children: [
-                      Container(
-                        width: 106,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          color: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                      GestureDetector(
+                        onTap: () {
+                          logout();
+                        },
+                        child: Container(
+                          width: 106,
+                          height: 42,
+                          decoration: ShapeDecoration(
+                            color: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            logout();
-                          },
                           child: const Center(
                             child: Text(
                               'OK',
@@ -181,19 +181,19 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       Spacer(),
-                      Container(
-                        width: 106,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          color: Colors.black.withOpacity(0.10000000149011612),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          width: 106,
+                          height: 42,
+                          decoration: ShapeDecoration(
+                            color: Colors.black.withOpacity(0.10000000149011612),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
                           child: Center(
                             child: Text(
                               'CANCEL',

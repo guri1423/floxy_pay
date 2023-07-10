@@ -30,10 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<TorusUserInfo> _getUserInfo() async {
     try {
       final TorusUserInfo response = await Web3AuthFlutter.getUserInfo();
-      setState(() {
-        _result = response.toString();
-        logoutVisible = true;
-      });
+
       return response;
     } on UserCancelledException {
       print("User cancelled.");
