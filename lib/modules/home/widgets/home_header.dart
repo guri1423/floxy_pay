@@ -1,10 +1,11 @@
+import 'dart:convert';
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/modules/notification/pages/notification.dart';
 import 'package:floxy_pay/modules/profile/pages/profile.dart';
 import 'package:floxy_pay/modules/sale/pages/sale.dart';
 import 'package:floxy_pay/modules/swap/pages/swap.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
@@ -24,37 +25,40 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
   final myAddress = '0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6';
 
-  final tokenAddress = EthereumAddress.fromHex('0xdAC17F958D2ee523a2206206994597C13D831ec7'); // Replace with the token's address
-  final userAddress = EthereumAddress.fromHex('0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6'); // Replace with the user's wallet address
+  final tokenAddress = EthereumAddress.fromHex('0xf4598c0e529E56B1ec322Ba7ee58dfB62dEd58aB');
+
+  final userAddress = EthereumAddress.fromHex('0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6');
 
 
   final httpClient = Client();
+
   final ethClient = Web3Client('https://rpc-mumbai.matic.today', Client());
 
 
   String _address = '';
 
 
-/*
-  getTokenBalance() async{
-    final balance = await ethClient.call(
-      contract: ,
-      function: contract.function('balanceOf'),
-      params: [],
-    );
-
-    final tokenBalance = balance.first as BigInt;
-    print('Token Balance: $tokenBalance');
-  }*/
-
-// var abinew = '[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_upgradedAddress","type":"address"}],"name":"deprecate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"deprecated","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_evilUser","type":"address"}],"name":"addBlackList","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"upgradedAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balances","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"maximumFee","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"unpause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_maker","type":"address"}],"name":"getBlackListStatus","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowed","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"who","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"pause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newBasisPoints","type":"uint256"},{"name":"newMaxFee","type":"uint256"}],"name":"setParams","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"issue","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"redeem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"basisPointsRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"isBlackListed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_clearedUser","type":"address"}],"name":"removeBlackList","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"MAX_UINT","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_blackListedUser","type":"address"}],"name":"destroyBlackFunds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_initialSupply","type":"uint256"},{"name":"_name","type":"string"},{"name":"_symbol","type":"string"},{"name":"_decimals","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"}],"name":"Issue","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"}],"name":"Redeem","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newAddress","type":"address"}],"name":"Deprecate","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"feeBasisPoints","type":"uint256"},{"indexed":false,"name":"maxFee","type":"uint256"}],"name":"Params","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_blackListedUser","type":"address"},{"indexed":false,"name":"_balance","type":"uint256"}],"name":"DestroyedBlackFunds","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_user","type":"address"}],"name":"AddedBlackList","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_user","type":"address"}],"name":"RemovedBlackList","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[],"name":"Pause","type":"event"},{"anonymous":false,"inputs":[],"name":"Unpause","type":"event"}]';
   Future<DeployedContract> loadContract()async{
     String abi = await rootBundle.loadString('assets/ethereum.abi.json');
-    String contractAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
-    final contract = DeployedContract(ContractAbi.fromJson(abi, '0xdAC17F958D2ee523a2206206994597C13D831ec7'),EthereumAddress.fromHex(contractAddress));
+    String contractAddress = '0xf4598c0e529E56B1ec322Ba7ee58dfB62dEd58aB';
+    final contract = DeployedContract(ContractAbi.fromJson(abi, 'MyToken'),EthereumAddress.fromHex(contractAddress));
 
     return contract;
   }
+
+  Future<DeployedContract> getAbi() async {
+
+    String abiStringFile = await rootBundle.loadString("assets/ethereum.abi.json");
+    var jsonAbi = jsonDecode(abiStringFile);
+    String contractAddress = '0xf4598c0e529E56B1ec322Ba7ee58dfB62dEd58aB';
+    final contract = DeployedContract(
+      ContractAbi.fromJson(jsonAbi, 'MyToken'),
+      EthereumAddress.fromHex(contractAddress),
+    );
+    return contract;
+
+  }
+
 
   Future<List<dynamic>> query (String functionName, List<dynamic> args)async{
 
@@ -125,6 +129,36 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
   String _result = '';
 
   String _address = '';*/
+
+
+  Future<Web3Client> createWeb3Client() async {
+    final rpcUrl = 'https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c';
+    final httpClient = Client();
+    final chainId = 1; // Use 1 for Ethereum mainnet
+    final web3Client = Web3Client(rpcUrl, httpClient);
+    return web3Client;
+  }
+  Future<EtherAmount> getWalletBalanceNew(String userAddress, String walletAddress) async {
+
+    final contract = await getAbi();
+    final ethFunction = contract.function('balanceOf');
+    final result = await ethClient.call(contract: contract, function: ethFunction, params: [EthereumAddress.fromHex(walletAddress)]);
+    final balanceInWei = result[0] as BigInt;
+    final balanceInEther = EtherAmount.fromUnitAndValue(EtherUnit.wei, balanceInWei);
+    return balanceInEther;
+  }
+
+
+  void fetchBalance() async {
+    final userAddress = '0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6';
+    final walletAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7'; // Replace with the desired wallet address
+    final balance = await getWalletBalanceNew(userAddress,walletAddress);
+    print('Wallet Balance: ${balance.getValueInUnit(EtherUnit.ether)} ETH');
+  }
+
+
+
+
 
 
 
@@ -240,7 +274,13 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                       child: GestureDetector(
                         onTap: () {
 
-                          getWalletBalance(userAddress);
+
+
+                          getAbi();
+
+                          // fetchBalance();
+
+                          // getWalletBalance(userAddress);
                           /*Navigator.push(
                               context,
                               MaterialPageRoute(

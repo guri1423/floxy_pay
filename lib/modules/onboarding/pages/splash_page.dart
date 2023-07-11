@@ -1,3 +1,4 @@
+import 'package:floxy_pay/modules/balance.dart';
 import 'package:floxy_pay/modules/bottom_navigation/pages/bottom_navigation.dart';
 import 'package:floxy_pay/modules/onboarding/pages/onboarding_one.dart';
 import 'package:floxy_pay/modules/onboarding/pages/onboarding_page.dart';
@@ -20,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
     if (status != null && status.contains('true')) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => BottomNavigation()),
+        MaterialPageRoute(builder: (context) => BalanceWallet(title: 'Ethereum')),
       );
     } else {
       Navigator.push(

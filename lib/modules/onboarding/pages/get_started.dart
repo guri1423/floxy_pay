@@ -1,16 +1,10 @@
-
-
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/core/strings.dart';
-import 'package:floxy_pay/modules/home/pages/home.dart';
-import 'package:floxy_pay/modules/send/pages/send.dart';
-import 'package:floxy_pay/modules/web3Auth/pages/authentication.dart';
+import 'package:floxy_pay/modules/balance.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../bottom_navigation/pages/bottom_navigation.dart';
 
 class GetStarted extends StatefulWidget {
   const GetStarted({super.key});
@@ -75,7 +69,7 @@ class _GetStartedState extends State<GetStarted> {
                   onTap: (){
 
                     
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Authentication()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BalanceWallet(title: 'Ethereum')));
 
                   },
                   child: customButton(context),
