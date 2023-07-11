@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:floxy_pay/core/colors.dart';
+import 'package:floxy_pay/modules/home/handler/balance_handler.dart';
 import 'package:floxy_pay/modules/notification/pages/notification.dart';
 import 'package:floxy_pay/modules/profile/pages/profile.dart';
 import 'package:floxy_pay/modules/sale/pages/sale.dart';
@@ -36,6 +37,8 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
 
   String _address = '';
+  final balanceHandler = BalanceHandler();
+/*
 
 
   Future<DeployedContract> loadContract()async{
@@ -82,9 +85,7 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
    return result;
   }
-
-
-
+*/
 
 
 
@@ -97,68 +98,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
 
   }
-
-/*
-  Future<DeployedContract> loadContract () async{
-
-    String abi = await rootBundle.loadString('assets/ethereum.abi.json');
-    String contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
-
-    final contract = DeployedContract(ContractAbi.fromJson(abi, 'UChildERC20Proxy',), EthereumAddress.fromHex(contractAddress));
-
-    return contract;
-  }
-
-
-  Future<List<dynamic>> query (String functionName, List<dynamic> args)async{
-
-    final contract = await loadContract();
-
-    final ethFunction = contract.functions
-  }
-
-
-  Future<Void> getWalletBalance(String targetAddress) async{
-
-    EthereumAddress address = EthereumAddress.fromHex(targetAddress);
-  }
-
-
-  String rpcUrl = 'https://rpc.ankr.com/eth';
-
-  String _result = '';
-
-  String _address = '';*/
-
-
-  Future<Web3Client> createWeb3Client() async {
-    final rpcUrl = 'https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c';
-    final httpClient = Client();
-    final chainId = 1; // Use 1 for Ethereum mainnet
-    final web3Client = Web3Client(rpcUrl, httpClient);
-    return web3Client;
-  }
-  Future<EtherAmount> getWalletBalanceNew(String userAddress, String walletAddress) async {
-
-    final contract = await getAbi();
-    final ethFunction = contract.function('balanceOf');
-    final result = await ethClient.call(contract: contract, function: ethFunction, params: [EthereumAddress.fromHex(walletAddress)]);
-    final balanceInWei = result[0] as BigInt;
-    final balanceInEther = EtherAmount.fromUnitAndValue(EtherUnit.wei, balanceInWei);
-    return balanceInEther;
-  }
-
-
-  void fetchBalance() async {
-    final userAddress = '0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6';
-    final walletAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7'; // Replace with the desired wallet address
-    final balance = await getWalletBalanceNew(userAddress,walletAddress);
-    print('Wallet Balance: ${balance.getValueInUnit(EtherUnit.ether)} ETH');
-  }
-
-
-
-
 
 
 
@@ -276,7 +215,7 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
 
 
-                          getAbi();
+                          balanceHandler.getAbi();
 
                           // fetchBalance();
 
