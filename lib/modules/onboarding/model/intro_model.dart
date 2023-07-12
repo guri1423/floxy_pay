@@ -15,10 +15,16 @@ final List<PageViewModel> introModel = [
   PageViewModel(
     title: Strings.onBoardingText2,
     body: Strings.onBoardingTextSub2,
-    image: SizedBox(
-        height: 290,
-        width: 290,
-        child: SvgPicture.asset('assets/svg_images/onboarding_page_two.svg')),
+    image: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+            height: 290,
+            width: 290,
+            child:
+                SvgPicture.asset('assets/svg_images/onboarding_page_two.svg')),
+      ],
+    ),
   ),
   PageViewModel(
     title: Strings.getStarted1,

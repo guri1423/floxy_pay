@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
     } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => OnboardingPageOne()),
+        MaterialPageRoute(builder: (context) => OnBoardingPage()),
       );
     }
   }
