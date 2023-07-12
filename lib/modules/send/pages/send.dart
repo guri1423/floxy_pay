@@ -32,13 +32,15 @@ class _SendPageState extends State<SendPage> {
   String ethereumClientUrl =
       'https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c';
   String contractName = "MyToken";
-  String private_key = "";
+  String private_key =
+      "bd68e75460eb4af9b87f4df03bf09bee1b82ba727c9665f17b5f024c7a1cf9e9";
 
   int balance = 0;
+
   bool loading = false;
 
-  Future<List<dynamic>> query(String functionName, List<dynamic> args) async {
-
+  Future<List<dynamic>> query(
+      String functionName, List<dynamic> args) async {
     DeployedContract contract = await getContract();
     ContractFunction function = contract.function(functionName);
     List<dynamic> result = await ethereumClient.call(
@@ -46,7 +48,8 @@ class _SendPageState extends State<SendPage> {
     return result;
   }
 
-  Future<String> transaction(String functionName, List<dynamic> args) async {
+  Future<String> transaction(
+      String functionName, List<dynamic> args) async {
     EthPrivateKey credential = EthPrivateKey.fromHex(private_key);
     DeployedContract contract = await getContract();
     ContractFunction function = contract.function(functionName);
@@ -64,7 +67,6 @@ class _SendPageState extends State<SendPage> {
     return result;
   }
 
-
   Future<DeployedContract> getContract() async {
     String abi = await rootBundle.loadString("assets/ethereum.abi.json");
 
@@ -78,19 +80,38 @@ class _SendPageState extends State<SendPage> {
     return contract;
   }
 
+  Future<void> setOwnerAddress() async {
+    String ownerAddress = '0xdbCa6c664224E5AE2400f10584E255f789C50c68';
+    String functionName = 'setOwner';
+    List<dynamic> args = [EthereumAddress.fromHex(ownerAddress)];
 
+    try {
+      String txHash = await transaction(functionName, args);
+      print('Transaction Hash: $txHash');
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   Future<void> send() async {
+    String receiverAddress = '0x6622d772c84fb30b1f1f3a5569ca02d8f12f2d29';
 
-    String walletAddress = "0xdbCa6c664224E5AE2400f10584E255f789C50c68";
+    List<dynamic> result = await query(
+        'transfer', [EthereumAddress.fromHex(receiverAddress), BigInt.parse('10000')]);
 
-    String receiverAddrss = '0x510a23606050b6bA1Ae37BdACb4e221756E31533';
-
-    List<dynamic> result = await query('transferFrom', [EthereumAddress.fromHex(walletAddress),EthereumAddress.fromHex(receiverAddrss),BigInt.parse('100')]);
-
-    debugPrint(result.toString());
-
+    print(result.toString());
   }
+
+
+
+
+
+
+  String walletAddress = "0xdbCa6c664224E5AE2400f10584E255f789C50c68";
+
+
+
+
 
 
 
@@ -102,8 +123,6 @@ class _SendPageState extends State<SendPage> {
     httpClient = Client();
     ethereumClient = Web3Client(ethereumClientUrl, httpClient);
     super.initState();
-
-
 
   }
 
@@ -187,7 +206,10 @@ class _SendPageState extends State<SendPage> {
                       GestureDetector(
                           onTap: (){
 
+
                             send();
+
+
 
                             // transferFrom(EthereumAddress.fromHex('0xdbCa6c664224E5AE2400f10584E255f789C50c68'),  EthereumAddress.fromHex('0x9C7c177836f36527AC2A55Cc762B0D0f05C52De2'), BigInt.parse(_amount.text));
 /*

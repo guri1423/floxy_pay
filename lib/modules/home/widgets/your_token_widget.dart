@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/modules/handler/main_net.dart';
+import 'package:floxy_pay/modules/handler/polygon_eth_handler.dart';
 import 'package:floxy_pay/modules/home/model/token_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,13 +15,27 @@ class YourTokenWidget extends StatefulWidget {
 
 class _YourTokenWidgetState extends State<YourTokenWidget> {
   final balanceHandler = BalanceHandler();
+  final polyHandler = PolyHandler();
   String? balance;
+  String? polyBalance;
+
+/*  Future<dynamic> getBal(){
+
+    dynamic val
+  }*/
 
   @override
   void initState() {
     balanceHandler.getBalance1().then((String bal) {
       setState(() {
         balance = bal;
+      });
+    });
+
+
+    polyHandler.getBalance1().then((String balance) {
+      setState(() {
+        polyBalance = balance;
       });
     });
     super.initState();
@@ -30,6 +45,31 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
+
+
+    YourTokens.allYourTokens = [
+      YourTokens(
+          title: "USDT",
+          value: "${balance} USDT",
+          iconSrc: "assets/svg_images/bitcoin.svg",
+          netProfit: "+2.49%",
+          subTitle: "Ethereum",
+          bgColor: CustomColors.token1),
+      YourTokens(
+          title: "USDT",
+          value: "${polyBalance} USDT",
+          iconSrc: "assets/svg_images/eth.svg",
+          netProfit: "+2.49%",
+          subTitle: "polygon",
+          bgColor: CustomColors.token2),
+      YourTokens(
+          title: "Matic",
+          value: "45,338.11Matic",
+          iconSrc: "assets/svg_images/bitcoin.svg",
+          netProfit: "+2.49%",
+          subTitle: "Matic",
+          bgColor: CustomColors.token3),
+    ];
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -38,7 +78,7 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
         ),
 
         /// Here we can show our balance
-        Text(balance ?? ''),
+        // Text(balance ?? ''),
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -139,4 +179,30 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
       ],
     );
   }
+
+
+
 }
+
+class YourTokens {
+  final String title;
+  final String subTitle;
+  final String value;
+  final String netProfit;
+  final String iconSrc;
+  final Color bgColor;
+
+  YourTokens({
+    required this.title,
+    required this.value,
+    required this.iconSrc,
+    required this.netProfit,
+    required this.subTitle,
+    required this.bgColor,
+  });
+
+  static List<YourTokens> allYourTokens = [];
+}
+
+
+

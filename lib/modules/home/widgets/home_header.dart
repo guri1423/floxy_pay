@@ -36,6 +36,7 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
   TextEditingController controller = TextEditingController();
 
   String address = '0x26b9497F5E52FeacDf735d11656c9885eD483A2b';
+
   String ethereumClientUrl =
       'https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c';
   String contractName = "MyToken";
@@ -283,14 +284,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                           ),
 
 
-                          const SizedBox(
-                            height: 12,
-                          ),
-
-                          Text(
-                            "Balance: ${balance.toString()}",
-                            style: theme.textTheme.titleLarge!.copyWith(fontSize: 16),
-                          ),
 
                           const SizedBox(
                             height: 12,
