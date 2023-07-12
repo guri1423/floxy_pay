@@ -1,4 +1,6 @@
-
+import 'package:floxy_pay/core/colors.dart';
+import 'package:floxy_pay/core/strings.dart';
+import 'package:floxy_pay/modules/buy_fxy/pages/buy_fxy.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:floxy_pay/widgets/custom_textField.dart';
 import 'package:floxy_pay/widgets/header_widget.dart';
@@ -7,9 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
 
-import '../../../core/colors.dart';
-import '../../../core/strings.dart';
-import '../../buy_fxy/pages/buy_fxy.dart';
 
 class SendPage extends StatefulWidget {
   const SendPage({super.key});
@@ -48,7 +47,6 @@ class _SendPageState extends State<SendPage> {
   }
 
   Future<String> transaction(String functionName, List<dynamic> args) async {
-
     EthPrivateKey credential = EthPrivateKey.fromHex(private_key);
     DeployedContract contract = await getContract();
     ContractFunction function = contract.function(functionName);
@@ -66,6 +64,7 @@ class _SendPageState extends State<SendPage> {
     return result;
   }
 
+
   Future<DeployedContract> getContract() async {
     String abi = await rootBundle.loadString("assets/ethereum.abi.json");
 
@@ -80,23 +79,22 @@ class _SendPageState extends State<SendPage> {
   }
 
 
-  Future<void> send(int amount, EthereumAddress receiverAddress, EthereumAddress senderAddress) async {
-    final result = await transaction(
-      "transfer",
-      [receiverAddress, BigInt.from(amount), senderAddress],
-    );
 
-    print("Deposited");
-    print(result);
+  Future<void> send() async {
+
+    String walletAddress = "0xdbCa6c664224E5AE2400f10584E255f789C50c68";
+
+    String receiverAddrss = '0x510a23606050b6bA1Ae37BdACb4e221756E31533';
+
+    List<dynamic> result = await query('transferFrom', [EthereumAddress.fromHex(walletAddress),EthereumAddress.fromHex(receiverAddrss),BigInt.parse('100')]);
+
+    debugPrint(result.toString());
+
   }
 
 
-  Future<void> withdraw(int amount) async {
-    BigInt parsedAmount = BigInt.from(amount);
-    var result = await transaction("withdraw", [parsedAmount]);
-    print("withdraw done");
-    print(result);
-  }
+
+
 
 
   @override
@@ -189,8 +187,12 @@ class _SendPageState extends State<SendPage> {
                       GestureDetector(
                           onTap: (){
 
-                           send(int.parse(_amount.text), EthereumAddress.fromHex('0xdbCa6c664224E5AE2400f10584E255f789C50c68'),
-                               EthereumAddress.fromHex('0x9C7c177836f36527AC2A55Cc762B0D0f05C52De2'));
+                            send();
+
+                            // transferFrom(EthereumAddress.fromHex('0xdbCa6c664224E5AE2400f10584E255f789C50c68'),  EthereumAddress.fromHex('0x9C7c177836f36527AC2A55Cc762B0D0f05C52De2'), BigInt.parse(_amount.text));
+/*
+                           send(BigInt.parse(_amount.text), EthereumAddress.fromHex('0xdbCa6c664224E5AE2400f10584E255f789C50c68'),
+                               EthereumAddress.fromHex('0x9C7c177836f36527AC2A55Cc762B0D0f05C52De2'));*/
 
 
                             // Navigator.push(context, MaterialPageRoute(builder: (context) => SalePage()));

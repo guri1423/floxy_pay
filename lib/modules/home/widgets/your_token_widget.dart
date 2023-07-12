@@ -1,11 +1,30 @@
+
+
+
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:floxy_pay/core/colors.dart';
+import 'package:floxy_pay/modules/handler/main_net.dart';
 import 'package:floxy_pay/modules/home/model/token_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class YourTokenWidget extends StatelessWidget {
-  const YourTokenWidget({Key? key}) : super(key: key);
+class YourTokenWidget extends StatefulWidget {
+  const YourTokenWidget({super.key});
+
+  @override
+  State<YourTokenWidget> createState() => _YourTokenWidgetState();
+}
+
+class _YourTokenWidgetState extends State<YourTokenWidget> {
+
+  final balanceHandler = BalanceHandler();
+
+  @override
+  void initState() {
+
+    balanceHandler.getBalance1();
+    super.initState();
+  }
 
 
   @override
@@ -43,8 +62,8 @@ class YourTokenWidget extends StatelessWidget {
               itemCount: YourTokens.allYourTokens.length,
               scrollDirection: Axis.horizontal,
               separatorBuilder: (context, index) => const SizedBox(
-                    width: 10,
-                  ),
+                width: 10,
+              ),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: index == 0
@@ -87,8 +106,8 @@ class YourTokenWidget extends StatelessWidget {
                               horizontal: 10, vertical: 4),
                           child: Center(
                             child:
-                                Text(YourTokens.allYourTokens[index].netProfit,
-                                style: theme.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w400),),
+                            Text(YourTokens.allYourTokens[index].netProfit,
+                              style: theme.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w400),),
                           ),
                         ),
                         const Spacer(),
@@ -113,3 +132,4 @@ class YourTokenWidget extends StatelessWidget {
     );
   }
 }
+

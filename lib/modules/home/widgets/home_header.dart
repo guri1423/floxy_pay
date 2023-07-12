@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/modules/notification/pages/notification.dart';
 import 'package:floxy_pay/modules/profile/pages/profile.dart';
@@ -43,7 +42,9 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
   String private_key = "";
 
   int balance = 0;
+  int mainNetBalance = 0;
   bool loading = false;
+
 
   Future<List<dynamic>> query(String functionName, List<dynamic> args) async {
 
@@ -106,9 +107,8 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
 
   late Client httpClient1;
+
   late Web3Client ethereumClient1;
-
-
 
 
   String address1 = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
@@ -166,14 +166,17 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
     List<dynamic> result = await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
 
+    setState(() {
+      mainNetBalance = int.parse(result[0].toString());
+    });
+
 
     debugPrint(result.toString());
 
-    debugPrint(balance.toString());
+    debugPrint(mainNetBalance.toString());
 
 
   }
-
 
 
 
@@ -182,15 +185,11 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
     httpClient = Client();
     ethereumClient = Web3Client(ethereumClientUrl, httpClient);
 
-    httpClient1 = Client();
-    ethereumClient1= Web3Client(ethereumClientUrl1, httpClient1);
+
     _getAddress();
-    getBalance();
+    // getBalance();
 
-    getBalance1();
     super.initState();
-
-
 
   }
 
@@ -203,9 +202,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
     final web3Client = Web3Client(rpcUrl, httpClient);
     return web3Client;
   }
-
-
-
 
 
 
