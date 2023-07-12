@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
 import '../../../services/storage_services.dart';
+import '../../buy_fxy/pages/buy_fxy.dart';
 import '../../receive/pages/receive_page.dart';
 import '../../send/pages/send.dart';
 
@@ -25,110 +26,174 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
   final myAddress = '0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6';
 
-  final tokenAddress = EthereumAddress.fromHex('0xf4598c0e529E56B1ec322Ba7ee58dfB62dEd58aB');
 
-  final userAddress = EthereumAddress.fromHex('0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6');
-
-
-  final httpClient = Client();
-
-  final ethClient = Web3Client('https://rpc-mumbai.matic.today', Client());
 
 
   String _address = '';
 
+  late Client httpClient;
+  late Web3Client ethereumClient;
 
-  Future<DeployedContract> loadContract()async{
-    String abi = await rootBundle.loadString('assets/ethereum.abi.json');
-    String contractAddress = '0xf4598c0e529E56B1ec322Ba7ee58dfB62dEd58aB';
-    final contract = DeployedContract(ContractAbi.fromJson(abi, 'MyToken'),EthereumAddress.fromHex(contractAddress));
+  TextEditingController controller = TextEditingController();
 
-    return contract;
+  String address = '0x26b9497F5E52FeacDf735d11656c9885eD483A2b';
+  String ethereumClientUrl =
+      'https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c';
+  String contractName = "MyToken";
+  String private_key = "";
+
+  int balance = 0;
+  bool loading = false;
+
+  Future<List<dynamic>> query(String functionName, List<dynamic> args) async {
+
+    DeployedContract contract = await getContract();
+    ContractFunction function = contract.function(functionName);
+    List<dynamic> result = await ethereumClient.call(
+        contract: contract, function: function, params: args);
+    return result;
   }
 
-  Future<DeployedContract> getAbi() async {
-
-    String abiStringFile = await rootBundle.loadString("assets/ethereum.abi.json");
-    var jsonAbi = jsonDecode(abiStringFile);
-    String contractAddress = '0xf4598c0e529E56B1ec322Ba7ee58dfB62dEd58aB';
-    final contract = DeployedContract(
-      ContractAbi.fromJson(jsonAbi, 'MyToken'),
-      EthereumAddress.fromHex(contractAddress),
+  Future<String> transaction(String functionName, List<dynamic> args) async {
+    EthPrivateKey credential = EthPrivateKey.fromHex(private_key);
+    DeployedContract contract = await getContract();
+    ContractFunction function = contract.function(functionName);
+    dynamic result = await ethereumClient.sendTransaction(
+      credential,
+      Transaction.callContract(
+        contract: contract,
+        function: function,
+        parameters: args,
+      ),
+      fetchChainIdFromNetworkId: true,
+      chainId: null,
     );
-    return contract;
-
-  }
-
-
-  Future<List<dynamic>> query (String functionName, List<dynamic> args)async{
-
-    final contract = await loadContract();
-
-    final ethFunction = contract.function(functionName);
-
-    final result = await ethClient.call(contract: contract, function: ethFunction, params: [EthereumAddress.fromHex('0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6')]);
-
 
     return result;
+  }
+
+  Future<DeployedContract> getContract() async {
+    String abi = await rootBundle.loadString("assets/ethereum.abi.json");
+
+    String contractAddress = "0xf4598c0e529E56B1ec322Ba7ee58dfB62dEd58aB";
+
+    DeployedContract contract = DeployedContract(
+      ContractAbi.fromJson(abi, contractName),
+      EthereumAddress.fromHex(contractAddress),
+    );
+
+    return contract;
+  }
+
+  Future<void> getBalance() async {
+
+    debugPrint('******');
+
+    String walletAddress = "0xdbCa6c664224E5AE2400f10584E255f789C50c68";
+
+    List<dynamic> result = await query('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
+
+     setState(() {
+       balance = int.parse(result[0].toString());
+     });
+
+    debugPrint(result.toString());
+
+    debugPrint(balance.toString());
+
 
   }
 
 
-  Future<List> getWalletBalance(dynamic targetAddress) async{
+  late Client httpClient1;
+  late Web3Client ethereumClient1;
 
-   List<dynamic> result = await query('balanceOf',  [EthereumAddress.fromHex('0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6')]);
 
-   debugPrint(result.toString());
 
-   return result;
+
+  String address1 = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
+  String ethereumClientUrl1 =
+      'https://mainnet.infura.io/v3/4cf5ea966d084aceb3c25b05c7a0089e';
+  String contractName1 = "TetherToken";
+  String private_key1 = "";
+
+
+  Future<List<dynamic>> query1(String functionName, List<dynamic> args) async {
+
+    DeployedContract contract = await getContract1();
+    ContractFunction function = contract.function(functionName);
+    List<dynamic> result = await ethereumClient1.call(
+        contract: contract, function: function, params: args);
+    return result;
   }
 
+  Future<String> transaction1(String functionName, List<dynamic> args) async {
+    EthPrivateKey credential = EthPrivateKey.fromHex(private_key);
+    DeployedContract contract = await getContract1();
+    ContractFunction function = contract.function(functionName);
+    dynamic result = await ethereumClient1.sendTransaction(
+      credential,
+      Transaction.callContract(
+        contract: contract,
+        function: function,
+        parameters: args,
+      ),
+      fetchChainIdFromNetworkId: true,
+      chainId: null,
+    );
+
+    return result;
+  }
+
+  Future<DeployedContract> getContract1() async {
+    String abi = await rootBundle.loadString("assets/tether_token.abi.json");
+
+    String contractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+
+    DeployedContract contract = DeployedContract(
+      ContractAbi.fromJson(abi, contractName1),
+      EthereumAddress.fromHex(contractAddress),
+    );
+
+    return contract;
+  }
+
+  Future<void> getBalance1() async {
+
+    debugPrint('****** get balance 1');
+
+    String walletAddress = "0x510a23606050b6bA1Ae37BdACb4e221756E31533";
+
+    List<dynamic> result = await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
 
 
+    debugPrint(result.toString());
+
+    debugPrint(balance.toString());
+
+
+  }
 
 
 
 
   @override
   void initState() {
+    httpClient = Client();
+    ethereumClient = Web3Client(ethereumClientUrl, httpClient);
+
+    httpClient1 = Client();
+    ethereumClient1= Web3Client(ethereumClientUrl1, httpClient1);
     _getAddress();
+    getBalance();
+
+    getBalance1();
     super.initState();
 
 
 
   }
 
-/*
-  Future<DeployedContract> loadContract () async{
-
-    String abi = await rootBundle.loadString('assets/ethereum.abi.json');
-    String contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
-
-    final contract = DeployedContract(ContractAbi.fromJson(abi, 'UChildERC20Proxy',), EthereumAddress.fromHex(contractAddress));
-
-    return contract;
-  }
-
-
-  Future<List<dynamic>> query (String functionName, List<dynamic> args)async{
-
-    final contract = await loadContract();
-
-    final ethFunction = contract.functions
-  }
-
-
-  Future<Void> getWalletBalance(String targetAddress) async{
-
-    EthereumAddress address = EthereumAddress.fromHex(targetAddress);
-  }
-
-
-  String rpcUrl = 'https://rpc.ankr.com/eth';
-
-  String _result = '';
-
-  String _address = '';*/
 
 
   Future<Web3Client> createWeb3Client() async {
@@ -138,26 +203,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
     final web3Client = Web3Client(rpcUrl, httpClient);
     return web3Client;
   }
-  Future<EtherAmount> getWalletBalanceNew(String userAddress, String walletAddress) async {
-
-    final contract = await getAbi();
-    final ethFunction = contract.function('balanceOf');
-    final result = await ethClient.call(contract: contract, function: ethFunction, params: [EthereumAddress.fromHex(walletAddress)]);
-    final balanceInWei = result[0] as BigInt;
-    final balanceInEther = EtherAmount.fromUnitAndValue(EtherUnit.wei, balanceInWei);
-    return balanceInEther;
-  }
-
-
-  void fetchBalance() async {
-    final userAddress = '0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6';
-    final walletAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7'; // Replace with the desired wallet address
-    final balance = await getWalletBalanceNew(userAddress,walletAddress);
-    print('Wallet Balance: ${balance.getValueInUnit(EtherUnit.ether)} ETH');
-  }
-
-
-
 
 
 
@@ -235,7 +280,19 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Address: ${_address.substring(0,8)}...",
+                            "Address: ${_address}",
+                            style: theme.textTheme.titleLarge!.copyWith(fontSize: 16),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+
+
+                          const SizedBox(
+                            height: 12,
+                          ),
+
+                          Text(
+                            "Balance: ${balance.toString()}",
                             style: theme.textTheme.titleLarge!.copyWith(fontSize: 16),
                           ),
 
@@ -274,17 +331,10 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                       child: GestureDetector(
                         onTap: () {
 
-
-
-                          getAbi();
-
-                          // fetchBalance();
-
-                          // getWalletBalance(userAddress);
-                          /*Navigator.push(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => BuyFxy()));*/
+                                  builder: (context) => BuyFxy()));
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -385,24 +435,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
     ]);
   }
 
-  /*Future<EtherAmount> _getBalance() async {
-
-    final StorageServices _servicesStorage = StorageServices();
-
-    final privateKey = await _servicesStorage.getId()  ?? '0';
-
-    final client = Web3Client(rpcUrl, Client());
-    final credentials = EthPrivateKey.fromHex(privateKey);
-    final address = credentials.address;
-    final balance = await client.getBalance(address);
-    debugPrint(balance.toString());
-
-    setState(() {
-      _result = balance.toString();
-    });
-
-    return balance;
-  }*/
 
   Future<String> _getAddress() async {
 

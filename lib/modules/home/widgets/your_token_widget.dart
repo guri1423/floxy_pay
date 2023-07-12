@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class YourTokenWidget extends StatelessWidget {
   const YourTokenWidget({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);

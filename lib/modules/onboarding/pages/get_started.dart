@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:floxy_pay/core/strings.dart';
 import 'package:floxy_pay/modules/balance.dart';
+import 'package:floxy_pay/modules/bottom_navigation/pages/bottom_navigation.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -68,9 +69,7 @@ class _GetStartedState extends State<GetStarted> {
 
                   onTap: (){
 
-                    
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => BalanceWallet(title: 'Ethereum')));
-
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavigation()));
                   },
                   child: customButton(context),
                 ),

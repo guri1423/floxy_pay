@@ -1,9 +1,11 @@
 
-import 'package:floxy_pay/modules/sale/pages/sale.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:floxy_pay/widgets/custom_textField.dart';
 import 'package:floxy_pay/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart';
+import 'package:web3dart/web3dart.dart';
 
 import '../../../core/colors.dart';
 import '../../../core/strings.dart';
@@ -20,6 +22,94 @@ class _SendPageState extends State<SendPage> {
 
   TextEditingController _address = TextEditingController();
   TextEditingController _amount = TextEditingController();
+
+
+  late Client httpClient;
+  late Web3Client ethereumClient;
+
+  TextEditingController controller = TextEditingController();
+
+  String address = '0x26b9497F5E52FeacDf735d11656c9885eD483A2b';
+  String ethereumClientUrl =
+      'https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c';
+  String contractName = "MyToken";
+  String private_key = "";
+
+  int balance = 0;
+  bool loading = false;
+
+  Future<List<dynamic>> query(String functionName, List<dynamic> args) async {
+
+    DeployedContract contract = await getContract();
+    ContractFunction function = contract.function(functionName);
+    List<dynamic> result = await ethereumClient.call(
+        contract: contract, function: function, params: args);
+    return result;
+  }
+
+  Future<String> transaction(String functionName, List<dynamic> args) async {
+
+    EthPrivateKey credential = EthPrivateKey.fromHex(private_key);
+    DeployedContract contract = await getContract();
+    ContractFunction function = contract.function(functionName);
+    dynamic result = await ethereumClient.sendTransaction(
+      credential,
+      Transaction.callContract(
+        contract: contract,
+        function: function,
+        parameters: args,
+      ),
+      fetchChainIdFromNetworkId: true,
+      chainId: null,
+    );
+
+    return result;
+  }
+
+  Future<DeployedContract> getContract() async {
+    String abi = await rootBundle.loadString("assets/ethereum.abi.json");
+
+    String contractAddress = "0xf4598c0e529E56B1ec322Ba7ee58dfB62dEd58aB";
+
+    DeployedContract contract = DeployedContract(
+      ContractAbi.fromJson(abi, contractName),
+      EthereumAddress.fromHex(contractAddress),
+    );
+
+    return contract;
+  }
+
+
+  Future<void> send(int amount, EthereumAddress receiverAddress, EthereumAddress senderAddress) async {
+    final result = await transaction(
+      "transfer",
+      [receiverAddress, BigInt.from(amount), senderAddress],
+    );
+
+    print("Deposited");
+    print(result);
+  }
+
+
+  Future<void> withdraw(int amount) async {
+    BigInt parsedAmount = BigInt.from(amount);
+    var result = await transaction("withdraw", [parsedAmount]);
+    print("withdraw done");
+    print(result);
+  }
+
+
+  @override
+  void initState() {
+    httpClient = Client();
+    ethereumClient = Web3Client(ethereumClientUrl, httpClient);
+    super.initState();
+
+
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +188,12 @@ class _SendPageState extends State<SendPage> {
 
                       GestureDetector(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SalePage()));
+
+                           send(int.parse(_amount.text), EthereumAddress.fromHex('0xdbCa6c664224E5AE2400f10584E255f789C50c68'),
+                               EthereumAddress.fromHex('0x9C7c177836f36527AC2A55Cc762B0D0f05C52De2'));
+
+
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => SalePage()));
                           },
                           child: customButtonNew(context, Strings.process, CustomColors.black, CustomColors.white)),
 

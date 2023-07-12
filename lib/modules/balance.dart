@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
-
 import '../core/colors.dart';
 
 
@@ -25,14 +24,15 @@ class _BalanceWalletState extends State<BalanceWallet> {
 
   String address = '0x26b9497F5E52FeacDf735d11656c9885eD483A2b';
   String ethereumClientUrl =
-      'https://rinkeby.infura.io/v3/5494ea4b4d6f4fb1b61e611a5c78586b';
-  String contractName = "Fluthereum";
+      'https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c';
+  String contractName = "MyToken";
   String private_key = "";
 
   int balance = 0;
   bool loading = false;
 
   Future<List<dynamic>> query(String functionName, List<dynamic> args) async {
+
     DeployedContract contract = await getContract();
     ContractFunction function = contract.function(functionName);
     List<dynamic> result = await ethereumClient.call(
@@ -59,8 +59,9 @@ class _BalanceWalletState extends State<BalanceWallet> {
   }
 
   Future<DeployedContract> getContract() async {
-    String abi = await rootBundle.loadString("assets/abi.json");
-    String contractAddress = "0xd55B64d9b7816f2e2D9be07CbC52303A77B7163b";
+    String abi = await rootBundle.loadString("assets/ethereum.abi.json");
+
+    String contractAddress = "0xf4598c0e529E56B1ec322Ba7ee58dfB62dEd58aB";
 
     DeployedContract contract = DeployedContract(
       ContractAbi.fromJson(abi, contractName),
@@ -71,13 +72,18 @@ class _BalanceWalletState extends State<BalanceWallet> {
   }
 
   Future<void> getBalance() async {
+
     debugPrint('******');
 
-    List<dynamic> result = await query('balance', []);
-    balance = int.parse(result[0]);
+    String walletAddress = "0xdbCa6c664224E5AE2400f10584E255f789C50c68";
+
+    List<dynamic> result = await query('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
+
+    balance = int.parse(result[0].toString());
+
+    debugPrint(result.toString());
 
     debugPrint(balance.toString());
-
 
   }
 
@@ -100,7 +106,6 @@ class _BalanceWalletState extends State<BalanceWallet> {
     super.initState();
     httpClient = Client();
     ethereumClient = Web3Client(ethereumClientUrl, httpClient);
-    getBalance();
   }
 
   @override
@@ -138,6 +143,8 @@ class _BalanceWalletState extends State<BalanceWallet> {
               onTap: () {
 
                 getBalance();
+
+                getContract();
               },
               child: Container(
                 decoration: BoxDecoration(

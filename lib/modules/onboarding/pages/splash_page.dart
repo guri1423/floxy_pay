@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
     if (status != null && status.contains('true')) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => BalanceWallet(title: 'Ethereum')),
+        MaterialPageRoute(builder: (context) => BottomNavigation()),
       );
     } else {
       Navigator.push(
