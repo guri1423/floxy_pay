@@ -1,6 +1,3 @@
-
-
-
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/modules/handler/main_net.dart';
@@ -16,16 +13,18 @@ class YourTokenWidget extends StatefulWidget {
 }
 
 class _YourTokenWidgetState extends State<YourTokenWidget> {
-
   final balanceHandler = BalanceHandler();
+  String? balance;
 
   @override
   void initState() {
-
-    balanceHandler.getBalance1();
+    balanceHandler.getBalance1().then((String bal) {
+      setState(() {
+        balance = bal;
+      });
+    });
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +36,10 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
         const SizedBox(
           height: 16,
         ),
+
+        /// Here we can show our balance
+        Text(balance ?? ''),
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
@@ -62,8 +65,8 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
               itemCount: YourTokens.allYourTokens.length,
               scrollDirection: Axis.horizontal,
               separatorBuilder: (context, index) => const SizedBox(
-                width: 10,
-              ),
+                    width: 10,
+                  ),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: index == 0
@@ -105,16 +108,21 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 4),
                           child: Center(
-                            child:
-                            Text(YourTokens.allYourTokens[index].netProfit,
-                              style: theme.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w400),),
+                            child: Text(
+                              YourTokens.allYourTokens[index].netProfit,
+                              style: theme.textTheme.titleSmall!
+                                  .copyWith(fontWeight: FontWeight.w400),
+                            ),
                           ),
                         ),
                         const Spacer(),
                         Row(
                           children: [
-                            SvgPicture.asset(YourTokens.allYourTokens[index].iconSrc),
-                            const SizedBox(width: 4,),
+                            SvgPicture.asset(
+                                YourTokens.allYourTokens[index].iconSrc),
+                            const SizedBox(
+                              width: 4,
+                            ),
                             Text(
                               YourTokens.allYourTokens[index].value,
                               style: theme.textTheme.headlineSmall!
@@ -132,4 +140,3 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
     );
   }
 }
-

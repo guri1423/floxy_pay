@@ -15,17 +15,13 @@ class BalanceHandler {
 
   dynamic mainNetBalance = 0;
 
-
-
   String address1 = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
   String ethereumClientUrl1 =
       'https://mainnet.infura.io/v3/4cf5ea966d084aceb3c25b05c7a0089e';
   String contractName1 = "TetherToken";
   String private_key1 = "";
 
-
   Future<List<dynamic>> query1(String functionName, List<dynamic> args) async {
-
     DeployedContract contract = await getContract1();
     ContractFunction function = contract.function(functionName);
     List<dynamic> result = await ethereumClient1.call(
@@ -64,8 +60,7 @@ class BalanceHandler {
     return contract;
   }
 
-  Future<dynamic> getBalance1() async {
-
+  Future<String> getBalance1() async {
     httpClient1 = Client();
     ethereumClient1 = Web3Client(ethereumClientUrl1, httpClient1);
 
@@ -73,16 +68,13 @@ class BalanceHandler {
 
     String walletAddress = "0x510a23606050b6bA1Ae37BdACb4e221756E31533";
 
-    List<dynamic> result = await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
+    List<dynamic> result =
+        await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
 
     debugPrint(result.toString());
 
-    mainNetBalance = int.parse(result[0].toString());
+    // mainNetBalance = int.parse(result[0].toString());
 
-    return mainNetBalance;
-
+    return result[0].toString();
   }
-
-
-
-  }
+}
