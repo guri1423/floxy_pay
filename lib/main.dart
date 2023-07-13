@@ -1,10 +1,7 @@
 import 'dart:collection';
-
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/core/theme.dart';
-import 'package:floxy_pay/modules/onboarding/pages/onboarding_one.dart';
 import 'package:floxy_pay/modules/onboarding/pages/splash_page.dart';
-import 'package:floxy_pay/services/storage_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +9,6 @@ import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
 import 'modules/bottom_navigation/bloc/bottom_navigation_cubit.dart';
-import 'modules/bottom_navigation/pages/bottom_navigation.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 class DropdownBox extends StatefulWidget {
+  final ValueChanged<String>? onChanged;
+  final String selectedOption;
+  const DropdownBox({Key? key, this.onChanged, required this.selectedOption})
+      : super(key: key);
   @override
   _DropdownBoxState createState() => _DropdownBoxState();
 }
 
 class _DropdownBoxState extends State<DropdownBox> {
-  String dropdownValue = 'FXY';
+  String dropdownValue = 'Ethereum';
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class _DropdownBoxState extends State<DropdownBox> {
                   dropdownValue = newValue!;
                 });
               },
-              items: <String>['FXY', 'YFX', 'YRV']
+              items: <String>['Ethereum', 'Polygon', 'Mainnet']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

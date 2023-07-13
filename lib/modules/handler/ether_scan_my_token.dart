@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -143,7 +144,17 @@ class SendBalanceHandler {
       debugPrint('Transaction pending...');
     } while (receipt == null);
 
+    Fluttertoast.showToast(
+      msg: 'Status of Transaction: ${receipt.status.toString()}',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black87,
+      textColor: Colors.white,
+    );
+
     if (receipt.status!) {
+
       // Transaction was successful
       debugPrint('Transaction successful! Receipt: ${receipt.toString()}');
       // Access other fields in the receipt
@@ -155,5 +166,36 @@ class SendBalanceHandler {
       debugPrint('Transaction failed! Receipt: ${receipt.toString()}');
     }
   }
+
+  Future<BigInt> estimateGasCost(String recipientAddress) async {
+
+    final client = Web3Client('https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c', Client());
+
+    final credentials = await client.credentialsFromPrivateKey('f86b4ac862171a594c255fadcfc6e20a7d1a6faba39a6756d1927a28d3c43023');
+    final ownAddress = await credentials.extractAddress();
+    // Connect to the Ethereum network
+
+    // Define the transaction parameters
+    final fromAddress = ownAddress;
+    final toAddress = EthereumAddress.fromHex(recipientAddress);
+    final value = EtherAmount.fromUnitAndValue(EtherUnit.ether, 0.1);
+
+    // Get the gas price
+    final gasPrice = await client.getGasPrice();
+
+    // Estimate the gas limit
+    final gasLimit = await client.estimateGas(
+      sender: fromAddress,
+      to: toAddress,
+      value: value,
+    );
+
+    // Calculate the gas cost
+    final gasCost = gasPrice.getInWei * gasLimit;
+
+    // Return the gas cost as a BigInt
+    return gasCost;
+  }
+
 
 }

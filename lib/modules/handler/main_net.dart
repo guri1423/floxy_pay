@@ -80,6 +80,8 @@ class BalanceHandler {
   }
 
   Future<void> transferTokens(String recipientAddress, double amount) async {
+    httpClient1 = Client();
+    ethereumClient1 = Web3Client(ethereumClientUrl1, httpClient1);
     final client = Web3Client('https://mainnet.infura.io/v3/4cf5ea966d084aceb3c25b05c7a0089e', Client());
 
     // Load your wallet and account credentials

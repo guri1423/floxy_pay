@@ -16,6 +16,9 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+
+  String _selectedOption = '';
+
   @override
   Widget build(BuildContext context) {
     double? height = MediaQuery.of(context).size.height;
@@ -59,7 +62,14 @@ class _HistoryPageState extends State<HistoryPage> {
 
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 42),
-                                    child: DropdownBox(),
+                                    child: DropdownBox(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedOption = value!;
+                                        });
+                                      },
+                                      selectedOption: _selectedOption,
+                                    ),
                                   ),
 
 
