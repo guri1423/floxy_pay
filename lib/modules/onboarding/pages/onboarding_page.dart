@@ -1,6 +1,7 @@
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/modules/bottom_navigation/pages/bottom_navigation.dart';
 import 'package:floxy_pay/modules/onboarding/model/intro_model.dart';
+import 'package:floxy_pay/modules/web3Auth/pages/authentication.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -72,7 +73,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => BottomNavigation()));
+                            builder: (context) => Authentication()));
                   },
                   child: customButton(context),
                 ),

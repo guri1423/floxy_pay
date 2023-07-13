@@ -162,8 +162,8 @@ class _AuthenticationState extends State<Authentication> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
+                const Padding(
+                  padding: EdgeInsets.only(
                       left: 16, right: 16, top: 40, bottom: 20),
                   child: Text(
                     'We do not store any related to your social logins.',
@@ -175,9 +175,9 @@ class _AuthenticationState extends State<Authentication> {
                     ),
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding:
-                      const EdgeInsets.only(left: 16, right: 16, bottom: 10),
+                      EdgeInsets.only(left: 16, right: 16, bottom: 10),
                   child: Text(
                     'Email',
                     style: TextStyle(

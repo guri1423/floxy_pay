@@ -4,9 +4,10 @@ import 'package:floxy_pay/modules/profile/pages/profile.dart';
 import 'package:floxy_pay/modules/sale/pages/sale.dart';
 import 'package:floxy_pay/modules/swap/pages/swap.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show MethodChannel, PlatformException, rootBundle;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
+import 'package:web3auth_flutter/web3auth_flutter.dart';
 import 'package:web3dart/web3dart.dart';
 import '../../../services/storage_services.dart';
 import '../../buy_fxy/pages/buy_fxy.dart';
@@ -118,6 +119,12 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
   String contractName1 = "TetherToken";
   String private_key1 = "";
 
+  static const MethodChannel _channel = MethodChannel('web3auth_flutter');
+
+  Future<String?> _getPrivKey() {
+    return Web3AuthFlutter.getPrivKey();
+  }
+
 
   Future<List<dynamic>> query1(String functionName, List<dynamic> args) async {
 
@@ -188,6 +195,8 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
 
     _getAddress();
+
+
     // getBalance();
 
     super.initState();
@@ -431,7 +440,7 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
     final privateKey = await _servicesStorage.getId()  ?? '0';
 
-    debugPrint(privateKey);
+    debugPrint('Private key ${privateKey}');
 
     const String rpcUrl = 'https://rpc.ankr.com/eth_goerli';
 
@@ -444,5 +453,7 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
     });
     return address.hexEip55;
   }
+
+
 
 }

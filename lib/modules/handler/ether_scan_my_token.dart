@@ -1,28 +1,27 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
 
-class PolyHandler {
-  PolyHandler._();
+class SendBalanceHandler {
+  SendBalanceHandler._();
 
-  static final PolyHandler _instance = PolyHandler._();
+  static final SendBalanceHandler _instance = SendBalanceHandler._();
 
-  factory PolyHandler() => _instance;
+  factory SendBalanceHandler() => _instance;
 
   late Client httpClient1;
   late Web3Client ethereumClient1;
 
   dynamic mainNetBalance = 0;
 
-  /*String address1 = '0xdAC17F958D2ee523a2206206994597C13D831ec7';*/
 
   String ethereumClientUrl1 =
-      'https://zkevm-rpc.com/';
-  String contractName1 = "TokenWrapped";
-  String private_key1 = "";
+      'https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c';
+  String contractName1 = "MyToken";
+  String private_key1 = "f86b4ac862171a594c255fadcfc6e20a7d1a6faba39a6756d1927a28d3c43023";
 
   Future<List<dynamic>> query1(String functionName, List<dynamic> args) async {
     DeployedContract contract = await getContract1();
@@ -51,9 +50,10 @@ class PolyHandler {
   }
 
   Future<DeployedContract> getContract1() async {
-    String abi = await rootBundle.loadString("assets/polygon_eth.json");
 
-    String contractAddress = "0x1E4a5963aBFD975d8c9021ce480b42188849D41d";
+    String abi = await rootBundle.loadString("assets/etherScan_myToken.json");
+
+    String contractAddress = "0x66b78E8D366b54288f70B3074113e53eaCB81992";
 
     DeployedContract contract = DeployedContract(
       ContractAbi.fromJson(abi, contractName1),
@@ -67,27 +67,43 @@ class PolyHandler {
     httpClient1 = Client();
     ethereumClient1 = Web3Client(ethereumClientUrl1, httpClient1);
 
-    debugPrint('****** get balance 1');
-
-    String walletAddress = "0xd7aa9ba6caac7b0436c91396f22ca5a7f31664fc";
+    String walletAddress = "0x6622D772c84fB30B1F1f3a5569cA02D8f12f2d29";
 
     List<dynamic> result =
     await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
 
     debugPrint(result.toString());
 
-    return result[0].toString();
-
     // mainNetBalance = int.parse(result[0].toString());
 
+    return result[0].toString();
   }
 
 
+  Future<String> getBalanceNewMethod() async {
+    httpClient1 = Client();
+    ethereumClient1 = Web3Client(ethereumClientUrl1, httpClient1);
+
+    String walletAddress = "0x6622D772c84fB30B1F1f3a5569cA02D8f12f2d29";
+
+    List<dynamic> result =
+    await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
+
+    debugPrint(result.toString());
+
+    // mainNetBalance = int.parse(result[0].toString());
+
+    return result[0].toString();
+  }
+
+
+
+
   Future<void> transferTokens(String recipientAddress, double amount) async {
-    final client = Web3Client('https://zkevm-rpc.com/', Client());
+    final client = Web3Client('https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c', Client());
 
     // Load your wallet and account credentials
-    final credentials = await client.credentialsFromPrivateKey('');
+    final credentials = await client.credentialsFromPrivateKey('f86b4ac862171a594c255fadcfc6e20a7d1a6faba39a6756d1927a28d3c43023');
     final ownAddress = await credentials.extractAddress();
 
     debugPrint('Owner Address: ${ownAddress}');
@@ -96,10 +112,10 @@ class PolyHandler {
     String abi = await rootBundle.loadString("assets/etherScan_myToken.json");
 
     // Define the contract address
-    String contractAddress = "0x1E4a5963aBFD975d8c9021ce480b42188849D41d";
+    String contractAddress = "0x66b78E8D366b54288f70B3074113e53eaCB81992";
 
     // Create a DeployedContract instance
-    final tokenContract = DeployedContract(ContractAbi.fromJson(abi, 'TokenWrapped'), EthereumAddress.fromHex(contractAddress),);
+    final tokenContract = DeployedContract(ContractAbi.fromJson(abi, 'MyToken'), EthereumAddress.fromHex(contractAddress),);
 
     // Convert the amount to Wei
     final decimalPlaces = 18;
@@ -139,4 +155,5 @@ class PolyHandler {
       debugPrint('Transaction failed! Receipt: ${receipt.toString()}');
     }
   }
+
 }
