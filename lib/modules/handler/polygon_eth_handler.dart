@@ -1,5 +1,5 @@
-import 'dart:ffi';
 
+import 'package:floxy_pay/services/storage_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
@@ -17,12 +17,15 @@ class PolyHandler {
 
   dynamic mainNetBalance = 0;
 
+
+  StorageServices _storageServices = StorageServices();
+
   /*String address1 = '0xdAC17F958D2ee523a2206206994597C13D831ec7';*/
 
   String ethereumClientUrl1 =
-      'https://zkevm-rpc.com/';
+      'https://polygon-rpc.com';
   String contractName1 = "TokenWrapped";
-  String private_key1 = "";
+
 
   Future<List<dynamic>> query1(String functionName, List<dynamic> args) async {
     DeployedContract contract = await getContract1();
@@ -33,7 +36,8 @@ class PolyHandler {
   }
 
   Future<String> transaction1(String functionName, List<dynamic> args) async {
-    EthPrivateKey credential = EthPrivateKey.fromHex(private_key1);
+    String? private_key1 = await _storageServices.getId();
+    EthPrivateKey credential = EthPrivateKey.fromHex(private_key1!);
     DeployedContract contract = await getContract1();
     ContractFunction function = contract.function(functionName);
     dynamic result = await ethereumClient1.sendTransaction(
@@ -53,7 +57,7 @@ class PolyHandler {
   Future<DeployedContract> getContract1() async {
     String abi = await rootBundle.loadString("assets/polygon_eth.json");
 
-    String contractAddress = "0x1E4a5963aBFD975d8c9021ce480b42188849D41d";
+    String contractAddress = "0xc2132d05d31c914a87c6611c10748aeb04b58e8f";
 
     DeployedContract contract = DeployedContract(
       ContractAbi.fromJson(abi, contractName1),
@@ -69,10 +73,14 @@ class PolyHandler {
 
     debugPrint('****** get balance 1');
 
-    String walletAddress = "0xd7aa9ba6caac7b0436c91396f22ca5a7f31664fc";
+    // String walletAddress = "0xd7aa9ba6caac7b0436c91396f22ca5a7f31664fc";
+
+    String? walletAddress = await _storageServices.getAddress();
+
+    debugPrint(walletAddress.toString());
 
     List<dynamic> result =
-    await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
+    await query1('balanceOf', [EthereumAddress.fromHex(walletAddress!)]);
 
     debugPrint(result.toString());
 
@@ -86,8 +94,10 @@ class PolyHandler {
   Future<void> transferTokens(String recipientAddress, double amount) async {
     final client = Web3Client('https://zkevm-rpc.com/', Client());
 
+    String? private_key1 = await _storageServices.getId();
+
     // Load your wallet and account credentials
-    final credentials = await client.credentialsFromPrivateKey('');
+    final credentials = await client.credentialsFromPrivateKey(private_key1!);
     final ownAddress = await credentials.extractAddress();
 
     debugPrint('Owner Address: ${ownAddress}');
@@ -116,7 +126,7 @@ class PolyHandler {
         function: transferFunction,
         parameters: [EthereumAddress.fromHex(recipientAddress), BigInt.from(amountInWei)],
       ),
-      chainId: 11155111,
+      chainId: 137,
     );
 
     // Wait for transaction confirmation

@@ -1,11 +1,8 @@
-
 import 'package:floxy_pay/modules/buy_fxy/pages/payment_method.dart';
-import 'package:floxy_pay/modules/buy_fxy/pages/payment_success.dart';
 import 'package:floxy_pay/widgets/common_widgets.dart';
 import 'package:floxy_pay/widgets/custom_textField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../../core/colors.dart';
 import '../../../core/strings.dart';
 import '../../../widgets/header_widget.dart';

@@ -3,6 +3,7 @@
 
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:web3dart/web3dart.dart';
 
 import '../core/strings.dart';
 
@@ -10,9 +11,11 @@ class StorageServices{
 
 
   final storage =  const FlutterSecureStorage();
-  setAddress(String address)async{
-    await storage.write(key: Strings.address, value: address);
+  setAddress(EthereumAddress address) async {
+    String addressString = address.hex; // Convert EthereumAddress to string
+    await storage.write(key: Strings.address, value: addressString);
   }
+
   setEmail(String email)async{
     await storage.write(key: Strings.emailKey, value: email);
   }
@@ -36,10 +39,13 @@ class StorageServices{
     return await storage.read(key: Strings.emailKey);
 
   }
-  Future<String?> getAddress()async{
-    return await storage.read(key: Strings.address);
 
+  Future<String?> getAddress() async {
+    String? addressString = await storage.read(key: Strings.address);
+    return addressString;
   }
+
+
   Future<String?> getPassword()async{
     return await storage.read(key: Strings.passwordKey);
 

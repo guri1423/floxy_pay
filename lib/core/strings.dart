@@ -21,7 +21,7 @@ class Strings{
   static const history = 'History';
   static const sale = 'Sale';
   static const currentBalance = 'Current Balance';
-  static const tenThousandFXY = '10,000 FXY';
+  static const tenThousandFXY = '0';
   static const sendFXY = 'Send FXY';
   static const saleFXY = 'Sale FXY';
   static const address = 'Address';

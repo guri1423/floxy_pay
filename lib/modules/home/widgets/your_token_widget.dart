@@ -1,10 +1,9 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:floxy_pay/core/colors.dart';
+import 'package:floxy_pay/modules/handler/ether_scan_my_token.dart';
 import 'package:floxy_pay/modules/handler/main_net.dart';
 import 'package:floxy_pay/modules/handler/polygon_eth_handler.dart';
-import 'package:floxy_pay/modules/home/model/token_file.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class YourTokenWidget extends StatefulWidget {
   const YourTokenWidget({super.key});
@@ -16,8 +15,11 @@ class YourTokenWidget extends StatefulWidget {
 class _YourTokenWidgetState extends State<YourTokenWidget> {
   final balanceHandler = BalanceHandler();
   final polyHandler = PolyHandler();
+  final sendHandler = SendBalanceHandler();
+
   String? balance;
   String? polyBalance;
+  String? sendBalance;
 
 /*  Future<dynamic> getBal(){
 
@@ -26,18 +28,30 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
 
   @override
   void initState() {
+
     balanceHandler.getBalance1().then((String bal) {
+      double dividedBalance = double.parse(bal) / 1000000;
       setState(() {
-        balance = bal;
+        balance = dividedBalance.toString();
       });
     });
 
+    sendHandler.getBalance1().then((String bal) {
+      double dividedBalance = double.parse(bal) / 1000000000000000000;
+      // NumberFormat formatter = NumberFormat.compact(); // Creates a formatter
+      double formattedBalance = dividedBalance; // Formats the number
+      setState(() {
+        sendBalance = formattedBalance.toString();
+      });
+    });
 
     polyHandler.getBalance1().then((String balance) {
+      double dividedBalance = double.parse(balance) / 1000000;
       setState(() {
-        polyBalance = balance;
+        polyBalance = dividedBalance.toString();
       });
     });
+
     super.initState();
   }
 
@@ -49,27 +63,28 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
 
     YourTokens.allYourTokens = [
       YourTokens(
-          title: "USDT",
+          title: "Tether USD",
           value: "${balance} USDT",
           iconSrc: "assets/svg_images/bitcoin.svg",
           netProfit: "+2.49%",
-          subTitle: "Ethereum",
+          subTitle: "Ethereum  USDT",
           bgColor: CustomColors.token1),
       YourTokens(
-          title: "USDT",
+          title: "Tether USD",
           value: "${polyBalance} USDT",
           iconSrc: "assets/svg_images/eth.svg",
           netProfit: "+2.49%",
-          subTitle: "polygon",
+          subTitle: "Polygon  USDT",
           bgColor: CustomColors.token2),
       YourTokens(
-          title: "Matic",
-          value: "45,338.11Matic",
+          title: "MyTokenSymbol",
+          value: "${sendBalance} MyTokenSymbol",
           iconSrc: "assets/svg_images/bitcoin.svg",
           netProfit: "+2.49%",
-          subTitle: "Matic",
+          subTitle: "Sepolia Ethereum Testnet  MyTokenSymbol",
           bgColor: CustomColors.token3),
     ];
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -77,8 +92,6 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
           height: 16,
         ),
 
-        /// Here we can show our balance
-        // Text(balance ?? ''),
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -158,8 +171,8 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
                         const Spacer(),
                         Row(
                           children: [
-                            SvgPicture.asset(
-                                YourTokens.allYourTokens[index].iconSrc),
+                            /*SvgPicture.asset(
+                                YourTokens.allYourTokens[index].iconSrc),*/
                             const SizedBox(
                               width: 4,
                             ),
@@ -179,8 +192,6 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
       ],
     );
   }
-
-
 
 }
 

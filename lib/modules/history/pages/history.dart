@@ -60,25 +60,17 @@ class _HistoryPageState extends State<HistoryPage> {
                                   const SizedBox(height: 5,),
 
 
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 42),
-                                    child: DropdownBox(
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedOption = value!;
-                                        });
-                                      },
-                                      selectedOption: _selectedOption,
-                                    ),
-                                  ),
-
-
-
-
-
-
-
-
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(bottom: 42),
+                                  //   child: DropdownBox(
+                                  //     onChanged: (value) {
+                                  //       setState(() {
+                                  //         _selectedOption = value!;
+                                  //       });
+                                  //     },
+                                  //     selectedOption: _selectedOption,
+                                  //   ),
+                                  // ),
 
                                 ],
                               ),

@@ -1,3 +1,4 @@
+import 'package:floxy_pay/services/storage_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
@@ -7,19 +8,21 @@ class BalanceHandler {
   BalanceHandler._();
 
   static final BalanceHandler _instance = BalanceHandler._();
-
   factory BalanceHandler() => _instance;
-
   late Client httpClient1;
   late Web3Client ethereumClient1;
 
   dynamic mainNetBalance = 0;
 
+  StorageServices _storageServices = StorageServices();
+
+
+
   String address1 = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
   String ethereumClientUrl1 =
       'https://mainnet.infura.io/v3/4cf5ea966d084aceb3c25b05c7a0089e';
   String contractName1 = "TetherToken";
-  String private_key1 = "";
+
 
   Future<List<dynamic>> query1(String functionName, List<dynamic> args) async {
     DeployedContract contract = await getContract1();
@@ -30,7 +33,8 @@ class BalanceHandler {
   }
 
   Future<String> transaction1(String functionName, List<dynamic> args) async {
-    EthPrivateKey credential = EthPrivateKey.fromHex(private_key1);
+    String? private_key1 = await _storageServices.getId();
+    EthPrivateKey credential = EthPrivateKey.fromHex(private_key1!);
     DeployedContract contract = await getContract1();
     ContractFunction function = contract.function(functionName);
     dynamic result = await ethereumClient1.sendTransaction(
@@ -43,15 +47,13 @@ class BalanceHandler {
       fetchChainIdFromNetworkId: true,
       chainId: null,
     );
-
     return result;
   }
 
   Future<DeployedContract> getContract1() async {
+    String abi = await rootBundle.loadString('assets/etherScan_myToken.json');
 
-    String abi = await rootBundle.loadString("https://mainnet.infura.io/v3/4cf5ea966d084aceb3c25b05c7a0089e");
-
-    String contractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+    String contractAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
 
     DeployedContract contract = DeployedContract(
       ContractAbi.fromJson(abi, contractName1),
@@ -65,12 +67,14 @@ class BalanceHandler {
     httpClient1 = Client();
     ethereumClient1 = Web3Client(ethereumClientUrl1, httpClient1);
 
+    String? walletAddress = await _storageServices.getAddress();
+
     debugPrint('****** get balance 1');
 
-    String walletAddress = "0x510a23606050b6bA1Ae37BdACb4e221756E31533";
+    // String walletAddress = '0x510a23606050b6bA1Ae37BdACb4e221756E31533';
 
-    List<dynamic> result =
-        await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
+    List<dynamic> result = await query1('balanceOf',
+        [EthereumAddress.fromHex(walletAddress.toString())]);
 
     debugPrint(result.toString());
 
@@ -79,29 +83,35 @@ class BalanceHandler {
     return result[0].toString();
   }
 
-  Future<void> transferTokens(String recipientAddress, double amount) async {
+  Future<void> transferTokens(
+      String recipientAddress, double amount) async {
     httpClient1 = Client();
     ethereumClient1 = Web3Client(ethereumClientUrl1, httpClient1);
-    final client = Web3Client('https://mainnet.infura.io/v3/4cf5ea966d084aceb3c25b05c7a0089e', Client());
+    final client = Web3Client(ethereumClientUrl1, Client());
+
+    String? private_key1 = await _storageServices.getId();
 
     // Load your wallet and account credentials
-    final credentials = await client.credentialsFromPrivateKey('');
+    final credentials = await client.credentialsFromPrivateKey(private_key1!);
     final ownAddress = await credentials.extractAddress();
 
     debugPrint('Owner Address: ${ownAddress}');
 
     // Load the token contract ABI
-    String abi = await rootBundle.loadString("assets/etherScan_myToken.json");
+    String abi = await rootBundle.loadString('assets/etherScan_myToken.json');
 
     // Define the contract address
-    String contractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+    String contractAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
 
     // Create a DeployedContract instance
-    final tokenContract = DeployedContract(ContractAbi.fromJson(abi, 'TetherToken'), EthereumAddress.fromHex(contractAddress),);
+    final tokenContract = DeployedContract(
+      ContractAbi.fromJson(abi, 'TetherToken'),
+      EthereumAddress.fromHex(contractAddress),
+    );
 
     // Convert the amount to Wei
     final decimalPlaces = 18;
-    final amountInWei = (amount * (10 * decimalPlaces));
+    final amountInWei = BigInt.from((amount * (10 * decimalPlaces)).toInt());
 
     debugPrint('Amount in Wei ${amountInWei}');
 
@@ -112,9 +122,12 @@ class BalanceHandler {
       Transaction.callContract(
         contract: tokenContract,
         function: transferFunction,
-        parameters: [EthereumAddress.fromHex(recipientAddress), BigInt.from(amountInWei)],
+        parameters: [
+          EthereumAddress.fromHex(recipientAddress),
+          amountInWei,
+        ],
       ),
-      chainId: 11155111,
+      chainId: 1,
     );
 
     // Wait for transaction confirmation
@@ -137,5 +150,5 @@ class BalanceHandler {
       debugPrint('Transaction failed! Receipt: ${receipt.toString()}');
     }
   }
-
 }
+

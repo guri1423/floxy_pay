@@ -15,7 +15,7 @@ class DropdownBox extends StatefulWidget {
 }
 
 class _DropdownBoxState extends State<DropdownBox> {
-  String dropdownValue = 'Ethereum';
+  String dropdownValue = 'Tether USD (Ethereum)';
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _DropdownBoxState extends State<DropdownBox> {
                   widget.onChanged?.call(dropdownValue);
                 });
               },
-              items: <String>['Ethereum', 'Polygon', 'Mainnet']
+              items: <String>['Tether USD (Ethereum)', 'Tether USD (Polygon)', 'MyTokenSymbol']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

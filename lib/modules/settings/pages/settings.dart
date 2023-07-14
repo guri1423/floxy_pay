@@ -37,69 +37,66 @@ class _SettingsPageState extends State<SettingsPage> {
                   color: Color.fromRGBO(255, 255, 255, 1),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: imageList.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: index == 0
-                            ? const EdgeInsets.only(bottom: 16, top: 30)
-                            : const EdgeInsets.only(
-                                bottom: 16,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: imageList.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: index == 0
+                          ? const EdgeInsets.only(bottom: 16, top: 30)
+                          : const EdgeInsets.only(
+                              bottom: 16,
+                            ),
+                      child: ListTile(
+                        onTap: () {
+                          if (index == 0) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfilePage()),
+                            );
+                          } else if (index == 1) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NotificationPage()),
+                            );
+                          } else if (index == 2) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChangePin()),
+                            );
+                          } else if (index == 3) {
+                            _showDialog(context);
+                          }
+                        },
+                        leading: Container(
+                            decoration: const BoxDecoration(boxShadow: [
+                              BoxShadow(
+                                color: Color(0x19272246),
+                                blurRadius: 12,
+                                offset: Offset(0, 2),
+                                spreadRadius: 0,
                               ),
-                        child: ListTile(
-                          onTap: () {
-                            if (index == 0) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProfilePage()),
-                              );
-                            } else if (index == 1) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NotificationPage()),
-                              );
-                            } else if (index == 2) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ChangePin()),
-                              );
-                            } else if (index == 3) {
-                              _showDialog(context);
-                            }
-                          },
-                          leading: Container(
-                              decoration: const BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                  color: Color(0x19272246),
-                                  blurRadius: 12,
-                                  offset: Offset(0, 2),
-                                  spreadRadius: 0,
-                                ),
-                              ], shape: BoxShape.circle),
-                              child: SvgPicture.asset(
-                                imageList[index],
-                              )),
-                          title: Text(
-                            pageList[index],
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                          trailing: const Icon(Icons.navigate_next_sharp),
-                          splashColor: CustomColors.blueLight,
+                            ], shape: BoxShape.circle),
+                            child: SvgPicture.asset(
+                              imageList[index],
+                            )),
+                        title: Text(
+                          pageList[index],
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  fontWeight: FontWeight.w500, fontSize: 16),
                         ),
-                      );
-                    },
-                  ),
+                        trailing: const Icon(Icons.navigate_next_sharp, color: CustomColors.black),
+                        splashColor: CustomColors.blueLight,
+                      ),
+                    );
+                  },
                 ),
               ))
         ]),
@@ -189,7 +186,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           width: 106,
                           height: 42,
                           decoration: ShapeDecoration(
-                            color: Colors.black.withOpacity(0.10000000149011612),
+                            color:
+                                Colors.black.withOpacity(0.10000000149011612),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),

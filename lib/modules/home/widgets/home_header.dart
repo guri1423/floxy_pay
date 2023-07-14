@@ -26,9 +26,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
   final myAddress = '0x25Ce743E4A39Dd5873039Ac9f9e77f412246c6A6';
 
-
-
-
   String _address = '';
 
   late Client httpClient;
@@ -106,7 +103,6 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
 
 
   }
-
 
   late Client httpClient1;
 
@@ -193,16 +189,11 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
     httpClient = Client();
     ethereumClient = Web3Client(ethereumClientUrl, httpClient);
 
-
     _getAddress();
-
-
-    // getBalance();
 
     super.initState();
 
   }
-
 
 
   Future<Web3Client> createWeb3Client() async {
@@ -286,18 +277,17 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Address: ${_address}",
-                            style: theme.textTheme.titleLarge!.copyWith(fontSize: 16),
+                            _address,
+                            style: theme.textTheme.titleLarge!.copyWith(fontSize: 12,fontWeight: FontWeight.normal),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
 
 
-
                           const SizedBox(
                             height: 12,
                           ),
-                          Row(
+                         /* Row(
                             children: [
                               Container(
                                 decoration: BoxDecoration(
@@ -321,7 +311,7 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
                                   style: theme.textTheme.bodyMedium!
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ],
-                          )
+                          )*/
                         ],
                       ),
                     ),
@@ -448,6 +438,8 @@ class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
     final credentials = EthPrivateKey.fromHex(privateKey);
     final address = credentials.address;
     debugPrint("Account, ${address.hexEip55}");
+
+    _servicesStorage.setAddress(address);
     setState(() {
       _address = address.hexEip55.toString();
     });

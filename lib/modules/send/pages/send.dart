@@ -26,6 +26,9 @@ class _SendPageState extends State<SendPage> {
   final polyHandler = PolyHandler();
   final balanceHandler = BalanceHandler();
 
+  String selectedDropdown = '';
+  String? balance;
+  String? unit;
   int _selectedOptionIndex = 0;
 
   @override
@@ -62,10 +65,17 @@ class _SendPageState extends State<SendPage> {
                             ),
                             sizebox,
                             Text(
-                              Strings.tenThousandFXY,
+                              balance ?? Strings.tenThousandFXY,
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
+
+                            Text(
+                              unit ?? 'USDT',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+
                             sizebox,
                             GestureDetector(
                               onTap: () {
@@ -97,8 +107,13 @@ class _SendPageState extends State<SendPage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5),
                       child:   DropdownBox(
-                        selectedOption: 'Ethereum',
+                        selectedOption: 'Tether USD (Ethereum)',
                         onChanged: (selectedValue) {
+                          setState(() {
+                            selectedDropdown = selectedValue;
+                            _getBalance();
+                            _getUnit();
+                          });
                           debugPrint('Selected: $selectedValue');
                         },
                       ),
@@ -107,22 +122,20 @@ class _SendPageState extends State<SendPage> {
                     customTextFieldForm(context, controller: _amount, hintText: Strings.amount),
 
                     GestureDetector(
-                      onTap: () {
-                        if (_selectedOptionIndex == 0) {
-                          debugPrint('Option 1');
-                          // sendBalance.transferTokens(_address.text, double.parse(_amount.text));
+                      onTap: () async{
 
-                        } else if (_selectedOptionIndex == 1) {
+                        if (selectedDropdown == 'Tether USD (Ethereum)') {
 
-                          debugPrint('Option 2');
+                          balanceHandler.transferTokens('0x9c7c177836f36527ac2a55cc762b0d0f05c52de2', 120);
 
-                          // polyHandler.transferTokens(_address.text, double.parse(_amount.text));
+                        } else if (selectedDropdown == 'Tether USD (Polygon)') {
 
-                        } else if (_selectedOptionIndex == 2) {
+                          polyHandler.transferTokens('0x9c7c177836f36527ac2a55cc762b0d0f05c52de2', 120);
 
-                          debugPrint('Option 3');
+                        } else if (selectedDropdown == 'MyTokenSymbol') {
 
-                          balanceHandler.transferTokens(_address.text, double.parse(_amount.text));
+                          sendBalance.transferTokens('0x9c7c177836f36527ac2a55cc762b0d0f05c52de2', 120);
+
                         } else {
 
                           print('Invalid option selected');
@@ -139,4 +152,56 @@ class _SendPageState extends State<SendPage> {
       ),
     );
   }
+
+  String? _getBalance() {
+    if (selectedDropdown == 'Tether USD (Ethereum)') {
+      balanceHandler.getBalance1().then((String bal) {
+        setState(() {
+          balance = bal;
+        });
+      });
+
+    } else if (selectedDropdown == 'Tether USD (Polygon)') {
+      polyHandler.getBalance1().then((String balance1) {
+        double dividedBalance = double.parse(balance1) / 1000000;
+        setState(() {
+          balance = dividedBalance.toString();
+        });
+      });
+    } else if (selectedDropdown == 'MyTokenSymbol') {
+      sendBalance.getBalance1().then((String bal) {
+        double dividedBalance = double.parse(bal) / 1000000000000000000;
+        double formattedBalance = dividedBalance;
+        setState(() {
+          balance = formattedBalance.toString();
+        });
+      });
+    } else {
+      print('Invalid option');
+    }
+    return null;
+  }
+
+  String? _getUnit() {
+    if (selectedDropdown == 'Tether USD (Ethereum)') {
+
+      setState(() {
+        unit = 'USDT' ;
+      });
+
+    } else if (selectedDropdown == 'Tether USD (Polygon)') {
+      setState(() {
+        unit = 'USDT' ;
+      });
+    } else if (selectedDropdown == 'MyTokenSymbol') {
+      setState(() {
+        unit = 'MyTokenSymbol' ;
+      });
+    } else {
+      print('Invalid option');
+    }
+    return null;
+  }
+
+
 }

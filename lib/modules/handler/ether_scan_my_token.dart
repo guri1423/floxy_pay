@@ -1,5 +1,6 @@
 
 
+import 'package:floxy_pay/services/storage_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,11 +19,12 @@ class SendBalanceHandler {
 
   dynamic mainNetBalance = 0;
 
-
   String ethereumClientUrl1 =
       'https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c';
   String contractName1 = "MyToken";
   String private_key1 = "f86b4ac862171a594c255fadcfc6e20a7d1a6faba39a6756d1927a28d3c43023";
+
+  StorageServices _storageServices = StorageServices();
 
   Future<List<dynamic>> query1(String functionName, List<dynamic> args) async {
     DeployedContract contract = await getContract1();
@@ -68,10 +70,12 @@ class SendBalanceHandler {
     httpClient1 = Client();
     ethereumClient1 = Web3Client(ethereumClientUrl1, httpClient1);
 
-    String walletAddress = "0x6622D772c84fB30B1F1f3a5569cA02D8f12f2d29";
+    String? walletAddress = await _storageServices.getAddress();
+
+    // String walletAddress = "0x6622D772c84fB30B1F1f3a5569cA02D8f12f2d29";
 
     List<dynamic> result =
-    await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
+    await query1('balanceOf', [EthereumAddress.fromHex(walletAddress!)]);
 
     debugPrint(result.toString());
 
@@ -81,23 +85,25 @@ class SendBalanceHandler {
   }
 
 
-  Future<String> getBalanceNewMethod() async {
+  /*Future<String> getBalanceNewMethod() async {
     httpClient1 = Client();
     ethereumClient1 = Web3Client(ethereumClientUrl1, httpClient1);
 
-    String walletAddress = "0x6622D772c84fB30B1F1f3a5569cA02D8f12f2d29";
+    String? walletAddress = await _storageServices.getAddress();
+
+
+
+    // String walletAddress = "0x6622D772c84fB30B1F1f3a5569cA02D8f12f2d29";
 
     List<dynamic> result =
-    await query1('balanceOf', [EthereumAddress.fromHex(walletAddress)]);
+    await query1('balanceOf', [EthereumAddress.fromHex(walletAddress!)]);
 
     debugPrint(result.toString());
 
     // mainNetBalance = int.parse(result[0].toString());
 
     return result[0].toString();
-  }
-
-
+  }*/
 
 
   Future<void> transferTokens(String recipientAddress, double amount) async {
@@ -167,18 +173,17 @@ class SendBalanceHandler {
     }
   }
 
-  Future<BigInt> estimateGasCost(String recipientAddress) async {
 
+  Future<BigInt> estimateGasCost(String recipientAddress, double amount) async {
     final client = Web3Client('https://sepolia.infura.io/v3/f77800ff05bf49d1b12787b2e7c24b6c', Client());
 
     final credentials = await client.credentialsFromPrivateKey('f86b4ac862171a594c255fadcfc6e20a7d1a6faba39a6756d1927a28d3c43023');
     final ownAddress = await credentials.extractAddress();
-    // Connect to the Ethereum network
 
     // Define the transaction parameters
     final fromAddress = ownAddress;
     final toAddress = EthereumAddress.fromHex(recipientAddress);
-    final value = EtherAmount.fromUnitAndValue(EtherUnit.ether, 0.1);
+    final value = EtherAmount.fromUnitAndValue(EtherUnit.ether, amount);
 
     // Get the gas price
     final gasPrice = await client.getGasPrice();
@@ -191,7 +196,9 @@ class SendBalanceHandler {
     );
 
     // Calculate the gas cost
-    final gasCost = gasPrice.getInWei * gasLimit;
+    final gasCost = gasPrice.getInWei;
+
+    debugPrint('Gas cost: $gasCost');
 
     // Return the gas cost as a BigInt
     return gasCost;
