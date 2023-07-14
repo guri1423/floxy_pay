@@ -96,13 +96,11 @@ class _SendPageState extends State<SendPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5),
-                      child: DropdownBox(
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedOptionIndex = int.parse(value!);
-                          });
+                      child:   DropdownBox(
+                        selectedOption: 'Ethereum',
+                        onChanged: (selectedValue) {
+                          debugPrint('Selected: $selectedValue');
                         },
-                        selectedOption: _selectedOptionIndex.toString(),
                       ),
                     ),
                     customTextFieldForm(context, controller: _address, hintText: Strings.address),
@@ -111,15 +109,18 @@ class _SendPageState extends State<SendPage> {
                     GestureDetector(
                       onTap: () {
                         if (_selectedOptionIndex == 0) {
-
-                          sendBalance.transferTokens(_address.text, double.parse(_amount.text));
+                          debugPrint('Option 1');
+                          // sendBalance.transferTokens(_address.text, double.parse(_amount.text));
 
                         } else if (_selectedOptionIndex == 1) {
 
-                          polyHandler.transferTokens(_address.text, double.parse(_amount.text));
+                          debugPrint('Option 2');
+
+                          // polyHandler.transferTokens(_address.text, double.parse(_amount.text));
+
                         } else if (_selectedOptionIndex == 2) {
 
-                          print('Selected option: Mainnet');
+                          debugPrint('Option 3');
 
                           balanceHandler.transferTokens(_address.text, double.parse(_amount.text));
                         } else {
