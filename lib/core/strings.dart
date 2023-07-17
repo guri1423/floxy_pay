@@ -25,6 +25,7 @@ class Strings{
   static const sendFXY = 'Send FXY';
   static const saleFXY = 'Sale FXY';
   static const address = 'Address';
+  static const recepientAddress = 'Recepient Address';
   static const amount = 'Amount';
   static const process = 'Process';
   static const name = 'Name';

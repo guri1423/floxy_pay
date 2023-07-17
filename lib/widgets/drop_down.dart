@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class DropdownBox extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final String selectedOption;
@@ -15,7 +16,7 @@ class DropdownBox extends StatefulWidget {
 }
 
 class _DropdownBoxState extends State<DropdownBox> {
-  String dropdownValue = 'Tether USD (Ethereum)';
+  String? dropdownValue;
 
   @override
   void initState() {
@@ -38,7 +39,8 @@ class _DropdownBoxState extends State<DropdownBox> {
           Expanded(
             child: DropdownButton<String>(
               value: dropdownValue,
-              icon: Icon(Icons.arrow_drop_down),
+              hint: const Text('Select Token'), // Displayed initially as the hint
+              icon: const Icon(Icons.arrow_drop_down),
               iconSize: 24,
               elevation: 16,
               style: TextStyle(color: Colors.black),
@@ -46,11 +48,14 @@ class _DropdownBoxState extends State<DropdownBox> {
               onChanged: (String? newValue) {
                 setState(() {
                   dropdownValue = newValue!;
-                  widget.onChanged?.call(dropdownValue);
+                  widget.onChanged?.call(dropdownValue!);
                 });
               },
-              items: <String>['Tether USD (Ethereum)', 'Tether USD (Polygon)', 'MyTokenSymbol']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: <String>[
+                'Tether USD (Ethereum)',
+                'Tether USD (Polygon)',
+                'MyTokenSymbol'
+              ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -63,3 +68,4 @@ class _DropdownBoxState extends State<DropdownBox> {
     );
   }
 }
+

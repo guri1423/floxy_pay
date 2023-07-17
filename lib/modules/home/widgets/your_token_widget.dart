@@ -17,9 +17,9 @@ class _YourTokenWidgetState extends State<YourTokenWidget> {
   final polyHandler = PolyHandler();
   final sendHandler = SendBalanceHandler();
 
-  String? balance;
-  String? polyBalance;
-  String? sendBalance;
+  String? balance = '0';
+  String? polyBalance ='0';
+  String? sendBalance ='0';
 
 /*  Future<dynamic> getBal(){
 

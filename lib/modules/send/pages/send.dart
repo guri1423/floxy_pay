@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:floxy_pay/core/colors.dart';
 import 'package:floxy_pay/core/strings.dart';
 import 'package:floxy_pay/modules/buy_fxy/pages/buy_fxy.dart';
@@ -10,6 +12,7 @@ import 'package:floxy_pay/widgets/drop_down.dart';
 import 'package:floxy_pay/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class SendPage extends StatefulWidget {
   const SendPage({Key? key}) : super(key: key);
@@ -29,6 +32,11 @@ class _SendPageState extends State<SendPage> {
   String selectedDropdown = '';
   String? balance;
   String? unit;
+
+  Barcode? result;
+  QRViewController? controller;
+  final qrKey = GlobalKey();
+
   int _selectedOptionIndex = 0;
 
   @override
@@ -96,16 +104,16 @@ class _SendPageState extends State<SendPage> {
                       ),
                     ),
                     sizebox,
-                    Padding(
+                   /* Padding(
                       padding: const EdgeInsets.only(top: 24, bottom: 24),
                       child: Text(
                         Strings.sendFXY,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                    ),
+                    ),*/
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
+                      padding: const EdgeInsets.only(bottom: 5,top: 24),
                       child:   DropdownBox(
                         selectedOption: 'Tether USD (Ethereum)',
                         onChanged: (selectedValue) {
@@ -118,7 +126,13 @@ class _SendPageState extends State<SendPage> {
                         },
                       ),
                     ),
-                    customTextFieldForm(context, controller: _address, hintText: Strings.address),
+                    customTextFieldForm(
+                      context,
+                      controller: _address,
+                      hintText: Strings.recepientAddress,
+                      onQRCodeIconTap: () => _buildQrView(context),
+                    ),
+
                     customTextFieldForm(context, controller: _amount, hintText: Strings.amount),
 
                     GestureDetector(
@@ -141,7 +155,10 @@ class _SendPageState extends State<SendPage> {
                           print('Invalid option selected');
                         }
                       },
-                      child: customButtonNew(context, Strings.process, CustomColors.black, CustomColors.white),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: customButtonNew(context, Strings.process, CustomColors.black, CustomColors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -202,6 +219,55 @@ class _SendPageState extends State<SendPage> {
     }
     return null;
   }
+
+
+  Widget _buildQrView(BuildContext context) {
+    // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+        MediaQuery.of(context).size.height < 400)
+        ? 150.0
+        : 300.0;
+    // To ensure the Scanner view is properly sizes after rotation
+    // we need to listen for Flutter SizeChanged notification and update controller
+    return QRView(
+      key: qrKey,
+      onQRViewCreated: _onQRViewCreated,
+      overlay: QrScannerOverlayShape(
+          borderColor: Colors.red,
+          borderRadius: 10,
+          borderLength: 30,
+          borderWidth: 10,
+          cutOutSize: scanArea),
+      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+    );
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    setState(() {
+      this.controller = controller;
+    });
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        result = scanData;
+      });
+    });
+  }
+
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('no Permission')),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
 
 
 }
