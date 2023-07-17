@@ -1,6 +1,7 @@
 import 'package:floxy_pay/modules/change_pin/pages/change_pin.dart';
 import 'package:floxy_pay/modules/notification/pages/notification.dart';
 import 'package:floxy_pay/modules/onboarding/pages/onboarding_one.dart';
+import 'package:floxy_pay/modules/onboarding/pages/onboarding_page.dart';
 import 'package:floxy_pay/modules/profile/pages/profile.dart';
 import 'package:floxy_pay/services/storage_services.dart';
 import 'package:flutter/material.dart';
@@ -232,7 +233,7 @@ class _SettingsPageState extends State<SettingsPage> {
     await _storageServices.clearStorage();
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => OnboardingPageOne()),
+        MaterialPageRoute(builder: (context) =>  OnBoardingPage()),
         (route) => false);
   }
 
@@ -243,7 +244,7 @@ class _SettingsPageState extends State<SettingsPage> {
         setState(() {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => OnboardingPageOne()),
+              MaterialPageRoute(builder: (context) => OnBoardingPage()),
               (route) => false);
         });
       } on UserCancelledException {

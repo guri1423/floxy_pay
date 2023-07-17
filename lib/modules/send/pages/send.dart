@@ -77,19 +77,18 @@ class _SendPageState extends State<SendPage> {
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
-
                             Text(
                               unit ?? 'USDT',
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
-
                             sizebox,
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => BuyFxy()),
+                                  MaterialPageRoute(
+                                      builder: (context) => BuyFxy()),
                                 );
                               },
                               child: customSmallButton(
@@ -104,7 +103,7 @@ class _SendPageState extends State<SendPage> {
                       ),
                     ),
                     sizebox,
-                   /* Padding(
+                    /* Padding(
                       padding: const EdgeInsets.only(top: 24, bottom: 24),
                       child: Text(
                         Strings.sendFXY,
@@ -113,8 +112,8 @@ class _SendPageState extends State<SendPage> {
                       ),
                     ),*/
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 5,top: 24),
-                      child:   DropdownBox(
+                      padding: const EdgeInsets.only(bottom: 5, top: 24),
+                      child: DropdownBox(
                         selectedOption: 'Tether USD (Ethereum)',
                         onChanged: (selectedValue) {
                           setState(() {
@@ -130,36 +129,34 @@ class _SendPageState extends State<SendPage> {
                       context,
                       controller: _address,
                       hintText: Strings.recepientAddress,
-                      onQRCodeIconTap: () => _buildQrView(context),
+                      onQRCodeIconTap: () => showQRScanner(context),
                     ),
 
-                    customTextFieldForm(context, controller: _amount, hintText: Strings.amount),
+                    customTextFieldForm(context,
+                        controller: _amount, hintText: Strings.amount),
 
                     GestureDetector(
-                      onTap: () async{
-
+                      onTap: () async {
                         if (selectedDropdown == 'Tether USD (Ethereum)') {
-
-                          balanceHandler.transferTokens('0x9c7c177836f36527ac2a55cc762b0d0f05c52de2', 120);
-
+                          balanceHandler.transferTokens(
+                              _address.text, double.parse(_amount.text));
                         } else if (selectedDropdown == 'Tether USD (Polygon)') {
-
-                          polyHandler.transferTokens('0x9c7c177836f36527ac2a55cc762b0d0f05c52de2', 120);
-
+                          polyHandler.transferTokens(
+                              _address.text, double.parse(_amount.text));
                         } else if (selectedDropdown == 'MyTokenSymbol') {
-
-                          sendBalance.transferTokens('0x9c7c177836f36527ac2a55cc762b0d0f05c52de2', 120);
-
+                          sendBalance.transferTokens(
+                              _address.text, double.parse(_amount.text));
                         } else {
-
                           print('Invalid option selected');
                         }
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: customButtonNew(context, Strings.process, CustomColors.black, CustomColors.white),
+                        child: customButtonNew(context, Strings.process,
+                            CustomColors.black, CustomColors.white),
                       ),
                     ),
+                    // _buildQrView(context),
                   ],
                 ),
               ),
@@ -177,7 +174,6 @@ class _SendPageState extends State<SendPage> {
           balance = bal;
         });
       });
-
     } else if (selectedDropdown == 'Tether USD (Polygon)') {
       polyHandler.getBalance1().then((String balance1) {
         double dividedBalance = double.parse(balance1) / 1000000;
@@ -201,18 +197,16 @@ class _SendPageState extends State<SendPage> {
 
   String? _getUnit() {
     if (selectedDropdown == 'Tether USD (Ethereum)') {
-
       setState(() {
-        unit = 'USDT' ;
+        unit = 'USDT';
       });
-
     } else if (selectedDropdown == 'Tether USD (Polygon)') {
       setState(() {
-        unit = 'USDT' ;
+        unit = 'USDT';
       });
     } else if (selectedDropdown == 'MyTokenSymbol') {
       setState(() {
-        unit = 'MyTokenSymbol' ;
+        unit = 'MyTokenSymbol';
       });
     } else {
       print('Invalid option');
@@ -220,35 +214,40 @@ class _SendPageState extends State<SendPage> {
     return null;
   }
 
+  showQRScanner(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return _buildQrView(context);
+        });
+  }
 
   Widget _buildQrView(BuildContext context) {
-    // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-        MediaQuery.of(context).size.height < 400)
-        ? 150.0
-        : 300.0;
-    // To ensure the Scanner view is properly sizes after rotation
-    // we need to listen for Flutter SizeChanged notification and update controller
-    return QRView(
-      key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(
-          borderColor: Colors.red,
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: scanArea),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+    return SizedBox(
+      height: 200,
+      width: 200,
+      child: QRView(
+        key: qrKey,
+        onQRViewCreated: _onQRViewCreated,
+        overlay: QrScannerOverlayShape(
+            borderColor: Colors.red,
+            borderRadius: 10,
+            borderLength: 30,
+            borderWidth: 10,
+            cutOutSize: 200),
+        onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+      ),
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _onQRViewCreated(QRViewController customController) {
     setState(() {
-      this.controller = controller;
+      controller = customController;
     });
-    controller.scannedDataStream.listen((scanData) {
+    controller?.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        _address = TextEditingController(text: scanData.code);
       });
     });
   }
@@ -267,7 +266,4 @@ class _SendPageState extends State<SendPage> {
     controller?.dispose();
     super.dispose();
   }
-
-
-
 }

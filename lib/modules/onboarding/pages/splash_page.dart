@@ -43,6 +43,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
+        key: ValueKey('splash_page'),
         child: CircularProgressIndicator(),
       ),
     );
